@@ -1,3 +1,57 @@
+# 의존성
 node_modules/
+.pnpm-store/
+
+# 빌드 결과물
 dist/
+.next/
+.turbo/
+out/
+
+# 환경 변수
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 로그 파일
+logs
+*.log
+pnpm-debug.log*
+
+# 테스트 커버리지
+coverage/
+*.lcov
+
+# 캐시 디렉토리
+.cache
+.parcel-cache
+.vite
+
+# Next.js 빌드 결과물
+.next
+
+# 스토리북 빌드 결과물
+storybook-static
+
+# TypeScript
+*.tsbuildinfo
+
+# 테스트 결과
+test-results/
+playwright-report/
+
+# 에디터 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
+
+# 임시 폴더
+tmp/
+temp/
