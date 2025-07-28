@@ -1,7 +1,7 @@
 {
-  "name": "@horizon/ui",
+  "name": "@horizon/tokens",
   "version": "1.0.0",
-  "description": "UI components for Horizon Render",
+  "description": "Design tokens for Horizon Render",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
