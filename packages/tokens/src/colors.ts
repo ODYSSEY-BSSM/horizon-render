@@ -36,4 +36,4 @@ export const colors = {
     100: '#FFCBC4',
     200: '#FF0000'
   }
-};
+} as const;

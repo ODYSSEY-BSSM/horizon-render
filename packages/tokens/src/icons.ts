@@ -13,4 +13,4 @@ export const icons = {
     40: '40',
     48: '48'
   }
-};
+} as const;
