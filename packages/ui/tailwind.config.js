@@ -17,26 +17,33 @@ module.exports = {
   },
   plugins: [
     function({ addUtilities }) {
+      // Helper function to generate font-variation-settings string
+      function getFontVariationSettings(settings) {
+        return Object.entries(settings)
+          .map(([axis, value]) => `'${axis}' ${value}`)
+          .join(', ');
+      }
+
       const iconUtilities = {};
 
       // Fill utilities
       Object.entries(tokens.icons.fill).forEach(([key, value]) => {
         iconUtilities[`.icon-fill-${key}`] = {
-          'font-variation-settings': `'FILL' ${value}, 'wght' 400, 'GRAD' 0`,
+          'font-variation-settings': getFontVariationSettings({ FILL: value, wght: 400, GRAD: 0 }),
         };
       });
 
       // Grade utilities
       Object.entries(tokens.icons.grade).forEach(([key, value]) => {
         iconUtilities[`.icon-grade-${key}`] = {
-          'font-variation-settings': `'FILL' 0, 'wght' 400, 'GRAD' ${value}`,
+          'font-variation-settings': getFontVariationSettings({ FILL: 0, wght: 400, GRAD: value }),
         };
       });
 
       // OpticalSize utilities
       Object.entries(tokens.icons.opticalSize).forEach(([key, value]) => {
         iconUtilities[`.icon-size-${key}`] = {
-          'font-variation-settings': `'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' ${value}`,
+          'font-variation-settings': getFontVariationSettings({ FILL: 0, wght: 400, GRAD: 0, opsz: value }),
         };
       });
 
