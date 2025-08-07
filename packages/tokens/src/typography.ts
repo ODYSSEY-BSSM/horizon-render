@@ -1,5 +1,5 @@
 export const fontFamily = {
-  sans: ['Inter', 'sans-serif'],
+  sans: ['SUIT Variable', 'sans-serif'],
 };
 
 export const fontSize = {
