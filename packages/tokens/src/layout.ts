@@ -3,7 +3,7 @@ import { colors } from './colors';
 export const grid = {
   columns: 12,
   gutterWidth: '24px',
-  margin: '120px'
+  margin: '8vw'
 } as const;
 
 export const stroke = {
