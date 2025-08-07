@@ -20,8 +20,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@horizon/ui": ["./packages/ui/src"],
-      "@horizon/tokens": ["./packages/tokens/src"]
+      "@horizon/ui": ["./packages/ui/src"]
     }
   },
   "include": [
