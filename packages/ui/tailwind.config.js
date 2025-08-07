@@ -10,7 +10,37 @@ module.exports = {
       colors: tokens.colors,
       fontFamily: tokens.fontFamily,
       fontSize: tokens.fontSize,
+      fontWeight: tokens.fontWeight,
+      lineHeight: tokens.lineHeight,
+      letterSpacing: tokens.letterSpacing,
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const iconUtilities = {};
+
+      // Fill utilities
+      Object.entries(tokens.icons.fill).forEach(([key, value]) => {
+        iconUtilities[`.icon-fill-${key}`] = {
+          'font-variation-settings': `'FILL' ${value}, 'wght' 400, 'GRAD' 0`,
+        };
+      });
+
+      // Grade utilities
+      Object.entries(tokens.icons.grade).forEach(([key, value]) => {
+        iconUtilities[`.icon-grade-${key}`] = {
+          'font-variation-settings': `'FILL' 0, 'wght' 400, 'GRAD' ${value}`,
+        };
+      });
+
+      // OpticalSize utilities
+      Object.entries(tokens.icons.opticalSize).forEach(([key, value]) => {
+        iconUtilities[`.icon-size-${key}`] = {
+          'font-variation-settings': `'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' ${value}`,
+        };
+      });
+
+      addUtilities(iconUtilities);
+    }
+  ],
 };

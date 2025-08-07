@@ -1,11 +1,50 @@
 export const fontFamily = {
-  sans: ['SUIT Variable', 'sans-serif'],
+  suit: ['SUIT Variable', 'sans-serif'],
+  icon: ['Material Symbols Outlined', 'monospace'],
 };
 
+export const fontWeight = {
+  heavy: 900,
+  extrabold: 800,
+  bold: 700,
+  semibold: 600,
+  medium: 500,
+  regular: 400,
+  light: 300,
+  extralight: 200,
+}
+
 export const fontSize = {
-  'xs': '.75rem',
-  'sm': '.875rem',
-  'base': '1rem',
-  'lg': '1.125rem',
-  'xl': '1.25rem',
+  40: '40px',
+  32: '32px',
+  24: '24px',
+  20: '20px',
+  18: '18px',
+  16: '16px',
+  14: '14px',
+  12: '12px',
+  11: '11px',
 };
+
+export const lineHeight = {
+  44: '44px',
+  34: '34px',
+  28: '28px',
+  26: '26px',
+  24: '24px',
+  22: '22px',
+  20: '20px',
+  18: '18px',
+  16: '16px',
+  14: '14px',
+}
+
+export const letterSpacing = {
+  5: '5%',
+  1: '1%',
+  0: '0%',
+  '-1': '-1%',
+  '-1.5': '-1.5%',
+  '-2': '-2%',
+}
+
