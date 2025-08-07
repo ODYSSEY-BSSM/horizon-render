@@ -41,6 +41,28 @@ module.exports = {
       });
 
       addUtilities(iconUtilities);
+    },
+    function({ addUtilities }) {
+      const layoutUtilities = {
+        '.grid': {
+          display: 'grid',
+          gridTemplateColumns: `repeat(${tokens.grid.columns}, 1fr)`,
+          gap: tokens.grid.gutterWidth,
+          margin: `0 ${tokens.grid.margin}`,
+        },
+        '.stroke': {
+          borderWidth: tokens.stroke.weight,
+          borderColor: tokens.stroke.color,
+        },
+        '.rounding-object': {
+          borderRadius: tokens.rounding.object,
+        },
+        '.rounding-section': {
+          borderRadius: tokens.rounding.section,
+        }
+      };
+
+      addUtilities(layoutUtilities);
     }
   ],
 };
