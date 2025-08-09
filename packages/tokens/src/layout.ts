@@ -15,5 +15,3 @@ export const rounding = {
   object: '8px',
   section: '12px'
 } as const;
-
-refactor(#1): 아이콘 유틸리티 헬퍼 함수로 코드 중복 제거

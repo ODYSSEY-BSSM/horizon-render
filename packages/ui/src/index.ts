@@ -1,2 +1,2 @@
 // UI components
-export {};
+export { Text, textVariants, type TextVariant } from './components/text';
