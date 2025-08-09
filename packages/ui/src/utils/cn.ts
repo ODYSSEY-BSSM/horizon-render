@@ -1,6 +1,6 @@
-type ClassValue = string | number | boolean | undefined | null | ClassValue[];
+type ClassNameValue = string | number | boolean | undefined | null | ClassNameValue[];
 
-export function cn(...inputs: ClassValue[]): string {
+export function cn(...inputs: ClassNameValue[]): string {
   const classes: string[] = [];
   
   for (const input of inputs) {
