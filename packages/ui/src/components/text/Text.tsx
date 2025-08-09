@@ -1,6 +1,6 @@
 import React from 'react';
 import { textVariants, TextVariant } from './variants';
-import { cn } from '../../utils';
+import { clsx } from 'clsx';
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
@@ -48,7 +48,7 @@ export const Text: React.FC<TextProps> = ({
 
   return (
     <Component 
-      className={cn(baseClasses, 'font-suit', ellipsisClasses, className)} 
+      className={clsx(baseClasses, 'font-suit', ellipsisClasses, className)} 
       style={styles}
       {...props}
     >
