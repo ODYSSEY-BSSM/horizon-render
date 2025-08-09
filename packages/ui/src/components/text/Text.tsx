@@ -7,6 +7,16 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
   className?: string;
   children: React.ReactNode;
+  color?: string;
+  width?: string | number;
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
+  ellipsis?: boolean;
+
+  'aria-label'?: string;
+  'aria-describedby'?: string;
+  'aria-labelledby'?: string;
+  role?: string;
 }
 
 export const Text: React.FC<TextProps> = ({
@@ -14,12 +24,32 @@ export const Text: React.FC<TextProps> = ({
   as: Component = 'p',
   className,
   children,
+  color,
+  width = 'auto',
+  textAlign = 'left',
+  whiteSpace = 'normal',
+  ellipsis = false,
   ...props
 }) => {
-  const baseClasses = variant ? textVariants[variant] : '';
+  const baseClasses = textVariants[variant] ?? '';
+  
+  const ellipsisClasses = ellipsis 
+    ? 'overflow-hidden text-ellipsis whitespace-nowrap' 
+    : '';
+
+  const styles: React.CSSProperties = {
+    color,
+    width: typeof width === 'number' ? `${width}px` : width,
+    textAlign,
+    whiteSpace: ellipsis ? 'nowrap' : whiteSpace,
+  };
 
   return (
-    <Component className={cn(baseClasses, 'font-suit', className)} {...props}>
+    <Component 
+      className={cn(baseClasses, 'font-suit', ellipsisClasses, className)} 
+      style={styles}
+      {...props}
+    >
       {children}
     </Component>
   );
