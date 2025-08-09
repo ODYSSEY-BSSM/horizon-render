@@ -1,3 +1,5 @@
+import { dirname, join } from "path";
+
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
   stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -7,6 +9,21 @@ const config = {
   framework: {
     name: '@storybook/react-vite',
     options: {},
+  },
+  async viteFinal(config) {
+    const { default: tailwindcss } = await import('tailwindcss');
+    const { default: autoprefixer } = await import('autoprefixer');
+    
+    config.css = {
+      ...config.css,
+      postcss: {
+        plugins: [
+          tailwindcss('./tailwind.config.js'),
+          autoprefixer,
+        ],
+      },
+    };
+    return config;
   },
 };
 export default config;

@@ -1,7 +1,11 @@
 const { tokens } = require('@horizon/tokens');
 
-const preset = {
-  content: [],
+module.exports = {
+  content: [
+    '../src/**/*.{js,ts,jsx,tsx,mdx}',
+    '../**/*.stories.{js,ts,jsx,tsx}',
+    './**/*.{js,ts,jsx,tsx}'
+  ],
   theme: {
     extend: {
       colors: tokens.colors,
@@ -70,13 +74,3 @@ const preset = {
     }
   ],
 };
-
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  ...preset,
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-  ],
-};
-
-module.exports.preset = preset;
