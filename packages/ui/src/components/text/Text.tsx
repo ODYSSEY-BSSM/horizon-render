@@ -37,9 +37,11 @@ export const Text: React.FC<TextProps> = ({
     ? 'overflow-hidden text-ellipsis whitespace-nowrap' 
     : '';
 
+  const widthValue = Number.isFinite(width) ? `${width}px` : width;
+  
   const styles: React.CSSProperties = {
     color,
-    width: typeof width === 'number' ? `${width}px` : width,
+    width: widthValue,
     textAlign,
     whiteSpace: ellipsis ? 'nowrap' : whiteSpace,
   };
