@@ -31,7 +31,7 @@ export const Text: React.FC<TextProps> = ({
   ellipsis = false,
   ...props
 }) => {
-  const baseClasses = textVariants[variant] ?? '';
+  const baseClasses = textVariants[variant];
   
   const ellipsisClasses = ellipsis 
     ? 'overflow-hidden text-ellipsis whitespace-nowrap' 
