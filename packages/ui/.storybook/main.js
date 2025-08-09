@@ -1,5 +1,3 @@
-import { dirname, join } from "path";
-
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
   stories: ['../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
