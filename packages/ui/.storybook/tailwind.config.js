@@ -1,6 +1,6 @@
-const mainConfig = require('../tailwind.config.js');
+import mainConfig from '../tailwind.config.js';
 
-module.exports = {
+export default {
   ...mainConfig,
   content: [
     '../src/**/*.{js,ts,jsx,tsx,mdx}',

@@ -1,4 +1,4 @@
-const { tokens } = require('@horizon/tokens');
+import { tokens } from '@horizon/tokens';
 
 const preset = {
   content: [],
@@ -72,11 +72,11 @@ const preset = {
 };
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   ...preset,
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
   ],
 };
 
-module.exports.preset = preset;
+export { preset };
