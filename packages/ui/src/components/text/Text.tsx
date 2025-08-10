@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type React from "react";
+import { getSizeValue } from "../../utils";
 import { type TextVariant, textVariants } from "./variants";
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
@@ -35,7 +36,7 @@ export const Text: React.FC<TextProps> = ({
 
   const ellipsisClasses = ellipsis ? "overflow-hidden text-ellipsis whitespace-nowrap" : "";
 
-  const widthValue = typeof width === "number" ? `${width}px` : width;
+  const widthValue = getSizeValue(width);
 
   const styles: React.CSSProperties = {
     color,
