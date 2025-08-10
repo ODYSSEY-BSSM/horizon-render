@@ -10,24 +10,24 @@ const meta: Meta<typeof Icon> = {
   argTypes: {
     name: {
       control: "text",
-      description: "Material Symbols icon name",
+      description: "Material Symbols icon name (e.g. 'home', 'star', 'settings')",
     },
     variant: {
       control: "select",
       options: ["XS", "SM", "MD", "LG", "XL"],
-      description: "Icon variant",
+      description: "Icon size variant with optimized font-weight and optical-size",
     },
     filled: {
       control: "boolean",
-      description: "Whether icon should be filled",
+      description: "Whether icon should be filled (solid) or outlined",
     },
     size: {
-      control: "number",
-      description: "Icon size in pixels (overrides variant)",
+      control: { type: "range", min: 12, max: 80, step: 2 },
+      description: "Custom icon size in pixels (overrides variant size)",
     },
     color: {
       control: "color",
-      description: "Icon color",
+      description: "Icon color (CSS color value)",
     },
   },
 };
@@ -38,57 +38,389 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     name: "home",
+    variant: "MD",
+    filled: false,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: '<Icon name="home" variant="MD" filled={false} />',
+      },
+    },
   },
 };
 
-export const Variants: Story = {
+export const AllVariants: Story = {
   render: () => (
-    <div className="flex gap-4 items-center">
-      <Icon name="star" variant="XS" />
-      <Icon name="star" variant="SM" />
-      <Icon name="star" variant="MD" />
-      <Icon name="star" variant="LG" />
-      <Icon name="star" variant="XL" />
+    <div className="space-y-6">
+      <div className="flex gap-6 items-end">
+        <div className="text-center">
+          <Icon name="star" variant="XS" />
+          <div className="text-xs mt-1 text-gray-600">XS (16px)</div>
+        </div>
+        <div className="text-center">
+          <Icon name="star" variant="SM" />
+          <div className="text-xs mt-1 text-gray-600">SM (20px)</div>
+        </div>
+        <div className="text-center">
+          <Icon name="star" variant="MD" />
+          <div className="text-xs mt-1 text-gray-600">MD (24px)</div>
+        </div>
+        <div className="text-center">
+          <Icon name="star" variant="LG" />
+          <div className="text-xs mt-1 text-gray-600">LG (32px)</div>
+        </div>
+        <div className="text-center">
+          <Icon name="star" variant="XL" />
+          <div className="text-xs mt-1 text-gray-600">XL (40px)</div>
+        </div>
+      </div>
+
+      <div className="text-sm text-gray-500">
+        💡 각 variant는 크기에 맞게 최적화된 font-weight와 optical-size를 사용합니다
+      </div>
     </div>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: `<Icon name="star" variant="XS" />  {/* 16px, light weight */}
+<Icon name="star" variant="SM" />  {/* 20px, regular weight */}
+<Icon name="star" variant="MD" />  {/* 24px, regular weight */}
+<Icon name="star" variant="LG" />  {/* 32px, medium weight */}
+<Icon name="star" variant="XL" />  {/* 40px, semibold weight */}`,
+      },
+    },
+  },
+};
+
+export const Playground: Story = {
+  args: {
+    name: "star",
+    variant: "MD",
+    filled: false,
+    color: "#000",
+    size: undefined,
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `<Icon 
+  name="star" 
+  variant="MD" 
+  filled={false} 
+  color="#000"
+/>`,
+      },
+    },
+  },
 };
 
 export const Filled: Story = {
   render: () => (
-    <div className="flex gap-4 items-center">
-      <Icon name="favorite" filled={false} />
-      <Icon name="favorite" filled={true} />
-      <Icon name="star" filled={false} />
-      <Icon name="star" filled={true} />
+    <div className="space-y-4">
+      <div className="flex gap-4 items-center">
+        <div className="text-center">
+          <Icon name="favorite" filled={false} />
+          <div className="text-xs mt-1">Outline</div>
+        </div>
+        <div className="text-center">
+          <Icon name="favorite" filled={true} />
+          <div className="text-xs mt-1">Filled</div>
+        </div>
+      </div>
+
+      <div className="flex gap-4 items-center">
+        <div className="text-center">
+          <Icon name="star" filled={false} />
+          <div className="text-xs mt-1">Outline</div>
+        </div>
+        <div className="text-center">
+          <Icon name="star" filled={true} />
+          <div className="text-xs mt-1">Filled</div>
+        </div>
+      </div>
     </div>
   ),
-};
+  parameters: {
+    docs: {
+      source: {
+        code: `{/* Outline icons */}
+<Icon name="favorite" filled={false} />
+<Icon name="star" filled={false} />
 
-export const CustomSize: Story = {
-  args: {
-    name: "favorite",
-    size: 32,
+{/* Filled icons */}
+<Icon name="favorite" filled={true} />
+<Icon name="star" filled={true} />`,
+      },
+    },
   },
 };
 
-export const CustomColor: Story = {
-  args: {
-    name: "star",
-    color: "#ff6b35",
+export const CustomSizing: Story = {
+  render: () => (
+    <div className="space-y-6">
+      {/* Custom sizes */}
+      <div>
+        <div className="text-sm mb-2 font-medium">Custom Sizes</div>
+        <div className="flex gap-4 items-center">
+          <div className="text-center">
+            <Icon name="settings" size={16} />
+            <div className="text-xs mt-1">16px</div>
+          </div>
+          <div className="text-center">
+            <Icon name="settings" size={24} />
+            <div className="text-xs mt-1">24px</div>
+          </div>
+          <div className="text-center">
+            <Icon name="settings" size={32} />
+            <div className="text-xs mt-1">32px</div>
+          </div>
+          <div className="text-center">
+            <Icon name="settings" size={48} />
+            <div className="text-xs mt-1">48px</div>
+          </div>
+        </div>
+      </div>
+
+      {/* String sizes */}
+      <div>
+        <div className="text-sm mb-2 font-medium">String Sizes</div>
+        <div className="flex gap-4 items-center">
+          <div className="text-center">
+            <Icon name="settings" size="1rem" />
+            <div className="text-xs mt-1">1rem</div>
+          </div>
+          <div className="text-center">
+            <Icon name="settings" size="1.5rem" />
+            <div className="text-xs mt-1">1.5rem</div>
+          </div>
+          <div className="text-center">
+            <Icon name="settings" size="2rem" />
+            <div className="text-xs mt-1">2rem</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `{/* Number sizes (converts to px) */}
+<Icon name="settings" size={16} />
+<Icon name="settings" size={24} />
+<Icon name="settings" size={32} />
+
+{/* String sizes (use as-is) */}
+<Icon name="settings" size="1rem" />
+<Icon name="settings" size="1.5rem" />
+<Icon name="settings" size="2rem" />`,
+      },
+    },
+  },
+};
+
+export const Colors: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div>
+        <div className="text-sm mb-3 font-medium">Semantic Colors</div>
+        <div className="flex gap-6 items-center">
+          <div className="text-center">
+            <Icon name="check_circle" color="#059669" />
+            <div className="text-xs mt-1 text-gray-600">Success</div>
+          </div>
+          <div className="text-center">
+            <Icon name="error" color="#dc2626" />
+            <div className="text-xs mt-1 text-gray-600">Error</div>
+          </div>
+          <div className="text-center">
+            <Icon name="warning" color="#f59e0b" />
+            <div className="text-xs mt-1 text-gray-600">Warning</div>
+          </div>
+          <div className="text-center">
+            <Icon name="info" color="#3b82f6" />
+            <div className="text-xs mt-1 text-gray-600">Info</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="text-sm mb-3 font-medium">Brand Colors</div>
+        <div className="flex gap-6 items-center">
+          <div className="text-center">
+            <Icon name="palette" color="#6366f1" />
+            <div className="text-xs mt-1 text-gray-600">Primary</div>
+          </div>
+          <div className="text-center">
+            <Icon name="palette" color="#8b5cf6" />
+            <div className="text-xs mt-1 text-gray-600">Secondary</div>
+          </div>
+          <div className="text-center">
+            <Icon name="palette" color="#10b981" />
+            <div className="text-xs mt-1 text-gray-600">Accent</div>
+          </div>
+          <div className="text-center">
+            <Icon name="palette" color="#6b7280" />
+            <div className="text-xs mt-1 text-gray-600">Neutral</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="text-sm text-gray-500">
+        💡 색상은 CSS color 값(hex, rgb, hsl 등)을 모두 지원합니다
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `{/* Semantic colors */}
+<Icon name="check_circle" color="#059669" />  {/* Success */}
+<Icon name="error" color="#dc2626" />        {/* Error */}
+<Icon name="warning" color="#f59e0b" />      {/* Warning */}
+<Icon name="info" color="#3b82f6" />         {/* Info */}
+
+{/* Brand colors */}
+<Icon name="palette" color="#6366f1" />      {/* Primary */}
+<Icon name="palette" color="#8b5cf6" />      {/* Secondary */}`,
+      },
+    },
   },
 };
 
 export const CommonIcons: Story = {
   render: () => (
-    <div className="flex gap-4 items-center">
-      <Icon name="home" />
-      <Icon name="search" />
-      <Icon name="settings" />
-      <Icon name="favorite" />
-      <Icon name="account_circle" />
-      <Icon name="notifications" />
-      <Icon name="menu" />
-      <Icon name="close" />
+    <div className="space-y-8">
+      <div>
+        <div className="text-sm mb-3 font-medium">Navigation Icons</div>
+        <div className="grid grid-cols-6 gap-4">
+          <div className="text-center">
+            <Icon name="home" />
+            <div className="text-xs mt-1 text-gray-600">home</div>
+          </div>
+          <div className="text-center">
+            <Icon name="search" />
+            <div className="text-xs mt-1 text-gray-600">search</div>
+          </div>
+          <div className="text-center">
+            <Icon name="menu" />
+            <div className="text-xs mt-1 text-gray-600">menu</div>
+          </div>
+          <div className="text-center">
+            <Icon name="close" />
+            <div className="text-xs mt-1 text-gray-600">close</div>
+          </div>
+          <div className="text-center">
+            <Icon name="arrow_back" />
+            <div className="text-xs mt-1 text-gray-600">arrow_back</div>
+          </div>
+          <div className="text-center">
+            <Icon name="arrow_forward" />
+            <div className="text-xs mt-1 text-gray-600">arrow_forward</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="text-sm mb-3 font-medium">Action Icons</div>
+        <div className="grid grid-cols-6 gap-4">
+          <div className="text-center">
+            <Icon name="settings" />
+            <div className="text-xs mt-1 text-gray-600">settings</div>
+          </div>
+          <div className="text-center">
+            <Icon name="favorite" />
+            <div className="text-xs mt-1 text-gray-600">favorite</div>
+          </div>
+          <div className="text-center">
+            <Icon name="notifications" />
+            <div className="text-xs mt-1 text-gray-600">notifications</div>
+          </div>
+          <div className="text-center">
+            <Icon name="account_circle" />
+            <div className="text-xs mt-1 text-gray-600">account_circle</div>
+          </div>
+          <div className="text-center">
+            <Icon name="edit" />
+            <div className="text-xs mt-1 text-gray-600">edit</div>
+          </div>
+          <div className="text-center">
+            <Icon name="delete" />
+            <div className="text-xs mt-1 text-gray-600">delete</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="text-sm mb-3 font-medium">Status Icons</div>
+        <div className="grid grid-cols-6 gap-4">
+          <div className="text-center">
+            <Icon name="check_circle" color="#059669" />
+            <div className="text-xs mt-1 text-gray-600">check_circle</div>
+          </div>
+          <div className="text-center">
+            <Icon name="error" color="#dc2626" />
+            <div className="text-xs mt-1 text-gray-600">error</div>
+          </div>
+          <div className="text-center">
+            <Icon name="warning" color="#f59e0b" />
+            <div className="text-xs mt-1 text-gray-600">warning</div>
+          </div>
+          <div className="text-center">
+            <Icon name="info" color="#3b82f6" />
+            <div className="text-xs mt-1 text-gray-600">info</div>
+          </div>
+          <div className="text-center">
+            <Icon name="help" color="#6b7280" />
+            <div className="text-xs mt-1 text-gray-600">help</div>
+          </div>
+          <div className="text-center">
+            <Icon name="visibility" />
+            <div className="text-xs mt-1 text-gray-600">visibility</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="text-xs text-gray-500 mt-4">
+        💡 Material Symbols에서 제공하는 2000+ 아이콘을 모두 사용할 수 있습니다.
+        <br />
+        전체 아이콘 목록은{" "}
+        <a
+          href="https://fonts.google.com/icons"
+          target="_blank"
+          className="text-blue-600 hover:underline"
+          rel="noreferrer"
+        >
+          Google Fonts Icons
+        </a>
+        에서 확인하세요.
+      </div>
     </div>
   ),
+  parameters: {
+    docs: {
+      source: {
+        code: `{/* Navigation */}
+<Icon name="home" />
+<Icon name="search" />
+<Icon name="menu" />
+<Icon name="close" />
+<Icon name="arrow_back" />
+<Icon name="arrow_forward" />
+
+{/* Actions */}
+<Icon name="settings" />
+<Icon name="favorite" />
+<Icon name="edit" />
+<Icon name="delete" />
+
+{/* Status with colors */}
+<Icon name="check_circle" color="#059669" />
+<Icon name="error" color="#dc2626" />
+<Icon name="warning" color="#f59e0b" />
+<Icon name="info" color="#3b82f6" />`,
+      },
+    },
+  },
 };
