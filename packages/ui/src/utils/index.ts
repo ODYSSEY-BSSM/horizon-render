@@ -1,0 +1,1 @@
+export { getSizeValue } from "./size";

@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type React from "react";
+import { getSizeValue } from "../../utils";
 import { type IconVariant, iconVariants } from "./variants";
 
 interface IconProps extends React.HTMLAttributes<HTMLElement> {
@@ -27,7 +28,7 @@ export const Icon: React.FC<IconProps> = ({
 }) => {
   const baseClasses = iconVariants[variant];
   const fillClass = filled ? "icon-fill-1" : "icon-fill-0";
-  const sizeValue = size ? (typeof size === "number" ? `${size}px` : size) : undefined;
+  const sizeValue = getSizeValue(size);
 
   const styles: React.CSSProperties = {
     fontSize: sizeValue,
