@@ -1,6 +1,6 @@
 export const fontFamily = {
-  suit: ['SUIT Variable', 'sans-serif'],
-  icon: ['Material Symbols Outlined', 'monospace'],
+  suit: ["SUIT Variable", "sans-serif"],
+  icon: ["Material Symbols Outlined", "monospace"],
 } as const;
 
 export const fontWeight = {
@@ -15,36 +15,35 @@ export const fontWeight = {
 } as const;
 
 export const fontSize = {
-  40: '40px',
-  32: '32px',
-  24: '24px',
-  20: '20px',
-  18: '18px',
-  16: '16px',
-  14: '14px',
-  12: '12px',
-  11: '11px',
+  40: "40px",
+  32: "32px",
+  24: "24px",
+  20: "20px",
+  18: "18px",
+  16: "16px",
+  14: "14px",
+  12: "12px",
+  11: "11px",
 } as const;
 
 export const lineHeight = {
-  44: '44px',
-  34: '34px',
-  28: '28px',
-  26: '26px',
-  24: '24px',
-  22: '22px',
-  20: '20px',
-  18: '18px',
-  16: '16px',
-  14: '14px',
+  44: "44px",
+  34: "34px",
+  28: "28px",
+  26: "26px",
+  24: "24px",
+  22: "22px",
+  20: "20px",
+  18: "18px",
+  16: "16px",
+  14: "14px",
 } as const;
 
 export const letterSpacing = {
-  5: '5%',
-  1: '1%',
-  0: '0%',
-  '-1': '-1%',
-  '-1.5': '-1.5%',
-  '-2': '-2%',
+  5: "5%",
+  1: "1%",
+  0: "0%",
+  "-1": "-1%",
+  "-1.5": "-1.5%",
+  "-2": "-2%",
 } as const;
-
