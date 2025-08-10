@@ -26,18 +26,18 @@ export const Icon: React.FC<IconProps> = ({
   className,
   ...props
 }) => {
-  const baseClasses = iconVariants[variant];
-  const fillClass = filled ? "icon-fill-1" : "icon-fill-0";
+  const variantConfig = iconVariants[variant];
   const sizeValue = getSizeValue(size);
 
   const styles: React.CSSProperties = {
     fontSize: sizeValue,
     color,
+    fontVariationSettings: `'FILL' ${filled ? "1" : "0"}, 'wght' ${variantConfig.wght}, 'GRAD' ${variantConfig.grad}, 'opsz' ${variantConfig.opsz}`,
   };
 
   return (
     <span
-      className={clsx("material-symbols-outlined select-none", baseClasses, fillClass, className)}
+      className={clsx("material-symbols-outlined select-none", variantConfig.classes, className)}
       style={styles}
       {...props}
     >

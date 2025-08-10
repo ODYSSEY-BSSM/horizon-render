@@ -1,9 +1,36 @@
+import { tokens } from "@horizon/tokens";
+
 export const iconVariants = {
-  XS: "text-16 font-light icon-grade-0 icon-size-20",
-  SM: "text-20 font-regular icon-grade-0 icon-size-24",
-  MD: "text-24 font-regular icon-grade-0 icon-size-32",
-  LG: "text-32 font-medium icon-grade-0 icon-size-40",
-  XL: "text-40 font-semibold icon-grade-0 icon-size-48",
+  XS: {
+    classes: "text-16 font-light",
+    wght: tokens.fontWeight.light,
+    grad: tokens.icons.grade[0],
+    opsz: tokens.icons.opticalSize[20],
+  },
+  SM: {
+    classes: "text-20 font-regular",
+    wght: tokens.fontWeight.regular,
+    grad: tokens.icons.grade[0],
+    opsz: tokens.icons.opticalSize[24],
+  },
+  MD: {
+    classes: "text-24 font-regular",
+    wght: tokens.fontWeight.regular,
+    grad: tokens.icons.grade[0],
+    opsz: tokens.icons.opticalSize[24],
+  },
+  LG: {
+    classes: "text-32 font-medium",
+    wght: tokens.fontWeight.medium,
+    grad: tokens.icons.grade[0],
+    opsz: tokens.icons.opticalSize[40],
+  },
+  XL: {
+    classes: "text-40 font-semibold",
+    wght: tokens.fontWeight.semibold,
+    grad: tokens.icons.grade[0],
+    opsz: tokens.icons.opticalSize[48],
+  },
 } as const;
 
 export type IconVariant = keyof typeof iconVariants;
