@@ -24,27 +24,35 @@ const preset = {
       const iconUtilities = {};
 
       // Fill utilities
-      for (const [key, value] of Object.entries(tokens.icons.fill)) {
-        iconUtilities[`.icon-fill-${key}`] = {
-          "font-variation-settings": getFontVariationSettings({ FILL: value, wght: 400, GRAD: 0 }),
+      for (const [fillKey, fillValue] of Object.entries(tokens.icons.fill)) {
+        iconUtilities[`.icon-fill-${fillKey}`] = {
+          "font-variation-settings": getFontVariationSettings({
+            FILL: fillValue,
+            wght: 400,
+            GRAD: 0,
+          }),
         };
       }
 
       // Grade utilities
-      for (const [key, value] of Object.entries(tokens.icons.grade)) {
-        iconUtilities[`.icon-grade-${key}`] = {
-          "font-variation-settings": getFontVariationSettings({ FILL: 0, wght: 400, GRAD: value }),
+      for (const [gradeKey, gradeValue] of Object.entries(tokens.icons.grade)) {
+        iconUtilities[`.icon-grade-${gradeKey}`] = {
+          "font-variation-settings": getFontVariationSettings({
+            FILL: 0,
+            wght: 400,
+            GRAD: gradeValue,
+          }),
         };
       }
 
       // OpticalSize utilities
-      for (const [key, value] of Object.entries(tokens.icons.opticalSize)) {
-        iconUtilities[`.icon-size-${key}`] = {
+      for (const [sizeKey, sizeValue] of Object.entries(tokens.icons.opticalSize)) {
+        iconUtilities[`.icon-size-${sizeKey}`] = {
           "font-variation-settings": getFontVariationSettings({
             FILL: 0,
             wght: 400,
             GRAD: 0,
-            opsz: value,
+            opsz: sizeValue,
           }),
         };
       }
