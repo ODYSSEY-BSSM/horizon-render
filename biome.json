@@ -39,7 +39,10 @@
       "quoteStyle": "double",
       "jsxQuoteStyle": "double",
       "semicolons": "always",
-      "trailingCommas": "es5"
+      "trailingCommas": "es5",
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2
     }
   }
 }
