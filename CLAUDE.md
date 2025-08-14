@@ -65,6 +65,11 @@ Design tokens automatically become Tailwind utilities. Custom icon utilities gen
 - **State Management**: Editor state separate from React Flow internal state
 - **API Integration**: Shared API client for data persistence (TBD)
 
+### Form & Validation Patterns
+- **Zod**: Schema validation for API responses and form data with TypeScript inference
+- **React Hook Form**: Form state management with `@hookform/resolvers/zod` integration
+- **Pattern**: Define schema once, use for both API validation and form validation
+
 ### Design Token Usage
 Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts` for available tokens before creating components.
 

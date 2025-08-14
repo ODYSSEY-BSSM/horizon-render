@@ -13,6 +13,9 @@ This is a pnpm monorepo for a TypeScript project named "horizon-render". The pro
 *   **Editor:** React Flow (visual workflow editor)
 *   **Styling:** Tailwind CSS
 *   **Component Library:** Storybook
+*   **Form Management:** React Hook Form + Zod
+*   **Schema Validation:** Zod
+*   **Testing:** Vitest + @testing-library/react
 *   **Testing:** Vitest + @testing-library/react
 *   **Linter/Formatter:** Biome
 
