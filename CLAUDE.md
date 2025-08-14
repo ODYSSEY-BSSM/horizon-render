@@ -31,7 +31,7 @@ pnpm test                  # Run tests (infrastructure ready, tests minimal)
 - **`@horizon/tokens`**: Design system foundation - colors, typography, layout tokens, icon system
 - **`@horizon/ui`**: React components using class-variance-authority pattern with Storybook documentation
 - **`apps/studio`**: React Flow based visual editor (React + Vite)
-- **`apps/web`**: Main web application (placeholder)
+- **`apps/web`**: Main web application (NextJS)
 
 ### Key Architectural Patterns
 
@@ -53,8 +53,8 @@ Design tokens automatically become Tailwind utilities. Custom icon utilities gen
 4. Update package index.ts exports
 
 ### App Development
-- **Studio App**: React Flow editor for visual workflows, uses `@horizon/ui` components and design tokens
-- **Web App**: Main application consuming the design system
+- **Studio App**: React Flow editor for visual workflows (React + Vite), uses `@horizon/ui` components and design tokens
+- **Web App**: NextJS application with SSR/API Routes, consuming the design system
 
 ### Design Token Usage
 Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts` for available tokens before creating components.

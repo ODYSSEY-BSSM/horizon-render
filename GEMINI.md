@@ -21,7 +21,7 @@ The monorepo is organized into three main areas: `apps`, `packages`, and `config
 
 *   `apps/`: Contains the applications.
     *   `studio`: React Flow based visual editor application (React + Vite).
-    *   `web`: Main web application (placeholder).
+    *   `web`: Main web application (NextJS).
 *   `packages/`: Contains shared packages intended to form a design system.
     *   `@horizon/tokens`: A package for design tokens. The entry point `src/index.ts` is currently empty.
     *   `@horizon/ui`: A package for UI components. The entry point `src/index.ts` is currently empty.
@@ -36,7 +36,7 @@ The project is in the **initial setup phase**. The foundational structure, depen
 
 **Key Observations:**
 
-*   The `apps/studio` is a React Flow editor application with Vite configuration. The `apps/web` workspace is a placeholder.
+*   The `apps/studio` is a React Flow editor application with Vite configuration. The `apps/web` is a NextJS application.
 *   The `@horizon/tokens` and `@horizon/ui` packages are implemented and provide design system foundation.
 *   The `tsconfig.json` includes path aliases (`@horizon/ui`, `@horizon/tokens`) for easier imports between packages.
 
@@ -45,7 +45,7 @@ The project is in the **initial setup phase**. The foundational structure, depen
 1.  **Develop Studio Editor:** Implement React Flow editor features in the `apps/studio` application.
 2.  **Extend UI Components:** Add more UI components in the `@horizon/ui` package as needed for the editor.
 3.  **API Integration:** Set up shared API client for both studio and web applications.
-4.  **Develop Web App:** Configure the `apps/web` application to consume the component library and build out features.
+4.  **Develop NextJS Web App:** Implement NextJS application with SSR/API Routes consuming the component library.
 
 ## 4. Building and Running
 
