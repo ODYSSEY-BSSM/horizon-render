@@ -12,6 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Development
 pnpm dev                    # Start all packages in parallel watch mode
 pnpm studio                # Run studio app (React Flow editor)
+pnpm web                   # Run web app (NextJS)
 pnpm storybook             # Run Storybook for component development
 
 # Code Quality (Always run before commits)
@@ -21,8 +22,10 @@ pnpm typecheck             # TypeScript type checking
 pnpm verify                # Full pipeline: lint + typecheck + test + build
 
 # Building & Testing  
-pnpm build                 # Build all packages
-pnpm test                  # Run tests (infrastructure ready, tests minimal)
+pnpm build                 # Build all packages and apps
+pnpm test                  # Run tests (Vitest + @testing-library/react)
+pnpm build-studio          # Build studio app (React + Vite)
+pnpm --filter web build    # Build NextJS app
 ```
 
 ## Architecture & Monorepo Structure
@@ -31,7 +34,7 @@ pnpm test                  # Run tests (infrastructure ready, tests minimal)
 - **`@horizon/tokens`**: Design system foundation - colors, typography, layout tokens, icon system
 - **`@horizon/ui`**: React components using class-variance-authority pattern with Storybook documentation
 - **`apps/studio`**: React Flow based visual editor (React + Vite)
-- **`apps/web`**: Main web application (placeholder)
+- **`apps/web`**: Main web application (NextJS)
 
 ### Key Architectural Patterns
 
@@ -53,8 +56,14 @@ Design tokens automatically become Tailwind utilities. Custom icon utilities gen
 4. Update package index.ts exports
 
 ### App Development
-- **Studio App**: React Flow editor for visual workflows, uses `@horizon/ui` components and design tokens
-- **Web App**: Main application consuming the design system
+- **Studio App**: React Flow editor for visual workflows (React + Vite), uses `@horizon/ui` components and design tokens
+- **Web App**: NextJS application with SSR/API Routes, consuming the design system
+
+### React Flow Editor Patterns
+- **Node Components**: Custom nodes extending base design system components
+- **Business Logic**: Focus testing on data transforms and state management, not canvas interactions
+- **State Management**: Editor state separate from React Flow internal state
+- **API Integration**: Shared API client for data persistence (TBD)
 
 ### Design Token Usage
 Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts` for available tokens before creating components.
@@ -67,11 +76,16 @@ Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typ
 
 ### Build System
 - **tsup** for library bundling (ESM + CommonJS)  
-- **Vite** for development and apps
+- **Vite** for studio app development and build
+- **NextJS** for web app with SSR/SSG capabilities
 - **Parallel development** via pnpm workspaces
 
 ## Testing Approach
-Vitest + jsdom configured but minimal tests implemented. Focus on Storybook stories for component testing and visual regression.
+**Vitest + @testing-library/react** for all testing:
+- **Component Tests**: UI package components with jsdom
+- **NextJS Tests**: API routes and pages with Vitest 
+- **Studio Tests**: React Flow editor business logic (avoid canvas testing)
+- **Visual Testing**: Storybook stories for component documentation
 
 ## Important Files to Check
 - `packages/tokens/src/*` - Design system tokens
