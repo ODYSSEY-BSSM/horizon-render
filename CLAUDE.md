@@ -11,7 +11,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 # Development
 pnpm dev                    # Start all packages in parallel watch mode
-pnpm storybook             # Run Storybook (studio app)
+pnpm studio                # Run studio app (React Flow editor)
+pnpm storybook             # Run Storybook for component development
 
 # Code Quality (Always run before commits)
 pnpm lint                  # Biome linting check
@@ -28,8 +29,8 @@ pnpm test                  # Run tests (infrastructure ready, tests minimal)
 
 ### Packages
 - **`@horizon/tokens`**: Design system foundation - colors, typography, layout tokens, icon system
-- **`@horizon/ui`**: React components using class-variance-authority pattern  
-- **`apps/studio`**: Storybook for component development
+- **`@horizon/ui`**: React components using class-variance-authority pattern with Storybook documentation
+- **`apps/studio`**: React Flow based visual editor (React + Vite)
 - **`apps/web`**: Main web application (placeholder)
 
 ### Key Architectural Patterns
@@ -50,6 +51,10 @@ Design tokens automatically become Tailwind utilities. Custom icon utilities gen
 2. Create comprehensive Storybook stories 
 3. Export component and any related utilities
 4. Update package index.ts exports
+
+### App Development
+- **Studio App**: React Flow editor for visual workflows, uses `@horizon/ui` components and design tokens
+- **Web App**: Main application consuming the design system
 
 ### Design Token Usage
 Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts` for available tokens before creating components.

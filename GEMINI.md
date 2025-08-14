@@ -20,8 +20,8 @@ This is a pnpm monorepo for a TypeScript project named "horizon-render". The pro
 The monorepo is organized into three main areas: `apps`, `packages`, and `configs`.
 
 *   `apps/`: Contains the applications.
-    *   `studio`: A Storybook or design system studio application (currently not configured).
-    *   `web`: A web application (currently not configured).
+    *   `studio`: React Flow based visual editor application (React + Vite).
+    *   `web`: Main web application (placeholder).
 *   `packages/`: Contains shared packages intended to form a design system.
     *   `@horizon/tokens`: A package for design tokens. The entry point `src/index.ts` is currently empty.
     *   `@horizon/ui`: A package for UI components. The entry point `src/index.ts` is currently empty.
@@ -36,25 +36,31 @@ The project is in the **initial setup phase**. The foundational structure, depen
 
 **Key Observations:**
 
-*   The `apps/studio` and `apps/web` workspaces are placeholders and lack specific build or development configurations.
-*   The `@horizon/tokens` and `@horizon/ui` packages are empty and need to be implemented.
+*   The `apps/studio` is a React Flow editor application with Vite configuration. The `apps/web` workspace is a placeholder.
+*   The `@horizon/tokens` and `@horizon/ui` packages are implemented and provide design system foundation.
 *   The `tsconfig.json` includes path aliases (`@horizon/ui`, `@horizon/tokens`) for easier imports between packages.
 
 **Potential Next Steps:**
 
-1.  **Define Design Tokens:** Populate the `@horizon/tokens` package with foundational design values (colors, spacing, typography, etc.).
-2.  **Implement UI Components:** Start building base UI components (e.g., Button, Input) in the `@horizon/ui` package, consuming tokens from `@horizon/tokens`.
-3.  **Configure Storybook:** Set up Storybook in the `apps/studio` workspace to visualize and test the UI components from `@horizon/ui`.
-4.  **Develop Applications:** Configure the `apps/web` application to consume the component library and build out features.
+1.  **Develop Studio Editor:** Implement React Flow editor features in the `apps/studio` application.
+2.  **Extend UI Components:** Add more UI components in the `@horizon/ui` package as needed for the editor.
+3.  **API Integration:** Set up shared API client for both studio and web applications.
+4.  **Develop Web App:** Configure the `apps/web` application to consume the component library and build out features.
 
 ## 4. Building and Running
 
 ### Development
 
-To start the development servers (e.g., `tsc --watch`) for all packages in parallel, run:
+To start the development servers for all packages in parallel, run:
 
 ```bash
 pnpm dev
+```
+
+To run the studio app (React Flow editor):
+
+```bash
+pnpm studio
 ```
 
 ### Build
