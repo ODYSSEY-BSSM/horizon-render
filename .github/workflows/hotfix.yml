@@ -18,6 +18,12 @@ jobs:
         run: |
           COMMIT_MSG="${{ github.event.head_commit.message }}"
           
+          # 머지 커밋은 허용 (GitHub PR 머지)
+          if [[ "$COMMIT_MSG" =~ ^Merge\ pull\ request ]]; then
+            echo "✅ 머지 커밋 감지됨: $COMMIT_MSG"
+            exit 0
+          fi
+          
           # 일반 커밋은 hotfix: 로만 허용
           if [[ ! "$COMMIT_MSG" =~ ^hotfix: ]]; then
             echo "::error::❌ main 브랜치는 hotfix: 커밋만 허용됩니다"
