@@ -20,7 +20,7 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> {
   role?: string;
 }
 
-export const Text: React.FC<TextProps> = ({
+export const Text = ({
   variant = "B1",
   as: Component = "p",
   className,
@@ -31,7 +31,7 @@ export const Text: React.FC<TextProps> = ({
   whiteSpace = "normal",
   ellipsis = false,
   ...props
-}) => {
+}: TextProps) => {
   const baseClasses = textVariants[variant];
 
   const ellipsisClasses = ellipsis ? "overflow-hidden text-ellipsis whitespace-nowrap" : "";
