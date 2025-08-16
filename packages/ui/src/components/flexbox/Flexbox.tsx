@@ -15,9 +15,9 @@ interface FlexBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export const FlexBox = ({
+export const Flexbox = ({
   direction = "row",
-  justify = "flexBox-start",
+  justify = "flexbox-start",
   align = "stretch",
   wrap = "nowrap",
   gap = 0,
