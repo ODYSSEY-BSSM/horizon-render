@@ -1,1 +1,1 @@
-export { getSizeValue } from "./size";
+export { getSizeValue } from './size';

@@ -1,40 +1,40 @@
-import { clsx } from "clsx";
-import type React from "react";
-import { getSizeValue } from "../../utils";
-import { type TextVariant, textVariants } from "./variants";
+import { clsx } from 'clsx';
+import type React from 'react';
+import { getSizeValue } from '../../utils';
+import { type TextVariant, textVariants } from './variants';
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
   className?: string;
   children: React.ReactNode;
   color?: string;
   width?: string | number;
-  textAlign?: "left" | "center" | "right" | "justify";
-  whiteSpace?: "normal" | "nowrap" | "pre" | "pre-wrap" | "pre-line";
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
   ellipsis?: boolean;
 
-  "aria-label"?: string;
-  "aria-describedby"?: string;
-  "aria-labelledby"?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
+  'aria-labelledby'?: string;
   role?: string;
 }
 
 export const Text = ({
-  variant = "B1",
-  as: Component = "p",
+  variant = 'B1',
+  as: Component = 'p',
   className,
   children,
   color,
-  width = "auto",
-  textAlign = "left",
-  whiteSpace = "normal",
+  width = 'auto',
+  textAlign = 'left',
+  whiteSpace = 'normal',
   ellipsis = false,
   ...props
 }: TextProps) => {
   const baseClasses = textVariants[variant];
 
-  const ellipsisClasses = ellipsis ? "overflow-hidden text-ellipsis whitespace-nowrap" : "";
+  const ellipsisClasses = ellipsis ? 'overflow-hidden text-ellipsis whitespace-nowrap' : '';
 
   const widthValue = getSizeValue(width);
 
@@ -42,12 +42,12 @@ export const Text = ({
     color,
     width: widthValue,
     textAlign,
-    whiteSpace: ellipsis ? "nowrap" : whiteSpace,
+    whiteSpace: ellipsis ? 'nowrap' : whiteSpace,
   };
 
   return (
     <Component
-      className={clsx(baseClasses, "font-suit", ellipsisClasses, className)}
+      className={clsx(baseClasses, 'font-suit', ellipsisClasses, className)}
       style={styles}
       {...props}
     >

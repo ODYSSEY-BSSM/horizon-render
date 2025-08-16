@@ -1,4 +1,4 @@
-import { tokens } from "@horizon/tokens";
+import { tokens } from '@horizon/tokens';
 
 const preset = {
   content: [],
@@ -15,20 +15,20 @@ const preset = {
   plugins: [
     ({ addUtilities }) => {
       const layoutUtilities = {
-        ".grid": {
-          display: "grid",
+        '.grid': {
+          display: 'grid',
           gridTemplateColumns: `repeat(${tokens.grid.columns}, 1fr)`,
           gap: tokens.grid.gutterWidth,
           margin: `0 ${tokens.grid.margin}`,
         },
-        ".stroke": {
+        '.stroke': {
           borderWidth: tokens.stroke.weight,
           borderColor: tokens.stroke.color,
         },
-        ".rounding-object": {
+        '.rounding-object': {
           borderRadius: tokens.rounding.object,
         },
-        ".rounding-section": {
+        '.rounding-section': {
           borderRadius: tokens.rounding.section,
         },
       };
@@ -41,7 +41,7 @@ const preset = {
 /** @type {import('tailwindcss').Config} */
 export default {
   ...preset,
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
 };
 
 export { preset };

@@ -36,8 +36,8 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
-      "jsxQuoteStyle": "double",
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "single",
       "semicolons": "always",
       "trailingCommas": "es5",
       "enabled": true,
