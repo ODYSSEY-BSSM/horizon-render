@@ -48,6 +48,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
         
+      - name: Build packages first
+        run: pnpm --filter @horizon/tokens build
+        
       - name: Build Storybook
         run: pnpm build-storybook
         
