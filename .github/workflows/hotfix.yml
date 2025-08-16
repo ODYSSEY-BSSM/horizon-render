@@ -3,9 +3,6 @@ name: Protect Main Branch
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-    types: [ opened, synchronize, reopened ]
 
 jobs:
   check-hotfix:
@@ -19,41 +16,13 @@ jobs:
           
       - name: Check if hotfix commit
         run: |
-          if [[ "${{ github.event_name }}" == "push" ]]; then
-            COMMIT_MSG="${{ github.event.head_commit.message }}"
-          else
-            COMMIT_MSG="${{ github.event.pull_request.title }}"
-          fi
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
           
           if [[ ! "$COMMIT_MSG" =~ ^hotfix: ]]; then
             echo "::error::❌ main 브랜치는 hotfix: 커밋만 허용됩니다"
-            echo "::error::현재 커밋/PR 제목: $COMMIT_MSG"
+            echo "::error::현재 커밋 메시지: $COMMIT_MSG"
             echo "::error::올바른 형식: hotfix: 설명"
             exit 1
           fi
           
           echo "✅ hotfix 커밋이 확인되었습니다: $COMMIT_MSG"
-          
-      - name: Add hotfix label (PR only)
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ['🚨 hotfix']
-            });
-            
-      - name: Add hotfix comment (PR only)
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '🚨 **핫픽스 PR이 감지되었습니다!**\n\n이 PR은 긴급 수정 사항입니다. 리뷰 후 빠른 커밋을 진행해주세요.'
-            });
