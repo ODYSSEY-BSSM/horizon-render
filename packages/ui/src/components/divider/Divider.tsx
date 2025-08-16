@@ -6,10 +6,6 @@ interface DividerProps extends React.HTMLAttributes<HTMLHRElement> {
   spacing?: number;
   className?: string;
   children?: React.ReactNode;
-
-  "aria-label"?: string;
-  "aria-orientation"?: "horizontal" | "vertical";
-  role?: string;
 }
 
 const getSpacingStyle = (spacing: number | undefined, orientation: string) => {
