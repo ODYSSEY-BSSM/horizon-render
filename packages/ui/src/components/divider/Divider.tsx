@@ -1,15 +1,11 @@
 import { clsx } from 'clsx';
 import type React from 'react';
 
-interface DividerProps extends React.HTMLAttributes<HTMLHRElement> {
+interface DividerProps extends React.HTMLAttributes<HTMLElement> {
   orientation?: 'horizontal' | 'vertical';
   spacing?: number;
   className?: string;
   children?: React.ReactNode;
-
-  'aria-label'?: string;
-  'aria-orientation'?: 'horizontal' | 'vertical';
-  role?: string;
 }
 
 const getSpacingStyle = (spacing: number | undefined, orientation: string) => {
@@ -58,15 +54,23 @@ export const Divider = ({
     );
   }
 
+  if (orientation === 'vertical') {
+    return (
+      <div
+        className={clsx('h-full border-l border-horizon-neutral-300', className)}
+        style={spacingStyle}
+        role="separator"
+        aria-orientation="vertical"
+        tabIndex={-1}
+        {...props}
+      />
+    );
+  }
+
   return (
     <hr
-      className={clsx(
-        'border-t border-horizon-neutral-300',
-        orientation === 'horizontal' ? 'w-full' : 'h-full border-l border-t-0',
-        className
-      )}
+      className={clsx('border-t border-horizon-neutral-300 w-full', className)}
       style={spacingStyle}
-      aria-orientation={orientation}
       {...props}
     />
   );
