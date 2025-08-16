@@ -1,0 +1,53 @@
+name: Hotfix
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  hotfix-labeling:
+    runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'hotfix/')
+    
+    steps:
+      - name: Add hotfix label
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['🚨 hotfix']
+            });
+            
+      - name: Add comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚨 **핫픽스 PR이 감지되었습니다!**\n\n이 PR은 긴급 수정 사항입니다. 리뷰 후 빠른 머지를 진행해주세요.'
+            });
+
+  hotfix-merge:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.merged == true && 
+      startsWith(github.head_ref, 'hotfix/') &&
+      github.base_ref == 'main'
+    
+    steps:
+      - name: Hotfix merged notification
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ **핫픽스가 성공적으로 머지되었습니다!**\n\n긴급 수정이 main 브랜치에 반영되었습니다.'
+            });
