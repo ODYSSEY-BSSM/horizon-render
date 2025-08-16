@@ -12,7 +12,7 @@ This is a pnpm monorepo for a TypeScript project named "horizon-render". The pro
 *   **Build Tools:** Vite (studio), NextJS (web)
 *   **Editor:** React Flow (visual workflow editor)
 *   **Styling:** Tailwind CSS
-*   **Component Library:** Storybook
+*   **Component Library:** React Component Library
 *   **Form Management:** React Hook Form + Zod
 *   **Schema Validation:** Zod
 *   **Testing:** Vitest + @testing-library/react
@@ -100,18 +100,18 @@ pnpm test
 *   **Component Tests:** UI package components with Vitest + jsdom
 *   **NextJS Tests:** API routes and pages with Vitest
 *   **Studio Tests:** React Flow editor business logic (avoid canvas testing)
-*   **Visual Testing:** Storybook stories for component documentation
+*   **Visual Testing:** Component testing via test files
 
-### Storybook
+### Studio Editor
 
-To run Storybook, use the following commands:
+To run the visual editor application:
 
 ```bash
-# Start the Storybook development server
-pnpm storybook
+# Start the studio app (React Flow editor)
+pnpm studio
 
-# Build Storybook for deployment
-pnpm build-storybook
+# Build studio app for deployment
+pnpm build-studio
 ```
 
 ## 5. Development Conventions

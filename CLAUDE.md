@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Horizon Render** is a React TypeScript design system monorepo built with pnpm. It's the "vol.2 restart" of Horizon FE project focused on creating a comprehensive component library with design tokens, Storybook documentation, and modern development tooling.
+**Horizon Render** is a React TypeScript design system monorepo built with pnpm. It's the "vol.2 restart" of Horizon FE project focused on creating a comprehensive component library with design tokens, visual editor application, and modern development tooling.
 
 ## Essential Commands
 
@@ -32,7 +32,7 @@ pnpm --filter web build    # Build NextJS app
 
 ### Packages
 - **`@horizon/tokens`**: Design system foundation - colors, typography, layout tokens, icon system
-- **`@horizon/ui`**: React components using class-variance-authority pattern with Storybook documentation
+- **`@horizon/ui`**: React components using class-variance-authority pattern
 - **`apps/studio`**: React Flow based visual editor (React + Vite)
 - **`apps/web`**: Main web application (NextJS)
 
@@ -51,9 +51,8 @@ Design tokens automatically become Tailwind utilities. Custom icon utilities gen
 
 ### Component Development
 1. Start in `@horizon/ui` with component + variants using `cva()`
-2. Create comprehensive Storybook stories 
-3. Export component and any related utilities
-4. Update package index.ts exports
+2. Export component and any related utilities
+3. Update package index.ts exports
 
 ### App Development
 - **Studio App**: React Flow editor for visual workflows (React + Vite), uses `@horizon/ui` components and design tokens
@@ -90,7 +89,7 @@ Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typ
 - **Component Tests**: UI package components with jsdom
 - **NextJS Tests**: API routes and pages with Vitest 
 - **Studio Tests**: React Flow editor business logic (avoid canvas testing)
-- **Visual Testing**: Storybook stories for component documentation
+- **Visual Testing**: Component testing via test files
 
 ## Important Files to Check
 - `packages/tokens/src/*` - Design system tokens
