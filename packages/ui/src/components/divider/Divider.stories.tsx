@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { Text } from '../text';
 import { Divider } from './Divider';
 
 const meta: Meta<typeof Divider> = {
@@ -40,9 +41,9 @@ export const Default: Story = {
 export const Horizontal: Story = {
   render: () => (
     <div className='space-y-4'>
-      <p>Content above</p>
+      <Text>Content above</Text>
       <Divider />
-      <p>Content below</p>
+      <Text>Content below</Text>
     </div>
   ),
 };
@@ -50,9 +51,9 @@ export const Horizontal: Story = {
 export const Vertical: Story = {
   render: () => (
     <div className='flex items-center h-24 space-x-4'>
-      <p>Left content</p>
+      <Text>Left content</Text>
       <Divider orientation='vertical' />
-      <p>Right content</p>
+      <Text>Right content</Text>
     </div>
   ),
 };
@@ -60,24 +61,24 @@ export const Vertical: Story = {
 export const Spacing: Story = {
   render: () => (
     <div className='space-y-4'>
-      <p>Content</p>
+      <Text>Content</Text>
       <Divider />
-      <p>No spacing</p>
+      <Text>No spacing</Text>
 
       <Divider spacing={8} />
-      <p>8px spacing</p>
+      <Text>8px spacing</Text>
 
       <Divider spacing={16} />
-      <p>16px spacing</p>
+      <Text>16px spacing</Text>
 
       <Divider spacing={24} />
-      <p>24px spacing</p>
+      <Text>24px spacing</Text>
 
       <Divider spacing={32} />
-      <p>32px spacing</p>
+      <Text>32px spacing</Text>
 
       <Divider spacing={48} />
-      <p>48px spacing</p>
+      <Text>48px spacing</Text>
     </div>
   ),
 };
@@ -86,20 +87,24 @@ export const WithText: Story = {
   render: () => (
     <div className='space-y-8'>
       <div>
-        <h4 className='font-medium mb-4'>Horizontal with Text</h4>
+        <Text variant='H3' as='h4' className='mb-4'>
+          Horizontal with Text
+        </Text>
         <div className='space-y-4'>
-          <p>Section 1</p>
+          <Text>Section 1</Text>
           <Divider>OR</Divider>
-          <p>Section 2</p>
+          <Text>Section 2</Text>
         </div>
       </div>
 
       <div>
-        <h4 className='font-medium mb-4'>Vertical with Text</h4>
+        <Text variant='H3' as='h4' className='mb-4'>
+          Vertical with Text
+        </Text>
         <div className='flex items-center h-24'>
-          <p>Left section</p>
+          <Text>Left section</Text>
           <Divider orientation='vertical'>|</Divider>
-          <p>Right section</p>
+          <Text>Right section</Text>
         </div>
       </div>
     </div>
