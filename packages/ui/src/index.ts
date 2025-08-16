@@ -1,4 +1,4 @@
 // UI components
 export { Text, textVariants, type TextVariant } from './components/text';
 export { Icon, iconVariants, type IconVariant } from './components/icon';
-export { FlexBox } from "./components/flexBox";
+export { Flexbox } from "./components/flexbox";
