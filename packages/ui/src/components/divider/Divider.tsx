@@ -58,8 +58,8 @@ export const Divider = ({
       <div
         className={clsx('h-full border-l border-horizon-neutral-300', className)}
         style={spacingStyle}
-        role="separator"
-        aria-orientation="vertical"
+        role='separator'
+        aria-orientation='vertical'
         tabIndex={-1}
         {...props}
       />
