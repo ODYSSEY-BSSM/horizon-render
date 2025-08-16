@@ -1,3 +1,4 @@
+import { Slot } from "@radix-ui/react-slot";
 import { clsx } from "clsx";
 import type React from "react";
 import { Icon } from "../icon";
@@ -14,6 +15,7 @@ interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
   className?: string;
   disabled?: boolean;
   buttonType?: "button" | "submit" | "reset";
+  asChild?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -27,6 +29,7 @@ export const Button: React.FC<ButtonProps> = ({
   className,
   disabled = false,
   buttonType = "button",
+  asChild = false,
   ...props
 }) => {
   const buttonClasses = buttonVariants({
@@ -38,6 +41,7 @@ export const Button: React.FC<ButtonProps> = ({
   });
 
   const slots = buttonSlotsBySize[size];
+  const Comp = asChild ? Slot : "button";
 
   const renderIcon = (position: "left" | "right") => {
     if (!iconName || icon === "none") return null;
@@ -69,13 +73,13 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <button
-      type={buttonType}
+    <Comp
+      type={asChild ? undefined : buttonType}
       className={clsx(buttonClasses, className)}
       disabled={disabled}
       {...props}
     >
       {renderContent()}
-    </button>
+    </Comp>
   );
 };
