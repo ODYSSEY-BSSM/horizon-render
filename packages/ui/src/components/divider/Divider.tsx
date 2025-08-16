@@ -34,7 +34,6 @@ export const Divider = ({
           className
         )}
         style={spacingStyle}
-        aria-orientation={orientation}
         {...props}
       >
         <div
