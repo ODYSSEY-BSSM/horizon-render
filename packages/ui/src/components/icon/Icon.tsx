@@ -17,7 +17,7 @@ interface IconProps extends React.HTMLAttributes<HTMLElement> {
   role?: string;
 }
 
-export const Icon: React.FC<IconProps> = ({
+export const Icon = ({
   name,
   variant = "MD",
   filled = false,
@@ -25,7 +25,7 @@ export const Icon: React.FC<IconProps> = ({
   color,
   className,
   ...props
-}) => {
+}: IconProps) => {
   const variantConfig = iconVariants[variant];
   const sizeValue = getSizeValue(size);
 
