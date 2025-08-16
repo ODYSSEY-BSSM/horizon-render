@@ -1,0 +1,28 @@
+name: Protect Main Branch
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  check-hotfix:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Check if hotfix commit
+        run: |
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          
+          if [[ ! "$COMMIT_MSG" =~ ^hotfix: ]]; then
+            echo "::error::❌ main 브랜치는 hotfix: 커밋만 허용됩니다"
+            echo "::error::현재 커밋 메시지: $COMMIT_MSG"
+            echo "::error::올바른 형식: hotfix: 설명"
+            exit 1
+          fi
+          
+          echo "✅ hotfix 커밋이 확인되었습니다: $COMMIT_MSG"
