@@ -33,6 +33,9 @@ const meta: Meta<typeof Button> = {
     iconName: {
       control: "text",
     },
+    asChild: {
+      control: "boolean",
+    },
   },
 };
 
@@ -241,6 +244,33 @@ export const AllCombinations: Story = {
   },
 };
 
+export const AsChild: Story = {
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Button>Regular Button</Button>
+      <Button asChild>
+        <a href="https://github.com">Link as Button</a>
+      </Button>
+      <Button asChild variant="outlined">
+        <button type="button">Div as Button</button>
+      </Button>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `<Button>Regular Button</Button>
+<Button asChild>
+  <a href="#" role="button">Link as Button</a>
+</Button>
+<Button asChild variant="outlined">
+  <div role="button" tabIndex={0}>Div as Button</div>
+</Button>`,
+      },
+    },
+  },
+};
+
 export const Playground: Story = {
   args: {
     children: "Click me!",
@@ -251,6 +281,7 @@ export const Playground: Story = {
     rounded: false,
     disabled: false,
     iconName: "add",
+    asChild: false,
   },
   parameters: {
     docs: {
@@ -263,6 +294,7 @@ export const Playground: Story = {
   rounded={false}
   disabled={false}
   iconName="add"
+  asChild={false}
 >
   Click me!
 </Button>`,
