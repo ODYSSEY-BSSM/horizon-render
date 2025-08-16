@@ -15,21 +15,21 @@ jobs:
           fetch-depth: 0
           
       - name: Check if hotfix commit
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
-          
           # 머지 커밋은 허용 (GitHub PR 머지)
-          if [[ "$COMMIT_MSG" =~ ^Merge\ pull\ request ]]; then
-            echo "✅ 머지 커밋 감지됨: $COMMIT_MSG"
+          if [[ "$FIRST_LINE" =~ ^Merge\ pull\ request ]]; then
+            echo "✅ 머지 커밋 감지됨: $FIRST_LINE"
             exit 0
           fi
           
           # 일반 커밋은 hotfix: 로만 허용
-          if [[ ! "$COMMIT_MSG" =~ ^hotfix: ]]; then
+          if [[ ! "$FIRST_LINE" =~ ^hotfix: ]]; then
             echo "::error::❌ main 브랜치는 hotfix: 커밋만 허용됩니다"
-            echo "::error::현재 커밋 메시지: $COMMIT_MSG"
+            echo "::error::현재 커밋 메시지: $FIRST_LINE"
             echo "::error::올바른 형식: hotfix: 설명"
             exit 1
           fi
           
-          echo "✅ hotfix 커밋이 확인되었습니다: $COMMIT_MSG"
+          echo "✅ hotfix 커밋이 확인되었습니다: $FIRST_LINE"
