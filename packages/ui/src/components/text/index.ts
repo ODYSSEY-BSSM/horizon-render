@@ -1,2 +1,2 @@
-export { Text } from "./Text";
-export { textVariants, type TextVariant } from "./variants";
+export { Text } from './Text';
+export { textVariants, type TextVariant } from './variants';

@@ -1,7 +1,7 @@
-import { clsx } from "clsx";
-import type React from "react";
-import { getSizeValue } from "../../utils";
-import { type IconVariant, iconVariants } from "./variants";
+import { clsx } from 'clsx';
+import type React from 'react';
+import { getSizeValue } from '../../utils';
+import { type IconVariant, iconVariants } from './variants';
 
 interface IconProps extends React.HTMLAttributes<HTMLElement> {
   name: string;
@@ -11,15 +11,15 @@ interface IconProps extends React.HTMLAttributes<HTMLElement> {
   color?: string;
   className?: string;
 
-  "aria-label"?: string;
-  "aria-describedby"?: string;
-  "aria-labelledby"?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
+  'aria-labelledby'?: string;
   role?: string;
 }
 
 export const Icon = ({
   name,
-  variant = "MD",
+  variant = 'MD',
   filled = false,
   size,
   color,
@@ -32,12 +32,12 @@ export const Icon = ({
   const styles: React.CSSProperties = {
     fontSize: sizeValue,
     color,
-    fontVariationSettings: `'FILL' ${filled ? "1" : "0"}, 'wght' ${variantConfig.wght}, 'GRAD' ${variantConfig.grad}, 'opsz' ${variantConfig.opsz}`,
+    fontVariationSettings: `'FILL' ${filled ? '1' : '0'}, 'wght' ${variantConfig.wght}, 'GRAD' ${variantConfig.grad}, 'opsz' ${variantConfig.opsz}`,
   };
 
   return (
     <span
-      className={clsx("material-symbols-outlined select-none", variantConfig.classes, className)}
+      className={clsx('material-symbols-outlined select-none', variantConfig.classes, className)}
       style={styles}
       {...props}
     >
