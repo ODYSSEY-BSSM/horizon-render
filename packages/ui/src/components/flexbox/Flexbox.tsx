@@ -1,25 +1,25 @@
-import { clsx } from "clsx";
-import type React from "react";
+import { clsx } from 'clsx';
+import type React from 'react';
 
 interface FlexBoxProps extends React.HTMLAttributes<HTMLDivElement> {
-  direction?: React.CSSProperties["flexDirection"];
-  justify?: React.CSSProperties["justifyContent"];
-  align?: React.CSSProperties["alignItems"];
-  wrap?: React.CSSProperties["flexWrap"];
+  direction?: React.CSSProperties['flexDirection'];
+  justify?: React.CSSProperties['justifyContent'];
+  align?: React.CSSProperties['alignItems'];
+  wrap?: React.CSSProperties['flexWrap'];
   gap?: string | number;
   grow?: number;
   shrink?: number;
-  basis?: React.CSSProperties["flexBasis"];
+  basis?: React.CSSProperties['flexBasis'];
   inline?: boolean;
   children: React.ReactNode;
   className?: string;
 }
 
 export const Flexbox = ({
-  direction = "row",
-  justify = "flex-start",
-  align = "stretch",
-  wrap = "nowrap",
+  direction = 'row',
+  justify = 'flex-start',
+  align = 'stretch',
+  wrap = 'nowrap',
   gap = 0,
   grow,
   shrink,
@@ -41,7 +41,7 @@ export const Flexbox = ({
   };
 
   return (
-    <div className={clsx(inline ? "inline-flex" : "flex", className)} style={styles} {...props}>
+    <div className={clsx(inline ? 'inline-flex' : 'flex', className)} style={styles} {...props}>
       {children}
     </div>
   );
