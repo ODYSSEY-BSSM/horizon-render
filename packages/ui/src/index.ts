@@ -1,7 +1,7 @@
-export { Text, textVariants, type TextVariant } from "./components/text";
-export { Icon, iconVariants, type IconVariant } from "./components/icon";
-export { Flexbox } from "./components/flexbox";
-export { Divider } from "./components/divider";
+export { Text, textVariants, type TextVariant } from './components/text';
+export { Icon, iconVariants, type IconVariant } from './components/icon';
+export { Flexbox } from './components/flexbox';
+export { Divider } from './components/divider';
 export {
   Button,
   buttonVariants,
@@ -10,4 +10,4 @@ export {
   iconVariants as buttonIconVariants,
   type ButtonVariants,
   type ButtonSlotsBySize,
-} from "./components/button";
+} from './components/button';

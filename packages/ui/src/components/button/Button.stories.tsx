@@ -1,40 +1,40 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "./Button";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from './Button';
 
 const meta: Meta<typeof Button> = {
-  title: "Components/Button",
+  title: 'Components/Button',
   component: Button,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   argTypes: {
     size: {
-      control: "select",
-      options: ["small", "medium", "large"],
+      control: 'select',
+      options: ['small', 'medium', 'large'],
     },
     property: {
-      control: "select",
-      options: ["default", "hover", "pressed", "disabled"],
+      control: 'select',
+      options: ['default', 'hover', 'pressed', 'disabled'],
     },
     icon: {
-      control: "select",
-      options: ["none", "left", "right", "only"],
+      control: 'select',
+      options: ['none', 'left', 'right', 'only'],
     },
     variant: {
-      control: "select",
-      options: ["contained", "outlined"],
+      control: 'select',
+      options: ['contained', 'outlined'],
     },
     rounded: {
-      control: "boolean",
+      control: 'boolean',
     },
     disabled: {
-      control: "boolean",
+      control: 'boolean',
     },
     iconName: {
-      control: "text",
+      control: 'text',
     },
     asChild: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -44,9 +44,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: "Button",
-    size: "medium",
-    variant: "contained",
+    children: 'Button',
+    size: 'medium',
+    variant: 'contained',
   },
   parameters: {
     docs: {
@@ -59,10 +59,10 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Button size="small">Small</Button>
-      <Button size="medium">Medium</Button>
-      <Button size="large">Large</Button>
+    <div className='flex items-center gap-4'>
+      <Button size='small'>Small</Button>
+      <Button size='medium'>Medium</Button>
+      <Button size='large'>Large</Button>
     </div>
   ),
   parameters: {
@@ -78,9 +78,9 @@ export const Sizes: Story = {
 
 export const Types: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
+    <div className='flex items-center gap-4'>
+      <Button variant='contained'>Contained</Button>
+      <Button variant='outlined'>Outlined</Button>
     </div>
   ),
   parameters: {
@@ -95,24 +95,24 @@ export const Types: Story = {
 
 export const WithIcons: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        <Button icon="left" iconName="add">
+    <div className='flex flex-col gap-4'>
+      <div className='flex items-center gap-4'>
+        <Button icon='left' iconName='add'>
           Add Item
         </Button>
-        <Button icon="right" iconName="arrow_forward">
+        <Button icon='right' iconName='arrow_forward'>
           Next
         </Button>
-        <Button icon="only" iconName="search" />
+        <Button icon='only' iconName='search' />
       </div>
-      <div className="flex items-center gap-4">
-        <Button variant="outlined" icon="left" iconName="download">
+      <div className='flex items-center gap-4'>
+        <Button variant='outlined' icon='left' iconName='download'>
           Download
         </Button>
-        <Button variant="outlined" icon="right" iconName="send">
+        <Button variant='outlined' icon='right' iconName='send'>
           Send
         </Button>
-        <Button variant="outlined" icon="only" iconName="favorite" />
+        <Button variant='outlined' icon='only' iconName='favorite' />
       </div>
     </div>
   ),
@@ -129,10 +129,10 @@ export const WithIcons: Story = {
 
 export const Rounded: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
+    <div className='flex items-center gap-4'>
       <Button rounded={false}>Square</Button>
       <Button rounded={true}>Rounded</Button>
-      <Button rounded={true} icon="only" iconName="favorite" />
+      <Button rounded={true} icon='only' iconName='favorite' />
     </div>
   ),
   parameters: {
@@ -148,24 +148,24 @@ export const Rounded: Story = {
 
 export const States: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        <Button property="default">Default</Button>
-        <Button property="hover">Hover</Button>
-        <Button property="pressed">Pressed</Button>
+    <div className='flex flex-col gap-4'>
+      <div className='flex items-center gap-4'>
+        <Button property='default'>Default</Button>
+        <Button property='hover'>Hover</Button>
+        <Button property='pressed'>Pressed</Button>
         <Button disabled>Disabled</Button>
       </div>
-      <div className="flex items-center gap-4">
-        <Button variant="outlined" property="default">
+      <div className='flex items-center gap-4'>
+        <Button variant='outlined' property='default'>
           Default
         </Button>
-        <Button variant="outlined" property="hover">
+        <Button variant='outlined' property='hover'>
           Hover
         </Button>
-        <Button variant="outlined" property="pressed">
+        <Button variant='outlined' property='pressed'>
           Pressed
         </Button>
-        <Button variant="outlined" disabled>
+        <Button variant='outlined' disabled>
           Disabled
         </Button>
       </div>
@@ -185,42 +185,42 @@ export const States: Story = {
 
 export const AllCombinations: Story = {
   render: () => (
-    <div className="space-y-6">
+    <div className='space-y-6'>
       <div>
-        <h3 className="text-lg font-semibold mb-4">Contained Buttons</h3>
-        <div className="space-y-4">
-          {(["small", "medium", "large"] as const).map((size) => (
-            <div key={size} className="flex items-center gap-4">
-              <span className="w-16 text-sm capitalize">{size}</span>
+        <h3 className='text-lg font-semibold mb-4'>Contained Buttons</h3>
+        <div className='space-y-4'>
+          {(['small', 'medium', 'large'] as const).map((size) => (
+            <div key={size} className='flex items-center gap-4'>
+              <span className='w-16 text-sm capitalize'>{size}</span>
               <Button size={size}>Text</Button>
-              <Button size={size} icon="left" iconName="add">
+              <Button size={size} icon='left' iconName='add'>
                 Icon Left
               </Button>
-              <Button size={size} icon="right" iconName="arrow_forward">
+              <Button size={size} icon='right' iconName='arrow_forward'>
                 Icon Right
               </Button>
-              <Button size={size} icon="only" iconName="search" />
+              <Button size={size} icon='only' iconName='search' />
             </div>
           ))}
         </div>
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-4">Outlined Buttons</h3>
-        <div className="space-y-4">
-          {(["small", "medium", "large"] as const).map((size) => (
-            <div key={size} className="flex items-center gap-4">
-              <span className="w-16 text-sm capitalize">{size}</span>
-              <Button size={size} variant="outlined">
+        <h3 className='text-lg font-semibold mb-4'>Outlined Buttons</h3>
+        <div className='space-y-4'>
+          {(['small', 'medium', 'large'] as const).map((size) => (
+            <div key={size} className='flex items-center gap-4'>
+              <span className='w-16 text-sm capitalize'>{size}</span>
+              <Button size={size} variant='outlined'>
                 Text
               </Button>
-              <Button size={size} variant="outlined" icon="left" iconName="add">
+              <Button size={size} variant='outlined' icon='left' iconName='add'>
                 Icon Left
               </Button>
-              <Button size={size} variant="outlined" icon="right" iconName="arrow_forward">
+              <Button size={size} variant='outlined' icon='right' iconName='arrow_forward'>
                 Icon Right
               </Button>
-              <Button size={size} variant="outlined" icon="only" iconName="search" />
+              <Button size={size} variant='outlined' icon='only' iconName='search' />
             </div>
           ))}
         </div>
@@ -246,13 +246,13 @@ export const AllCombinations: Story = {
 
 export const AsChild: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
+    <div className='flex items-center gap-4'>
       <Button>Regular Button</Button>
       <Button asChild>
-        <a href="https://github.com">Link as Button</a>
+        <a href='https://github.com'>Link as Button</a>
       </Button>
-      <Button asChild variant="outlined">
-        <button type="button">Div as Button</button>
+      <Button asChild variant='outlined'>
+        <button type='button'>Div as Button</button>
       </Button>
     </div>
   ),
@@ -273,14 +273,14 @@ export const AsChild: Story = {
 
 export const Playground: Story = {
   args: {
-    children: "Click me!",
-    size: "medium",
-    property: "default",
-    icon: "none",
-    variant: "contained",
+    children: 'Click me!',
+    size: 'medium',
+    property: 'default',
+    icon: 'none',
+    variant: 'contained',
     rounded: false,
     disabled: false,
-    iconName: "add",
+    iconName: 'add',
     asChild: false,
   },
   parameters: {
