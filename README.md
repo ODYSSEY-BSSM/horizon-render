@@ -1,5 +1,5 @@
 # horizon-render
-Horizon FE Restart vol.2, our odyssey ain't ending
+For Horizon. DON'T RESET AGAIN, for @justn-hyeok
 
 # 커밋 타입 가이드
 
