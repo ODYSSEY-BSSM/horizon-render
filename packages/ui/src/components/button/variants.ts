@@ -35,6 +35,7 @@ export const buttonBase = [
   'inline-flex items-center justify-center',
   'font-suit select-none transition-colors',
   'focus-visible:outline-none focus-visible:ring-2',
+  'disabled:pointer-events-none',
 ].join(' ');
 
 export const buttonVariants = cva(buttonBase, {
@@ -44,12 +45,6 @@ export const buttonVariants = cva(buttonBase, {
       medium: 'h-10 px-5 py-2.5 gap-2 shrink-0',
       large: 'h-12 px-6 py-2.5 gap-2.5 shrink-0',
     },
-    property: {
-      default: '',
-      hover: 'hover:bg-primary-700',
-      pressed: 'active:bg-primary-900',
-      disabled: 'disabled:pointer-events-none disabled:bg-neutral-200',
-    },
     icon: {
       none: 'gap-0',
       left: 'gap-1.5',
@@ -57,9 +52,18 @@ export const buttonVariants = cva(buttonBase, {
       only: 'gap-2.5',
     },
     type: {
-      contained: 'bg-primary-500 text-white hover:bg-primary-700 active:bg-primary-900',
-      outlined:
-        'bg-transparent border border-primary-500 text-primary-500 hover:bg-primary-50 active:bg-primary-100',
+      contained: [
+        'bg-primary-500 text-white',
+        'hover:bg-primary-700',
+        'active:bg-primary-900',
+        'disabled:bg-neutral-200',
+      ].join(' '),
+      outlined: [
+        'bg-transparent border border-primary-500 text-primary-500',
+        'hover:bg-primary-600 hover:text-white hover:border-none',
+        'active:bg-primary-900 active:text-white active:border-none',
+        'disabled:border-neutral-300 disabled:text-neutral-300',
+      ].join(' '),
     },
     rounded: {
       true: 'rounded-full',
@@ -68,7 +72,6 @@ export const buttonVariants = cva(buttonBase, {
   },
   defaultVariants: {
     size: 'medium',
-    property: 'default',
     icon: 'none',
     type: 'contained',
     rounded: false,

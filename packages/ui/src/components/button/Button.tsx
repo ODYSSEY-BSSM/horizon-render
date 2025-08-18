@@ -6,7 +6,6 @@ import { type ButtonVariants, buttonSlotsBySize, buttonVariants } from './varian
 
 interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   size?: 'small' | 'medium' | 'large';
-  property?: 'default' | 'hover' | 'pressed' | 'disabled';
   icon?: 'none' | 'left' | 'right' | 'only';
   variant?: 'contained' | 'outlined';
   rounded?: boolean;
@@ -20,7 +19,6 @@ interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button: React.FC<ButtonProps> = ({
   size = 'medium',
-  property = 'default',
   icon = 'none',
   variant = 'contained',
   rounded = false,
@@ -34,14 +32,13 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const buttonClasses = buttonVariants({
     size,
-    property: disabled ? 'disabled' : property,
     icon,
     type: variant,
     rounded,
   });
 
   const slots = buttonSlotsBySize[size];
-  const Comp = asChild ? Slot : 'button';
+  const Component = asChild ? Slot : 'button';
 
   const renderIcon = (position: 'left' | 'right') => {
     if (!iconName || icon === 'none') return null;
@@ -73,13 +70,13 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <Comp
+    <Component
       type={asChild ? undefined : buttonType}
       className={clsx(buttonClasses, className)}
       disabled={disabled}
       {...props}
     >
       {renderContent()}
-    </Comp>
+    </Component>
   );
 };
