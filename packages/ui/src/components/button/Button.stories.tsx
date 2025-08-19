@@ -12,10 +12,6 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: ['small', 'medium', 'large'],
     },
-    property: {
-      control: 'select',
-      options: ['default', 'hover', 'pressed', 'disabled'],
-    },
     icon: {
       control: 'select',
       options: ['none', 'left', 'right', 'only'],
@@ -251,9 +247,6 @@ export const AsChild: Story = {
       <Button asChild>
         <a href='https://github.com'>Link as Button</a>
       </Button>
-      <Button asChild variant='outlined'>
-        <button type='button'>Div as Button</button>
-      </Button>
     </div>
   ),
   parameters: {
@@ -262,9 +255,6 @@ export const AsChild: Story = {
         code: `<Button>Regular Button</Button>
 <Button asChild>
   <a href="#" role="button">Link as Button</a>
-</Button>
-<Button asChild variant="outlined">
-  <div role="button" tabIndex={0}>Div as Button</div>
 </Button>`,
       },
     },
