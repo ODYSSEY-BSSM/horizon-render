@@ -2,7 +2,7 @@ import { Slot } from '@radix-ui/react-slot';
 import { clsx } from 'clsx';
 import type React from 'react';
 import { Icon } from '../icon';
-import { type ButtonVariants, buttonSlotsBySize, buttonVariants } from './variants';
+import { buttonSlotsBySize, buttonVariants } from './variants';
 
 interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   size?: 'small' | 'medium' | 'large';
