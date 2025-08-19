@@ -49,7 +49,7 @@ export const buttonVariants = cva(buttonBase, {
       none: 'gap-0',
       left: 'gap-1.5',
       right: 'gap-1.5',
-      only: 'gap-2.5',
+      only: 'gap-0',
     },
     type: {
       contained: [
@@ -59,7 +59,7 @@ export const buttonVariants = cva(buttonBase, {
         'disabled:bg-neutral-200',
       ].join(' '),
       outlined: [
-        'bg-transparent border border-primary-500 text-primary-500',
+        'bg-transparent border border-[1.5px] border-primary-500 text-primary-500',
         'hover:bg-primary-600 hover:text-white hover:border-none',
         'active:bg-primary-900 active:text-white active:border-none',
         'disabled:border-neutral-300 disabled:text-neutral-300',
