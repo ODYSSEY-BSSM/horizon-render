@@ -37,7 +37,7 @@ export const Icon = ({
 
   return (
     <span
-      className={clsx('material-symbols-outlined select-none', variantConfig.classes, className)}
+      className={clsx('material-symbols-rounded select-none', variantConfig.classes, className)}
       style={styles}
       {...props}
     >
