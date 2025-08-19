@@ -47,8 +47,8 @@ export const buttonVariants = cva(buttonBase, {
     },
     icon: {
       none: 'gap-0',
-      left: 'gap-1.5',
-      right: 'gap-1.5',
+      left: '',
+      right: '',
       only: 'gap-0',
     },
     type: {
