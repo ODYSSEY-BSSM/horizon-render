@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'contained',
   rounded = false,
   children,
-  iconName,
+  iconName = 'check',
   className,
   disabled = false,
   buttonType = 'button',
