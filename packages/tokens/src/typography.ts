@@ -22,6 +22,7 @@ export const fontSize = {
   18: '18px',
   16: '16px',
   14: '14px',
+  13: '13px',
   12: '12px',
   11: '11px',
 } as const;

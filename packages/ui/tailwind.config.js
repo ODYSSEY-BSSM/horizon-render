@@ -2,6 +2,7 @@ import { tokens } from '@horizon/tokens';
 
 const preset = {
   content: [],
+  safelist: ['text-13', 'text-14', 'text-16', 'text-20', 'text-24', 'text-32', 'text-40'],
   theme: {
     extend: {
       colors: tokens.colors,
