@@ -142,25 +142,15 @@ export const Rounded: Story = {
   },
 };
 
-export const States: Story = {
+export const Disabled: Story = {
   render: () => (
     <div className='flex flex-col gap-4'>
       <div className='flex items-center gap-4'>
-        <Button property='default'>Default</Button>
-        <Button property='hover'>Hover</Button>
-        <Button property='pressed'>Pressed</Button>
+        <Button>Default</Button>
         <Button disabled>Disabled</Button>
       </div>
       <div className='flex items-center gap-4'>
-        <Button variant='outlined' property='default'>
-          Default
-        </Button>
-        <Button variant='outlined' property='hover'>
-          Hover
-        </Button>
-        <Button variant='outlined' property='pressed'>
-          Pressed
-        </Button>
+        <Button variant='outlined'>Default</Button>
         <Button variant='outlined' disabled>
           Disabled
         </Button>
@@ -170,7 +160,7 @@ export const States: Story = {
   parameters: {
     docs: {
       source: {
-        code: `<Button property="default">Default</Button>
+        code: `<Button>Default</Button>
 <Button property="hover">Hover</Button>
 <Button property="pressed">Pressed</Button>
 <Button disabled>Disabled</Button>`,
