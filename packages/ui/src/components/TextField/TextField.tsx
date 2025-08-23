@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
 import type React from 'react';
 import { forwardRef, useEffect, useId, useState } from 'react';
-import { Icon } from '../icon';
-import { Text } from '../text';
+import { Icon } from '../Icon';
+import { Text } from '../Text';
 import { type TextFieldVariant, containerVariants, textFieldVariants } from './variants';
 
 interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
