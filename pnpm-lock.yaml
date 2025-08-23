@@ -74,6 +74,21 @@ importers:
 
   apps/web: {}
 
+  packages/hooks:
+    devDependencies:
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.1.11
+      react:
+        specifier: ^18.0.0
+        version: 18.3.1
+      tsup:
+        specifier: ^8.0.0
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.9.2)(yaml@2.8.1)
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.2
+
   packages/tokens:
     devDependencies:
       tsup:
