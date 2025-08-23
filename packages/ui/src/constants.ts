@@ -37,3 +37,17 @@ export const ALLOWED_HTML_ELEMENTS = [
 ] as const;
 
 export type AllowedHTMLElement = (typeof ALLOWED_HTML_ELEMENTS)[number];
+
+// Divider constants
+export const DIVIDER_CONSTANTS = {
+  SPACING: {
+    SM: '0.5rem', // 8px
+    MD: '1rem', // 16px
+    LG: '1.5rem', // 24px
+    XL: '2rem', // 32px
+  },
+  CONTENT_SPACING: {
+    HORIZONTAL: '1rem', // 16px (px-4)
+    VERTICAL: '1rem', // 16px (py-4)
+  },
+} as const;
