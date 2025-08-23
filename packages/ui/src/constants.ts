@@ -51,3 +51,14 @@ export const DIVIDER_CONSTANTS = {
     VERTICAL: '1rem', // 16px (py-4)
   },
 } as const;
+
+// Flexbox constants
+export const FLEXBOX_CONSTANTS = {
+  GAP: {
+    XS: 'gap-1', // 4px
+    SM: 'gap-2', // 8px
+    MD: 'gap-4', // 16px
+    LG: 'gap-6', // 24px
+    XL: 'gap-8', // 32px
+  },
+} as const;
