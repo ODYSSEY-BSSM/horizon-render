@@ -14,7 +14,28 @@ const meta: Meta<typeof Text> = {
     },
     as: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div'],
+      options: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'p',
+        'span',
+        'div',
+        'label',
+        'li',
+        'blockquote',
+        'caption',
+        'legend',
+        'figcaption',
+        'dt',
+        'dd',
+        'small',
+        'strong',
+        'em',
+      ],
     },
     color: { control: 'color' },
     width: { control: 'text' },
@@ -37,13 +58,6 @@ export const Default: Story = {
   args: {
     children: 'Default text example',
     variant: 'B1',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: '<Text variant="B1">Default text example</Text>',
-      },
-    },
   },
 };
 
@@ -68,52 +82,36 @@ export const AllVariants: Story = {
       <Text variant='O'>O - 오버라인</Text>
     </div>
   ),
-  parameters: {
-    docs: {
-      source: {
-        code: `<Text variant="H1" as="h1">H1 - 헤딩 1</Text>
-<Text variant="H2" as="h2">H2 - 헤딩 2</Text>
-<Text variant="H3" as="h3">H3 - 헤딩 3</Text>
-<Text variant="ST" as="h4">ST - 서브타이틀</Text>
-<Text variant="B1">B1 - 본문 1</Text>
-<Text variant="B2">B2 - 본문 2</Text>
-<Text variant="C">C - 캡션</Text>
-<Text variant="O">O - 오버라인</Text>`,
-      },
-    },
-  },
 };
 
-export const Playground: Story = {
-  args: {
-    children: 'Edit me in the controls panel!',
-    variant: 'B1',
-    color: '#000',
-    width: 'auto',
-    textAlign: 'left',
-    ellipsis: false,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `<Text 
-  variant="B1" 
-  color="#000" 
-  width="auto" 
-  textAlign="left" 
-  ellipsis={false}
->
-  Edit me in the controls panel!
-</Text>`,
-      },
-    },
-  },
+export const WithCustomElements: Story = {
+  render: () => (
+    <div className='space-y-4'>
+      <Text as='label' variant='O'>
+        Label element
+      </Text>
+      <Text as='span' variant='B2'>
+        Span element
+      </Text>
+      <Text as='div' variant='B1'>
+        Div element
+      </Text>
+      <Text as='li' variant='B2'>
+        List item element
+      </Text>
+      <Text as='caption' variant='C'>
+        Table caption
+      </Text>
+      <Text as='blockquote' variant='B1'>
+        Blockquote element
+      </Text>
+    </div>
+  ),
 };
 
 export const Styling: Story = {
   render: () => (
     <div className='space-y-6'>
-      {/* Colors */}
       <div>
         <Text variant='ST' className='mb-2'>
           Colors
@@ -125,7 +123,6 @@ export const Styling: Story = {
         </div>
       </div>
 
-      {/* Text Alignment */}
       <div style={{ width: '300px' }}>
         <Text variant='ST' className='mb-2'>
           Text Alignment
@@ -137,7 +134,6 @@ export const Styling: Story = {
         </div>
       </div>
 
-      {/* Width Control */}
       <div>
         <Text variant='ST' className='mb-2'>
           Width Control
@@ -148,26 +144,6 @@ export const Styling: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    docs: {
-      source: {
-        code: `{/* Colors */}
-<Text color="#3b82f6">Blue text</Text>
-<Text color="#dc2626">Red text</Text>
-<Text color="#059669">Green text</Text>
-
-{/* Text Alignment */}
-<Text textAlign="left">Left aligned</Text>
-<Text textAlign="center">Center aligned</Text>
-<Text textAlign="right">Right aligned</Text>
-
-{/* Width Control */}
-<Text width={200}>
-  이 텍스트는 200px 너비로 제한됩니다.
-</Text>`,
-      },
-    },
-  },
 };
 
 export const Ellipsis: Story = {
@@ -184,72 +160,15 @@ export const Ellipsis: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    docs: {
-      source: {
-        code: `{/* With ellipsis */}
-<Text ellipsis>매우 긴 텍스트로 말줄임표가 적용됩니다.</Text>
-
-{/* Without ellipsis */}
-<Text ellipsis={false}>자연스럽게 줄바꿈되는 긴 텍스트입니다.</Text>`,
-      },
-    },
-  },
 };
 
-export const WhiteSpace: Story = {
-  render: () => (
-    <div className='space-y-4' style={{ width: '250px' }}>
-      <Text variant='ST'>White Space Options</Text>
-
-      <div className='border p-2 rounded'>
-        <Text variant='C' whiteSpace='normal'>
-          Normal: 여러 공백과{'\n'}줄바꿈이 있는 텍스트
-        </Text>
-      </div>
-
-      <div className='border p-2 rounded'>
-        <Text variant='C' whiteSpace='nowrap'>
-          Nowrap: 아무리 길어도 줄바꿈되지 않는 텍스트
-        </Text>
-      </div>
-
-      <div className='border p-2 rounded'>
-        <Text variant='C' whiteSpace='pre'>
-          Pre: 여러 공백과{'\n'}줄바꿈이 보존되는 텍스트
-        </Text>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      source: {
-        code: `<Text whiteSpace="normal">Normal: 자동 줄바꿈</Text>
-<Text whiteSpace="nowrap">Nowrap: 줄바꿈 안됨</Text>
-<Text whiteSpace="pre">Pre: 공백과 줄바꿈 보존</Text>`,
-      },
-    },
-  },
-};
-
-export const Accessibility: Story = {
+export const Playground: Story = {
   args: {
+    children: 'Edit me in the controls panel!',
     variant: 'B1',
-    children: 'Screen reader friendly text',
-    'aria-label': 'Alternative text for screen readers',
-    role: 'status',
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `<Text 
-  variant="B1" 
-  aria-label="Alternative text for screen readers" 
-  role="status"
->
-  Screen reader friendly text
-</Text>`,
-      },
-    },
+    color: '#000',
+    width: 'auto',
+    textAlign: 'left',
+    ellipsis: false,
   },
 };
