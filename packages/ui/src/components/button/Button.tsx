@@ -1,7 +1,6 @@
 import { Slot } from '@radix-ui/react-slot';
 import { clsx } from 'clsx';
 import type React from 'react';
-import { Icon } from '../icon';
 import { buttonSlotsBySize, buttonVariants } from './variants';
 
 interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
@@ -45,13 +44,14 @@ export const Button: React.FC<ButtonProps> = ({
     if (icon !== position && icon !== 'only') return null;
 
     return (
-      <Icon
-        name={iconName}
-        className={slots.icon.classes}
+      <span
+        className={clsx('material-symbols-rounded select-none', slots.icon.classes)}
         style={{
           fontVariationSettings: `'FILL' 0, 'wght' ${slots.icon.wght}, 'GRAD' ${slots.icon.grad}, 'opsz' ${slots.icon.opsz}`,
         }}
-      />
+      >
+        {iconName}
+      </span>
     );
   };
 
