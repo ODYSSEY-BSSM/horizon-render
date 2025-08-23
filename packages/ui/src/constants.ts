@@ -32,8 +32,16 @@ export const ALLOWED_HTML_ELEMENTS = [
   'div',
   'label',
   'li',
-  'caption',
   'blockquote',
+  'caption',
+  'legend',
+  'figcaption',
+  'dt',
+  'dd',
+  'small',
+  'strong',
+  'em',
+  'button',
 ] as const;
 
 export type AllowedHTMLElement = (typeof ALLOWED_HTML_ELEMENTS)[number];
