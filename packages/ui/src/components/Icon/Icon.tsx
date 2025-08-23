@@ -3,7 +3,7 @@ import type React from 'react';
 import { getSizeValue } from '../../utils';
 import { type IconVariant, iconVariants } from './variants';
 
-interface IconProps extends React.HTMLAttributes<HTMLElement> {
+interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   name: string;
   variant?: IconVariant;
   filled?: boolean;
@@ -30,7 +30,7 @@ export const Icon = ({
   const sizeValue = getSizeValue(size);
 
   const styles: React.CSSProperties = {
-    fontSize: sizeValue,
+    ...(sizeValue && { fontSize: sizeValue }),
     color,
     fontVariationSettings: `'FILL' ${filled ? '1' : '0'}, 'wght' ${variantConfig.wght}, 'GRAD' ${variantConfig.grad}, 'opsz' ${variantConfig.opsz}`,
   };

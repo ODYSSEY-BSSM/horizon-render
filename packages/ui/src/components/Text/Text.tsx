@@ -5,7 +5,20 @@ import { type TextVariant, textVariants } from './variants';
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
-  as?: React.ElementType;
+  as?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'p'
+    | 'span'
+    | 'div'
+    | 'label'
+    | 'li'
+    | 'caption'
+    | 'blockquote';
   className?: string;
   children: React.ReactNode;
   color?: string;
@@ -37,7 +50,7 @@ export const Text = ({
     color,
     width: widthValue,
     textAlign,
-    whiteSpace: ellipsis ? 'nowrap' : whiteSpace,
+    ...(!ellipsis && { whiteSpace }),
   };
 
   return (
