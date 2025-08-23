@@ -1,5 +1,4 @@
 import { ICON_CONSTANTS } from '@/constants';
-import { getSizeValue } from '@/utils';
 import { clsx } from 'clsx';
 import type React from 'react';
 import { type IconVariant, iconVariants } from './variants';
@@ -30,10 +29,8 @@ export const Icon = ({
   ...props
 }: IconProps) => {
   const variantConfig = iconVariants[variant];
-  const sizeValue = getSizeValue(size);
-
   const styles: React.CSSProperties = {
-    ...(sizeValue && { fontSize: sizeValue }),
+    ...(size && { fontSize: typeof size === 'number' ? `${size}px` : size }),
     color,
     fontVariationSettings: `'FILL' ${filled ? ICON_CONSTANTS.FILL.FILLED : ICON_CONSTANTS.FILL.OUTLINED}, 'wght' ${variantConfig.wght}, 'GRAD' ${variantConfig.grad}, 'opsz' ${variantConfig.opsz}`,
   };

@@ -1,5 +1,4 @@
 import { type AllowedHTMLElement, VARIANT_TO_SEMANTIC_ELEMENT } from '@/constants';
-import { getSizeValue } from '@/utils';
 import { clsx } from 'clsx';
 import type React from 'react';
 import { type TextVariant, textVariants } from './variants';
@@ -35,11 +34,9 @@ export const Text = ({
 
   const ellipsisClasses = ellipsis ? 'overflow-hidden text-ellipsis whitespace-nowrap' : '';
 
-  const widthValue = getSizeValue(width);
-
   const styles: React.CSSProperties = {
     color,
-    width: widthValue,
+    width: typeof width === 'number' ? `${width}px` : width,
     textAlign,
     ...(!ellipsis && { whiteSpace }),
   };
