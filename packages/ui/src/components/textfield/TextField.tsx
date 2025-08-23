@@ -1,12 +1,14 @@
 import { clsx } from 'clsx';
 import type React from 'react';
 import { forwardRef, useEffect, useId, useState } from 'react';
+import { Icon } from '../icon';
+import { Text } from '../text';
 import { type TextFieldVariant, containerVariants, textFieldVariants } from './variants';
 
 interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   variant?: TextFieldVariant;
   label?: string;
-  icon?: React.ReactNode;
+  icon?: string;
   error?: boolean;
   className?: string;
   containerClassName?: string;
@@ -56,20 +58,19 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     return (
       <div className={clsx(containerClasses, containerClassName)}>
         {label && (
-          <label
+          <Text
+            as='label'
+            variant='O'
             htmlFor={inputId}
-            className={clsx(
-              'text-11 font-medium leading-[18px] tracking-[0.55px] text-neutral-400 font-suit',
-              labelClassName
-            )}
+            className={clsx('text-neutral-400', labelClassName)}
           >
             {label}
-          </label>
+          </Text>
         )}
         <div className='relative'>
           {icon && (
-            <div className='absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 flex items-center justify-center w-5 h-5'>
-              {icon}
+            <div className='absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center'>
+              <Icon name={icon} variant='SM' color='rgb(163 163 163)' />
             </div>
           )}
           <input
