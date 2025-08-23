@@ -1,24 +1,12 @@
+import { getSizeValue } from '@/utils';
 import { clsx } from 'clsx';
 import type React from 'react';
-import { getSizeValue } from '../../utils';
+import { type AllowedHTMLElement, VARIANT_TO_SEMANTIC_ELEMENT } from './constants';
 import { type TextVariant, textVariants } from './variants';
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
-  as?:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'p'
-    | 'span'
-    | 'div'
-    | 'label'
-    | 'li'
-    | 'caption'
-    | 'blockquote';
+  as?: AllowedHTMLElement;
   className?: string;
   children: React.ReactNode;
   color?: string;
@@ -30,7 +18,7 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> {
 
 export const Text = ({
   variant = 'B1',
-  as: Component = 'p',
+  as,
   className,
   children,
   color,
@@ -40,6 +28,7 @@ export const Text = ({
   ellipsis = false,
   ...props
 }: TextProps) => {
+  const Component = as || (VARIANT_TO_SEMANTIC_ELEMENT[variant] as React.ElementType);
   const baseClasses = textVariants[variant];
 
   const ellipsisClasses = ellipsis ? 'overflow-hidden text-ellipsis whitespace-nowrap' : '';

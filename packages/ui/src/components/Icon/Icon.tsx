@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
 import type React from 'react';
 import { getSizeValue } from '../../utils';
+import { ICON_CONSTANTS } from './constants';
 import { type IconVariant, iconVariants } from './variants';
 
 interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -10,6 +11,7 @@ interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   size?: number | string;
   color?: string;
   className?: string;
+  decorative?: boolean;
 
   'aria-label'?: string;
   'aria-describedby'?: string;
@@ -24,6 +26,7 @@ export const Icon = ({
   size,
   color,
   className,
+  decorative = false,
   ...props
 }: IconProps) => {
   const variantConfig = iconVariants[variant];
@@ -32,14 +35,21 @@ export const Icon = ({
   const styles: React.CSSProperties = {
     ...(sizeValue && { fontSize: sizeValue }),
     color,
-    fontVariationSettings: `'FILL' ${filled ? '1' : '0'}, 'wght' ${variantConfig.wght}, 'GRAD' ${variantConfig.grad}, 'opsz' ${variantConfig.opsz}`,
+    fontVariationSettings: `'FILL' ${filled ? ICON_CONSTANTS.FILL.FILLED : ICON_CONSTANTS.FILL.OUTLINED}, 'wght' ${variantConfig.wght}, 'GRAD' ${variantConfig.grad}, 'opsz' ${variantConfig.opsz}`,
   };
+
+  const accessibilityProps = decorative
+    ? { 'aria-hidden': true }
+    : props['aria-label']
+      ? {}
+      : { 'aria-label': name };
 
   return (
     <span
       className={clsx('material-symbols-rounded select-none', variantConfig.classes, className)}
       style={styles}
       {...props}
+      {...accessibilityProps}
     >
       {name}
     </span>
