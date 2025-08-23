@@ -10,7 +10,7 @@ export {
   iconVariants as buttonIconVariants,
   type ButtonVariants,
   type ButtonSlotsBySize,
-} from './components/button'
+} from './components/button';
 export {
   TextField,
   textFieldVariants,
