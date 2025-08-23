@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
 import type React from 'react';
 import { forwardRef, useEffect, useId, useState } from 'react';
-import { Icon } from '../Icon';
-import { Text } from '../Text';
+import { Icon } from '../Icon/Icon';
+import { Text } from '../Text/Text';
 import { type TextFieldVariant, containerVariants, textFieldVariants } from './variants';
 
 interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -61,8 +61,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           <Text
             as='label'
             variant='O'
-            htmlFor={inputId}
             className={clsx('text-neutral-400', labelClassName)}
+            {...{ htmlFor: inputId }}
           >
             {label}
           </Text>
