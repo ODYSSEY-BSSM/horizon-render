@@ -121,11 +121,11 @@ export const Button = ({
       return null;
     }
 
-    const child = children as React.ReactElement;
+    const child = children as React.ReactElement<React.HTMLAttributes<HTMLElement>>;
 
     return cloneElement(child, {
       ...finalProps,
-      className: clsx(child.props?.className, finalProps.className),
+      className: clsx(child.props.className, finalProps.className),
       children: content,
     });
   }

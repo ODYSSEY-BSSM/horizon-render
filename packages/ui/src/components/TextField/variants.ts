@@ -37,10 +37,22 @@ export const textFieldVariants = cva(
         true: ['pl-11'],
         false: [],
       },
+      filled: {
+        true: ['border-primary-500'],
+        false: [],
+      },
     },
+    compoundVariants: [
+      {
+        error: true,
+        filled: true,
+        class: ['border-warning-200'],
+      },
+    ],
     defaultVariants: {
       error: false,
       hasIcon: false,
+      filled: false,
     },
   }
 );

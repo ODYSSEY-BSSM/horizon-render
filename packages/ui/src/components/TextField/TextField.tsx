@@ -7,7 +7,7 @@ import { type TextFieldVariantProps, containerVariants, textFieldVariants } from
 
 interface TextFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
-    Omit<TextFieldVariantProps, 'hasIcon'> {
+    Omit<TextFieldVariantProps, 'hasIcon' | 'filled'> {
   label?: string;
   icon?: string;
   errorMessage?: string;
@@ -32,6 +32,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   ) => {
     const inputId = useId();
     const hasIcon = !!icon;
+    const filled = !!(props.value || props.defaultValue);
 
     return (
       <div className={clsx(containerVariants(), containerClassName)}>
@@ -54,7 +55,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           <input
             id={inputId}
             ref={ref}
-            className={clsx(textFieldVariants({ error, hasIcon }), className)}
+            className={clsx(textFieldVariants({ error, hasIcon, filled }), className)}
             {...props}
           />
         </div>
