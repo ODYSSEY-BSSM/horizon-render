@@ -36,17 +36,18 @@ export const buttonBase = [
   'font-suit select-none transition-colors',
   'focus-visible:outline-none focus-visible:ring-2',
   'disabled:pointer-events-none',
+  'shrink-0 py-2.5',
 ].join(' ');
 
 export const buttonVariants = cva(buttonBase, {
   variants: {
     size: {
-      small: 'h-8 px-4 py-2.5 gap-1.5 shrink-0',
-      medium: 'h-10 px-5 py-2.5 gap-2 shrink-0',
-      large: 'h-12 px-6 py-2.5 gap-2.5 shrink-0',
+      small: 'gap-1.5',
+      medium: 'gap-2',
+      large: 'gap-2.5',
     },
     icon: {
-      none: 'gap-0',
+      none: '',
       left: 'pl-2.5',
       right: 'pr-2.5',
       only: 'gap-0 px-2.5',
@@ -70,6 +71,11 @@ export const buttonVariants = cva(buttonBase, {
       false: 'rounded-lg',
     },
   },
+  compoundVariants: [
+    { icon: ['none', 'left', 'right'], size: 'small', class: 'px-4' },
+    { icon: ['none', 'left', 'right'], size: 'medium', class: 'px-5' },
+    { icon: ['none', 'left', 'right'], size: 'large', class: 'px-6' },
+  ],
   defaultVariants: {
     size: 'medium',
     icon: 'none',
