@@ -117,7 +117,9 @@ export const Button = ({
 
   if (asChild) {
     if (!children || !isValidElement(children)) {
-      console.warn('Button: asChild requires a single valid React element as children');
+      console.warn(
+        'Button component: asChild=true requires a single valid React element as children'
+      );
       return null;
     }
 
