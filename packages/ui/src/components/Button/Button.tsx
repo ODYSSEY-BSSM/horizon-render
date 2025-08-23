@@ -121,7 +121,7 @@ export const Button = ({
       return null;
     }
 
-    const child = children as React.ReactElement<any>;
+    const child = children as React.ReactElement;
 
     return cloneElement(child, {
       ...finalProps,
