@@ -5,6 +5,7 @@ import type React from 'react';
 import { type TextVariant, textVariants } from './variants';
 
 interface TextProps extends React.HTMLAttributes<HTMLElement> {
+  htmlFor?: string;
   variant?: TextVariant;
   as?: AllowedHTMLElement;
   className?: string;
@@ -26,6 +27,7 @@ export const Text = ({
   textAlign = 'left',
   whiteSpace = 'normal',
   ellipsis = false,
+  htmlFor,
   ...props
 }: TextProps) => {
   const Component = as || (VARIANT_TO_SEMANTIC_ELEMENT[variant] as React.ElementType);
@@ -46,6 +48,7 @@ export const Text = ({
     <Component
       className={clsx(baseClasses, 'font-suit', ellipsisClasses, className)}
       style={styles}
+      htmlFor={htmlFor}
       {...props}
     >
       {children}
