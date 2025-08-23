@@ -1,7 +1,7 @@
+import { ICON_CONSTANTS } from '@/constants';
+import { getSizeValue } from '@/utils';
 import { clsx } from 'clsx';
 import type React from 'react';
-import { getSizeValue } from '../../utils';
-import { ICON_CONSTANTS } from './constants';
 import { type IconVariant, iconVariants } from './variants';
 
 interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
