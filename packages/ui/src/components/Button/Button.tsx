@@ -1,6 +1,7 @@
-import { Slot } from '@radix-ui/react-slot';
+import { ICON_CONSTANTS } from '@/constants';
 import { clsx } from 'clsx';
 import type React from 'react';
+import { cloneElement, isValidElement } from 'react';
 import { buttonSlotsBySize, buttonVariants } from './variants';
 
 interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
@@ -10,25 +11,31 @@ interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
   rounded?: boolean;
   children?: React.ReactNode;
   iconName?: string;
+  iconFilled?: boolean;
   className?: string;
   disabled?: boolean;
-  buttonType?: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
   asChild?: boolean;
+  loading?: boolean;
+  loadingText?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = ({
   size = 'medium',
   icon = 'none',
   variant = 'contained',
   rounded = false,
   children,
   iconName = 'check',
+  iconFilled = false,
   className,
   disabled = false,
-  buttonType = 'button',
+  type = 'button',
   asChild = false,
+  loading = false,
+  loadingText,
   ...props
-}) => {
+}: ButtonProps) => {
   const buttonClasses = buttonVariants({
     size,
     icon,
@@ -37,7 +44,20 @@ export const Button: React.FC<ButtonProps> = ({
   });
 
   const slots = buttonSlotsBySize[size];
-  const Component = asChild ? Slot : 'button';
+
+  const isDisabled = disabled || loading;
+
+  const buttonProps = {
+    className: clsx(buttonClasses, className),
+    disabled: isDisabled,
+    'aria-disabled': isDisabled,
+    ...(loading && { 'aria-busy': true }),
+    ...(icon === 'only' && iconName && !loading && { 'aria-label': iconName }),
+    ...(loading && loadingText && { 'aria-label': loadingText }),
+    ...props,
+  };
+
+  const finalProps = asChild ? buttonProps : { ...buttonProps, type };
 
   const renderIcon = (position: 'left' | 'right') => {
     if (!iconName || icon === 'none') return null;
@@ -47,15 +67,39 @@ export const Button: React.FC<ButtonProps> = ({
       <span
         className={clsx('material-symbols-rounded select-none', slots.icon.classes)}
         style={{
-          fontVariationSettings: `'FILL' 0, 'wght' ${slots.icon.wght}, 'GRAD' ${slots.icon.grad}, 'opsz' ${slots.icon.opsz}`,
+          fontVariationSettings: `'FILL' ${iconFilled ? ICON_CONSTANTS.FILL.FILLED : ICON_CONSTANTS.FILL.OUTLINED}, 'wght' ${slots.icon.wght}, 'GRAD' ${slots.icon.grad}, 'opsz' ${slots.icon.opsz}`,
         }}
+        aria-hidden={icon !== 'only'}
       >
         {iconName}
       </span>
     );
   };
 
+  const renderLoadingIcon = () => (
+    <span
+      className={clsx('material-symbols-rounded select-none animate-spin', slots.icon.classes)}
+      style={{
+        fontVariationSettings: `'FILL' ${ICON_CONSTANTS.FILL.OUTLINED}, 'wght' ${slots.icon.wght}, 'GRAD' ${slots.icon.grad}, 'opsz' ${slots.icon.opsz}`,
+      }}
+      aria-hidden='true'
+    >
+      refresh
+    </span>
+  );
+
   const renderContent = () => {
+    if (loading) {
+      return (
+        <>
+          {renderLoadingIcon()}
+          {(loadingText || children) && (
+            <span className={slots.text}>{loadingText || children}</span>
+          )}
+        </>
+      );
+    }
+
     if (icon === 'only') {
       return renderIcon('left');
     }
@@ -69,14 +113,22 @@ export const Button: React.FC<ButtonProps> = ({
     );
   };
 
-  return (
-    <Component
-      type={asChild ? undefined : buttonType}
-      className={clsx(buttonClasses, className)}
-      disabled={disabled}
-      {...props}
-    >
-      {renderContent()}
-    </Component>
-  );
+  const content = renderContent();
+
+  if (asChild) {
+    if (!children || !isValidElement(children)) {
+      console.warn('Button: asChild requires a single valid React element as children');
+      return null;
+    }
+
+    const child = children as React.ReactElement<any>;
+
+    return cloneElement(child, {
+      ...finalProps,
+      className: clsx(child.props?.className, finalProps.className),
+      children: content,
+    });
+  }
+
+  return <button {...finalProps}>{content}</button>;
 };
