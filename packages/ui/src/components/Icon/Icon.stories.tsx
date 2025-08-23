@@ -155,7 +155,6 @@ export const Filled: Story = {
 export const CustomSizing: Story = {
   render: () => (
     <div className='space-y-6'>
-      {/* Custom sizes */}
       <div>
         <div className='text-sm mb-2 font-medium'>Custom Sizes</div>
         <div className='flex gap-4 items-center'>
@@ -178,7 +177,6 @@ export const CustomSizing: Story = {
         </div>
       </div>
 
-      {/* String sizes */}
       <div>
         <div className='text-sm mb-2 font-medium'>String Sizes</div>
         <div className='flex gap-4 items-center'>

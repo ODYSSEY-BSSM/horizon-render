@@ -302,7 +302,6 @@ export const RealWorldExamples: Story = {
           실제 사용 예시
         </Text>
 
-        {/* Article Header */}
         <article className='space-y-4 max-w-2xl'>
           <Text variant='H1' as='h1'>
             새로운 디자인 시스템 출시 소식
@@ -318,7 +317,6 @@ export const RealWorldExamples: Story = {
       </div>
 
       <div className='border-t pt-8'>
-        {/* Card Component */}
         <div className='max-w-sm border rounded-lg p-6 bg-white shadow-sm'>
           <Text variant='H3' as='h3' className='mb-2'>
             프로젝트 카드
@@ -341,7 +339,6 @@ export const RealWorldExamples: Story = {
       </div>
 
       <div className='border-t pt-8'>
-        {/* Form Labels */}
         <div className='max-w-md space-y-4'>
           <Text variant='H3' className='mb-4'>
             폼 예시
