@@ -6,7 +6,24 @@ const meta: Meta<typeof Icon> = {
   component: Icon,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component: `
+Material Symbols 기반 아이콘 컴포넌트입니다. 2000+ 아이콘을 지원하며, 크기와 스타일을 세밀하게 제어할 수 있습니다.
+
+## 주요 기능
+
+- **Material Symbols**: Google의 최신 아이콘 시스템 사용
+- **5가지 크기 변형**: XS(16px), SM(20px), MD(24px), LG(32px), XL(40px)
+- **최적화된 렌더링**: 크기별 font-weight, optical-size 자동 조정
+- **유연한 스타일링**: 색상, 크기, filled/outlined 스타일
+- **접근성**: 적절한 aria 속성과 시맨틱 마크업
+- **TypeScript**: 완전한 타입 지원과 자동 완성
+        `,
+      },
+    },
   },
+  tags: ['autodocs'],
   argTypes: {
     name: {
       control: 'text',
@@ -94,28 +111,6 @@ export const AllVariants: Story = {
   },
 };
 
-export const Playground: Story = {
-  args: {
-    name: 'star',
-    variant: 'MD',
-    filled: false,
-    color: '#000',
-    size: undefined,
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: `<Icon 
-  name="star" 
-  variant="MD" 
-  filled={false} 
-  color="#000"
-/>`,
-      },
-    },
-  },
-};
-
 export const Filled: Story = {
   render: () => (
     <div className='space-y-4'>
@@ -160,7 +155,6 @@ export const Filled: Story = {
 export const CustomSizing: Story = {
   render: () => (
     <div className='space-y-6'>
-      {/* Custom sizes */}
       <div>
         <div className='text-sm mb-2 font-medium'>Custom Sizes</div>
         <div className='flex gap-4 items-center'>
@@ -183,7 +177,6 @@ export const CustomSizing: Story = {
         </div>
       </div>
 
-      {/* String sizes */}
       <div>
         <div className='text-sm mb-2 font-medium'>String Sizes</div>
         <div className='flex gap-4 items-center'>
@@ -284,6 +277,27 @@ export const Colors: Story = {
 {/* Brand colors */}
 <Icon name="palette" color="#6366f1" />      {/* Primary */}
 <Icon name="palette" color="#8b5cf6" />      {/* Secondary */}`,
+      },
+    },
+  },
+};
+
+export const Playground: Story = {
+  args: {
+    name: 'star',
+    variant: 'MD',
+    filled: false,
+    color: '#000000',
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: `<Icon
+  name="star"
+  variant="MD"
+  filled={false}
+  color="#000000"
+/>`,
       },
     },
   },
