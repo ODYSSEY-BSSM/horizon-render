@@ -1,19 +1,25 @@
-import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo.js";import"./index-GiUgBvb1.js";import"./clsx-B-dksMZM.js";import"./size-CAyEbdpu.js";import"./index-TSvnGxuV.js";const A={title:"Components/Icon",component:s,parameters:{layout:"centered"},argTypes:{name:{control:"text",description:"Material Symbols icon name (e.g. 'home', 'star', 'settings')"},variant:{control:"select",options:["XS","SM","MD","LG","XL"],description:"Icon size variant with optimized font-weight and optical-size"},filled:{control:"boolean",description:"Whether icon should be filled (solid) or outlined"},size:{control:{type:"range",min:12,max:80,step:2},description:"Custom icon size in pixels (overrides variant size)"},color:{control:"color",description:"Icon color (CSS color value)"}}},t={args:{name:"home",variant:"MD",filled:!1},parameters:{docs:{source:{code:'<Icon name="home" variant="MD" filled={false} />'}}}},a={render:()=>e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{className:"flex gap-6 items-end",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"XS"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"XS (16px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"SM"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"SM (20px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"MD"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"MD (24px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"LG"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"LG (32px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"XL"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"XL (40px)"})]})]}),e.jsx("div",{className:"text-sm text-gray-500",children:"💡 각 variant는 크기에 맞게 최적화된 font-weight와 optical-size를 사용합니다"})]}),parameters:{docs:{source:{code:`<Icon name="star" variant="XS" />  {/* 16px, light weight */}
+import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-Gw8DLH43.js";import"./index-GiUgBvb1.js";import"./clsx-C0pa3r6B.js";import"./index-TSvnGxuV.js";const F={title:"Components/Icon",component:s,parameters:{layout:"centered",docs:{description:{component:`
+Material Symbols 기반 아이콘 컴포넌트입니다. 2000+ 아이콘을 지원하며, 크기와 스타일을 세밀하게 제어할 수 있습니다.
+
+## 주요 기능
+
+- **Material Symbols**: Google의 최신 아이콘 시스템 사용
+- **5가지 크기 변형**: XS(16px), SM(20px), MD(24px), LG(32px), XL(40px)
+- **최적화된 렌더링**: 크기별 font-weight, optical-size 자동 조정
+- **유연한 스타일링**: 색상, 크기, filled/outlined 스타일
+- **접근성**: 적절한 aria 속성과 시맨틱 마크업
+- **TypeScript**: 완전한 타입 지원과 자동 완성
+        `}}},tags:["autodocs"],argTypes:{name:{control:"text",description:"Material Symbols icon name (e.g. 'home', 'star', 'settings')"},variant:{control:"select",options:["XS","SM","MD","LG","XL"],description:"Icon size variant with optimized font-weight and optical-size"},filled:{control:"boolean",description:"Whether icon should be filled (solid) or outlined"},size:{control:{type:"range",min:12,max:80,step:2},description:"Custom icon size in pixels (overrides variant size)"},color:{control:"color",description:"Icon color (CSS color value)"}}},t={args:{name:"home",variant:"MD",filled:!1},parameters:{docs:{source:{code:'<Icon name="home" variant="MD" filled={false} />'}}}},a={render:()=>e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{className:"flex gap-6 items-end",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"XS"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"XS (16px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"SM"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"SM (20px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"MD"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"MD (24px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"LG"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"LG (32px)"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",variant:"XL"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"XL (40px)"})]})]}),e.jsx("div",{className:"text-sm text-gray-500",children:"💡 각 variant는 크기에 맞게 최적화된 font-weight와 optical-size를 사용합니다"})]}),parameters:{docs:{source:{code:`<Icon name="star" variant="XS" />  {/* 16px, light weight */}
 <Icon name="star" variant="SM" />  {/* 20px, regular weight */}
 <Icon name="star" variant="MD" />  {/* 24px, regular weight */}
 <Icon name="star" variant="LG" />  {/* 32px, medium weight */}
-<Icon name="star" variant="XL" />  {/* 40px, semibold weight */}`}}}},c={args:{name:"star",variant:"MD",filled:!1,color:"#000",size:void 0},parameters:{docs:{source:{code:`<Icon 
-  name="star" 
-  variant="MD" 
-  filled={false} 
-  color="#000"
-/>`}}}},i={render:()=>e.jsxs("div",{className:"space-y-4",children:[e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"favorite",filled:!1}),e.jsx("div",{className:"text-xs mt-1",children:"Outline"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"favorite",filled:!0}),e.jsx("div",{className:"text-xs mt-1",children:"Filled"})]})]}),e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",filled:!1}),e.jsx("div",{className:"text-xs mt-1",children:"Outline"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",filled:!0}),e.jsx("div",{className:"text-xs mt-1",children:"Filled"})]})]})]}),parameters:{docs:{source:{code:`{/* Outline icons */}
+<Icon name="star" variant="XL" />  {/* 40px, semibold weight */}`}}}},c={render:()=>e.jsxs("div",{className:"space-y-4",children:[e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"favorite",filled:!1}),e.jsx("div",{className:"text-xs mt-1",children:"Outline"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"favorite",filled:!0}),e.jsx("div",{className:"text-xs mt-1",children:"Filled"})]})]}),e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",filled:!1}),e.jsx("div",{className:"text-xs mt-1",children:"Outline"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"star",filled:!0}),e.jsx("div",{className:"text-xs mt-1",children:"Filled"})]})]})]}),parameters:{docs:{source:{code:`{/* Outline icons */}
 <Icon name="favorite" filled={false} />
 <Icon name="star" filled={false} />
 
 {/* Filled icons */}
 <Icon name="favorite" filled={true} />
-<Icon name="star" filled={true} />`}}}},r={render:()=>e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-2 font-medium",children:"Custom Sizes"}),e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:16}),e.jsx("div",{className:"text-xs mt-1",children:"16px"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:24}),e.jsx("div",{className:"text-xs mt-1",children:"24px"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:32}),e.jsx("div",{className:"text-xs mt-1",children:"32px"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:48}),e.jsx("div",{className:"text-xs mt-1",children:"48px"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-2 font-medium",children:"String Sizes"}),e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:"1rem"}),e.jsx("div",{className:"text-xs mt-1",children:"1rem"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:"1.5rem"}),e.jsx("div",{className:"text-xs mt-1",children:"1.5rem"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:"2rem"}),e.jsx("div",{className:"text-xs mt-1",children:"2rem"})]})]})]})]}),parameters:{docs:{source:{code:`{/* Number sizes (converts to px) */}
+<Icon name="star" filled={true} />`}}}},i={render:()=>e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-2 font-medium",children:"Custom Sizes"}),e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:16}),e.jsx("div",{className:"text-xs mt-1",children:"16px"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:24}),e.jsx("div",{className:"text-xs mt-1",children:"24px"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:32}),e.jsx("div",{className:"text-xs mt-1",children:"32px"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:48}),e.jsx("div",{className:"text-xs mt-1",children:"48px"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-2 font-medium",children:"String Sizes"}),e.jsxs("div",{className:"flex gap-4 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:"1rem"}),e.jsx("div",{className:"text-xs mt-1",children:"1rem"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:"1.5rem"}),e.jsx("div",{className:"text-xs mt-1",children:"1.5rem"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings",size:"2rem"}),e.jsx("div",{className:"text-xs mt-1",children:"2rem"})]})]})]})]}),parameters:{docs:{source:{code:`{/* Number sizes (converts to px) */}
 <Icon name="settings" size={16} />
 <Icon name="settings" size={24} />
 <Icon name="settings" size={32} />
@@ -21,7 +27,7 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
 {/* String sizes (use as-is) */}
 <Icon name="settings" size="1rem" />
 <Icon name="settings" size="1.5rem" />
-<Icon name="settings" size="2rem" />`}}}},n={render:()=>e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Semantic Colors"}),e.jsxs("div",{className:"flex gap-6 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"check_circle",color:"#059669"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Success"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"error",color:"#dc2626"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Error"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"warning",color:"#f59e0b"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Warning"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"info",color:"#3b82f6"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Info"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Brand Colors"}),e.jsxs("div",{className:"flex gap-6 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#6366f1"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Primary"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#8b5cf6"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Secondary"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#10b981"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Accent"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#6b7280"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Neutral"})]})]})]}),e.jsx("div",{className:"text-sm text-gray-500",children:"💡 색상은 CSS color 값(hex, rgb, hsl 등)을 모두 지원합니다"})]}),parameters:{docs:{source:{code:`{/* Semantic colors */}
+<Icon name="settings" size="2rem" />`}}}},r={render:()=>e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Semantic Colors"}),e.jsxs("div",{className:"flex gap-6 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"check_circle",color:"#059669"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Success"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"error",color:"#dc2626"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Error"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"warning",color:"#f59e0b"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Warning"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"info",color:"#3b82f6"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Info"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Brand Colors"}),e.jsxs("div",{className:"flex gap-6 items-center",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#6366f1"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Primary"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#8b5cf6"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Secondary"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#10b981"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Accent"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"palette",color:"#6b7280"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"Neutral"})]})]})]}),e.jsx("div",{className:"text-sm text-gray-500",children:"💡 색상은 CSS color 값(hex, rgb, hsl 등)을 모두 지원합니다"})]}),parameters:{docs:{source:{code:`{/* Semantic colors */}
 <Icon name="check_circle" color="#059669" />  {/* Success */}
 <Icon name="error" color="#dc2626" />        {/* Error */}
 <Icon name="warning" color="#f59e0b" />      {/* Warning */}
@@ -29,7 +35,12 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
 
 {/* Brand colors */}
 <Icon name="palette" color="#6366f1" />      {/* Primary */}
-<Icon name="palette" color="#8b5cf6" />      {/* Secondary */}`}}}},m={render:()=>e.jsxs("div",{className:"space-y-8",children:[e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Navigation Icons"}),e.jsxs("div",{className:"grid grid-cols-6 gap-4",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"home"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"home"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"search"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"search"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"menu"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"menu"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"close"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"close"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"arrow_back"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"arrow_back"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"arrow_forward"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"arrow_forward"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Action Icons"}),e.jsxs("div",{className:"grid grid-cols-6 gap-4",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"settings"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"favorite"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"favorite"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"notifications"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"notifications"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"account_circle"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"account_circle"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"edit"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"edit"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"delete"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"delete"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Status Icons"}),e.jsxs("div",{className:"grid grid-cols-6 gap-4",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"check_circle",color:"#059669"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"check_circle"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"error",color:"#dc2626"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"error"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"warning",color:"#f59e0b"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"warning"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"info",color:"#3b82f6"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"info"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"help",color:"#6b7280"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"help"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"visibility"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"visibility"})]})]})]}),e.jsxs("div",{className:"text-xs text-gray-500 mt-4",children:["💡 Material Symbols에서 제공하는 2000+ 아이콘을 모두 사용할 수 있습니다.",e.jsx("br",{}),"전체 아이콘 목록은"," ",e.jsx("a",{href:"https://fonts.google.com/icons",target:"_blank",className:"text-blue-600 hover:underline",rel:"noreferrer",children:"Google Fonts Icons"}),"에서 확인하세요."]})]}),parameters:{docs:{source:{code:`{/* Navigation */}
+<Icon name="palette" color="#8b5cf6" />      {/* Secondary */}`}}}},n={args:{name:"star",variant:"MD",filled:!1,color:"#000000"},parameters:{docs:{source:{code:`<Icon
+  name="star"
+  variant="MD"
+  filled={false}
+  color="#000000"
+/>`}}}},m={render:()=>e.jsxs("div",{className:"space-y-8",children:[e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Navigation Icons"}),e.jsxs("div",{className:"grid grid-cols-6 gap-4",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"home"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"home"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"search"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"search"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"menu"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"menu"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"close"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"close"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"arrow_back"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"arrow_back"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"arrow_forward"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"arrow_forward"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Action Icons"}),e.jsxs("div",{className:"grid grid-cols-6 gap-4",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"settings"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"settings"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"favorite"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"favorite"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"notifications"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"notifications"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"account_circle"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"account_circle"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"edit"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"edit"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"delete"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"delete"})]})]})]}),e.jsxs("div",{children:[e.jsx("div",{className:"text-sm mb-3 font-medium",children:"Status Icons"}),e.jsxs("div",{className:"grid grid-cols-6 gap-4",children:[e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"check_circle",color:"#059669"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"check_circle"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"error",color:"#dc2626"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"error"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"warning",color:"#f59e0b"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"warning"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"info",color:"#3b82f6"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"info"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"help",color:"#6b7280"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"help"})]}),e.jsxs("div",{className:"text-center",children:[e.jsx(s,{name:"visibility"}),e.jsx("div",{className:"text-xs mt-1 text-gray-600",children:"visibility"})]})]})]}),e.jsxs("div",{className:"text-xs text-gray-500 mt-4",children:["💡 Material Symbols에서 제공하는 2000+ 아이콘을 모두 사용할 수 있습니다.",e.jsx("br",{}),"전체 아이콘 목록은"," ",e.jsx("a",{href:"https://fonts.google.com/icons",target:"_blank",className:"text-blue-600 hover:underline",rel:"noreferrer",children:"Google Fonts Icons"}),"에서 확인하세요."]})]}),parameters:{docs:{source:{code:`{/* Navigation */}
 <Icon name="home" />
 <Icon name="search" />
 <Icon name="menu" />
@@ -101,26 +112,6 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
     }
   }
 }`,...(N=(v=a.parameters)==null?void 0:v.docs)==null?void 0:N.source}}};var g,h,j;c.parameters={...c.parameters,docs:{...(g=c.parameters)==null?void 0:g.docs,source:{originalSource:`{
-  args: {
-    name: 'star',
-    variant: 'MD',
-    filled: false,
-    color: '#000',
-    size: undefined
-  },
-  parameters: {
-    docs: {
-      source: {
-        code: \`<Icon 
-  name="star" 
-  variant="MD" 
-  filled={false} 
-  color="#000"
-/>\`
-      }
-    }
-  }
-}`,...(j=(h=c.parameters)==null?void 0:h.docs)==null?void 0:j.source}}};var f,p,I;i.parameters={...i.parameters,docs:{...(f=i.parameters)==null?void 0:f.docs,source:{originalSource:`{
   render: () => <div className='space-y-4'>
       <div className='flex gap-4 items-center'>
         <div className='text-center'>
@@ -157,9 +148,8 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
       }
     }
   }
-}`,...(I=(p=i.parameters)==null?void 0:p.docs)==null?void 0:I.source}}};var u,y,b;r.parameters={...r.parameters,docs:{...(u=r.parameters)==null?void 0:u.docs,source:{originalSource:`{
+}`,...(j=(h=c.parameters)==null?void 0:h.docs)==null?void 0:j.source}}};var p,f,I;i.parameters={...i.parameters,docs:{...(p=i.parameters)==null?void 0:p.docs,source:{originalSource:`{
   render: () => <div className='space-y-6'>
-      {/* Custom sizes */}
       <div>
         <div className='text-sm mb-2 font-medium'>Custom Sizes</div>
         <div className='flex gap-4 items-center'>
@@ -182,7 +172,6 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
         </div>
       </div>
 
-      {/* String sizes */}
       <div>
         <div className='text-sm mb-2 font-medium'>String Sizes</div>
         <div className='flex gap-4 items-center'>
@@ -216,7 +205,7 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
       }
     }
   }
-}`,...(b=(y=r.parameters)==null?void 0:y.docs)==null?void 0:b.source}}};var S,z,w;n.parameters={...n.parameters,docs:{...(S=n.parameters)==null?void 0:S.docs,source:{originalSource:`{
+}`,...(I=(f=i.parameters)==null?void 0:f.docs)==null?void 0:I.source}}};var u,y,b;r.parameters={...r.parameters,docs:{...(u=r.parameters)==null?void 0:u.docs,source:{originalSource:`{
   render: () => <div className='space-y-6'>
       <div>
         <div className='text-sm mb-3 font-medium'>Semantic Colors</div>
@@ -281,7 +270,26 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
       }
     }
   }
-}`,...(w=(z=n.parameters)==null?void 0:z.docs)==null?void 0:w.source}}};var _,M,k;m.parameters={...m.parameters,docs:{...(_=m.parameters)==null?void 0:_.docs,source:{originalSource:`{
+}`,...(b=(y=r.parameters)==null?void 0:y.docs)==null?void 0:b.source}}};var S,w,z;n.parameters={...n.parameters,docs:{...(S=n.parameters)==null?void 0:S.docs,source:{originalSource:`{
+  args: {
+    name: 'star',
+    variant: 'MD',
+    filled: false,
+    color: '#000000'
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: \`<Icon
+  name="star"
+  variant="MD"
+  filled={false}
+  color="#000000"
+/>\`
+      }
+    }
+  }
+}`,...(z=(w=n.parameters)==null?void 0:w.docs)==null?void 0:z.source}}};var _,M,k;m.parameters={...m.parameters,docs:{...(_=m.parameters)==null?void 0:_.docs,source:{originalSource:`{
   render: () => <div className='space-y-8'>
       <div>
         <div className='text-sm mb-3 font-medium'>Navigation Icons</div>
@@ -408,4 +416,4 @@ import{j as e}from"./jsx-runtime-CDt2p4po.js";import{I as s}from"./Icon-D3OLzcWo
       }
     }
   }
-}`,...(k=(M=m.parameters)==null?void 0:M.docs)==null?void 0:k.source}}};const O=["Default","AllVariants","Playground","Filled","CustomSizing","Colors","CommonIcons"];export{a as AllVariants,n as Colors,m as CommonIcons,r as CustomSizing,t as Default,i as Filled,c as Playground,O as __namedExportsOrder,A as default};
+}`,...(k=(M=m.parameters)==null?void 0:M.docs)==null?void 0:k.source}}};const A=["Default","AllVariants","Filled","CustomSizing","Colors","Playground","CommonIcons"];export{a as AllVariants,r as Colors,m as CommonIcons,i as CustomSizing,t as Default,c as Filled,n as Playground,A as __namedExportsOrder,F as default};
