@@ -61,8 +61,8 @@ export const buttonVariants = cva(buttonBase, {
       ].join(' '),
       outlined: [
         'bg-transparent border border-[1.5px] border-primary-500 text-primary-500',
-        'hover:bg-primary-600 hover:text-white hover:border-none',
-        'active:bg-primary-900 active:text-white active:border-none',
+        'hover:bg-primary-600 hover:text-white hover:border-primary-600',
+        'active:bg-primary-900 active:text-white active:border-primary-900',
         'disabled:border-neutral-300 disabled:text-neutral-300',
       ].join(' '),
     },

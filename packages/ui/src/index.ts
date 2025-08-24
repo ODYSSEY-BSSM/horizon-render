@@ -1,19 +1,5 @@
-export { Text, textVariants, type TextVariant } from './components/text';
-export { Icon, iconVariants, type IconVariant } from './components/icon';
-export { Flexbox } from './components/flexbox';
-export { Divider } from './components/divider';
-export {
-  Button,
-  buttonVariants,
-  buttonSlotsBySize,
-  textVariants as buttonTextVariants,
-  iconVariants as buttonIconVariants,
-  type ButtonVariants,
-  type ButtonSlotsBySize,
-} from './components/button';
-export {
-  TextField,
-  textFieldVariants,
-  containerVariants,
-  type TextFieldVariant,
-} from './components/textfield';
+export { Text } from './components/Text/Text';
+export { Icon } from './components/Icon/Icon';
+export { Divider } from './components/Divider/Divider';
+export { Button } from './components/Button/Button';
+export { TextField } from './components/TextField/TextField';
