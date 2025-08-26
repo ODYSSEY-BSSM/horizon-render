@@ -1,4 +1,4 @@
-name: '빌드/설정/의존성'
+name: '빌드 및 설정 작업'
 description: '빌드 시스템, 설정, 의존성 관리 등에 대한 이슈입니다.'
 title: 'chore: '
 labels: ['chore']

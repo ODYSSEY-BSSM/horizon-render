@@ -1,4 +1,4 @@
-name: '버그수정'
+name: '버그 수정'
 description: '버그가 발생했나요?'
 title: 'fix: '
 labels: ['fix']
