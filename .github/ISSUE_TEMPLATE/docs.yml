@@ -1,4 +1,4 @@
-name: '문서 작성/수정'
+name: '문서 작성 및 수정'
 description: '문서 작성 및 수정에 대한 이슈입니다.'
 title: 'docs: '
 labels: ['docs']
