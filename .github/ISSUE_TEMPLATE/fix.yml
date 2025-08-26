@@ -1,7 +1,7 @@
-name: '🐞 버그 리포트'
+name: '🐞 fix: 버그수정'
 description: '버그가 발생했나요?'
-title: '[버그] '
-labels: '버그'
+title: 'fix: '
+labels: ['fix']
 body:
   - type: textarea
     attributes:
