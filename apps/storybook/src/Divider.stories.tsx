@@ -1,6 +1,6 @@
-import { Text } from '@/components/Text/Text';
+import { Text } from '@horizon/ui';
+import { Divider } from '@horizon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Divider } from './Divider';
 
 const meta: Meta<typeof Divider> = {
   title: 'Components/Divider',

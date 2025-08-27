@@ -1,5 +1,6 @@
+import { Button } from '@horizon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from './Button';
+import React from 'react';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -105,7 +106,7 @@ export const Default: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className='flex items-center gap-4'>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
       <Button size='small'>사이즈 스몰</Button>
       <Button size='medium'>사이즈 미디움</Button>
       <Button size='large'>사이즈 라지</Button>
@@ -124,7 +125,7 @@ export const Sizes: Story = {
 
 export const Types: Story = {
   render: () => (
-    <div className='flex items-center gap-4'>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
       <Button variant='contained'>채워진 버튼</Button>
       <Button variant='outlined'>테두리 버튼</Button>
     </div>
@@ -141,8 +142,8 @@ export const Types: Story = {
 
 export const WithIcons: Story = {
   render: () => (
-    <div className='flex flex-col gap-4'>
-      <div className='flex items-center gap-4'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button icon='left' iconName='add'>
           아이템 추가
         </Button>
@@ -151,7 +152,7 @@ export const WithIcons: Story = {
         </Button>
         <Button icon='only' iconName='search' />
       </div>
-      <div className='flex items-center gap-4'>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button variant='outlined' icon='left' iconName='download'>
           다운로드
         </Button>
@@ -160,7 +161,7 @@ export const WithIcons: Story = {
         </Button>
         <Button variant='outlined' icon='only' iconName='favorite' />
       </div>
-      <div className='flex items-center gap-4'>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button icon='left' iconName='star' iconFilled>
           즐겨찾기 (Filled)
         </Button>
@@ -190,7 +191,7 @@ export const WithIcons: Story = {
 
 export const Rounded: Story = {
   render: () => (
-    <div className='flex items-center gap-4'>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
       <Button rounded={false}>각진 모서리</Button>
       <Button rounded={true}>둥근 모서리</Button>
       <Button rounded={true} icon='only' iconName='favorite' />
@@ -209,12 +210,12 @@ export const Rounded: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className='flex flex-col gap-4'>
-      <div className='flex items-center gap-4'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button>기본 상태</Button>
         <Button disabled>비활성화</Button>
       </div>
-      <div className='flex items-center gap-4'>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button variant='outlined'>기본 상태</Button>
         <Button variant='outlined' disabled>
           비활성화
@@ -236,13 +237,13 @@ export const Disabled: Story = {
 
 export const AllCombinations: Story = {
   render: () => (
-    <div className='space-y-6'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <h3 className='text-lg font-semibold mb-4'>채워진 버튼</h3>
-        <div className='space-y-4'>
+        <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px' }}>채워진 버튼</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {(['small', 'medium', 'large'] as const).map((size) => (
-            <div key={size} className='flex items-center gap-4'>
-              <span className='w-16 text-sm'>
+            <div key={size} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <span style={{ width: '64px', fontSize: '14px' }}>
                 {size === 'small' ? '작음' : size === 'medium' ? '보통' : '큼'}
               </span>
               <Button size={size}>텍스트</Button>
@@ -259,11 +260,11 @@ export const AllCombinations: Story = {
       </div>
 
       <div>
-        <h3 className='text-lg font-semibold mb-4'>테두리 버튼</h3>
-        <div className='space-y-4'>
+        <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px' }}>테두리 버튼</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {(['small', 'medium', 'large'] as const).map((size) => (
-            <div key={size} className='flex items-center gap-4'>
-              <span className='w-16 text-sm'>
+            <div key={size} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <span style={{ width: '64px', fontSize: '14px' }}>
                 {size === 'small' ? '작음' : size === 'medium' ? '보통' : '큼'}
               </span>
               <Button size={size} variant='outlined'>
@@ -301,15 +302,15 @@ export const AllCombinations: Story = {
 
 export const LoadingStates: Story = {
   render: () => (
-    <div className='flex flex-col gap-4'>
-      <div className='flex items-center gap-4'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button>정상 상태</Button>
         <Button loading>로딩 중</Button>
         <Button loading loadingText='저장 중...'>
           저장하기
         </Button>
       </div>
-      <div className='flex items-center gap-4'>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button variant='outlined'>정상 상태</Button>
         <Button variant='outlined' loading>
           로딩 중
@@ -318,7 +319,7 @@ export const LoadingStates: Story = {
           파일 업로드
         </Button>
       </div>
-      <div className='flex items-center gap-4'>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button icon='left' iconName='download'>
           다운로드
         </Button>
@@ -347,19 +348,37 @@ export const LoadingStates: Story = {
 
 export const FormButtons: Story = {
   render: () => (
-    <form className='space-y-4 p-4 border rounded-lg max-w-sm'>
+    <form
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        padding: '16px',
+        border: '1px solid #e5e5e5',
+        borderRadius: '8px',
+        maxWidth: '384px',
+      }}
+    >
       <div>
-        <label htmlFor='email' className='block text-sm font-medium mb-1'>
+        <label
+          htmlFor='email'
+          style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '4px' }}
+        >
           이메일
         </label>
         <input
           id='email'
           type='email'
-          className='w-full px-3 py-2 border rounded-md'
+          style={{
+            width: '100%',
+            padding: '8px 12px',
+            border: '1px solid #d1d5db',
+            borderRadius: '6px',
+          }}
           placeholder='example@email.com'
         />
       </div>
-      <div className='flex gap-2'>
+      <div style={{ display: 'flex', gap: '8px' }}>
         <Button type='submit' icon='right' iconName='send'>
           제출
         </Button>
@@ -389,8 +408,8 @@ export const FormButtons: Story = {
 
 export const AsChild: Story = {
   render: () => (
-    <div className='flex flex-col gap-4'>
-      <div className='flex items-center gap-4'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button>일반 버튼</Button>
         <Button asChild>
           <a href='https://github.com' target='_blank' rel='noopener noreferrer'>
@@ -398,7 +417,7 @@ export const AsChild: Story = {
           </a>
         </Button>
       </div>
-      <div className='flex items-center gap-4'>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button variant='outlined' icon='left' iconName='download'>
           일반 다운로드
         </Button>
@@ -408,7 +427,7 @@ export const AsChild: Story = {
           </a>
         </Button>
       </div>
-      <div className='flex items-center gap-4'>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button loading loadingText='로딩 중...'>
           로딩 버튼
         </Button>
