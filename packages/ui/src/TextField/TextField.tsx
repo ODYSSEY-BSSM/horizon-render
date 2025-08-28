@@ -145,7 +145,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           <Text
             as='label'
             variant='O'
-            color={tokens.colors.neutral[400]}
+            color='neutral.400'
             htmlFor={inputId}
             className={labelClassName}
           >
@@ -155,7 +155,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <StyledInputWrapper>
           {hasIcon && icon && (
             <StyledIconWrapper>
-              <Icon name={icon} variant='SM' color={tokens.colors.neutral[400]} />
+              <Icon name={icon} variant='sm' color='neutral.400' />
             </StyledIconWrapper>
           )}
           <StyledInput
@@ -170,7 +170,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         </StyledInputWrapper>
         {error && errorMessage && (
           <StyledErrorMessage>
-            <Text variant='C' color={tokens.colors.warning[200]} textAlign='center'>
+            <Text variant='C' color='warning.200' textAlign='center'>
               {errorMessage}
             </Text>
           </StyledErrorMessage>
