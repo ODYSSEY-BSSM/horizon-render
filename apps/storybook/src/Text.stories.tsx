@@ -14,7 +14,7 @@ const meta: Meta<typeof Text> = {
 
 ## 주요 기능
 
-- **8가지 타이포그래피 변형**: H1, H2, H3, ST, B1, B2, C, O
+- **8가지 타이포그래피 변형**: h1, h2, h3, subtitle, body, small, caption, overline
 - **폴리모픽 렌더링**: \`as\` prop으로 다양한 HTML 요소 렌더링
 - **스타일 커스터마이징**: 색상, 너비, 텍스트 정렬, 말줄임표 등
 - **접근성**: 시맨틱 HTML 요소와 적절한 기본값
@@ -99,10 +99,10 @@ export const AllVariants: Story = {
         H3 - 서브 헤딩 (20px, 굵음)
       </Text>
       <Text variant='ST' as='h4'>
-        ST - 서브타이틀 (16px, 중간)
+        ST - 서브타이틀 (18px, 중간)
       </Text>
-      <Text variant='B1'>B1 - 본문 텍스트 (14px, 보통)</Text>
-      <Text variant='B2'>B2 - 작은 본문 (13px, 보통)</Text>
+      <Text variant='B1'>B1 - 본문 텍스트 (16px, 보통)</Text>
+      <Text variant='B2'>B2 - 작은 본문 (14px, 보통)</Text>
       <Text variant='C'>C - 캡션 텍스트 (12px, 보통)</Text>
       <Text variant='O'>O - 오버라인 (11px, 보통)</Text>
     </div>
@@ -127,32 +127,32 @@ export const AllVariants: Story = {
 export const PolymorphicElements: Story = {
   render: () => (
     <div className='space-y-4'>
-      <Text as='label' variant='O' htmlFor='example'>
+      <Text as='label' variant='overline' htmlFor='example'>
         폼 라벨 (label 요소)
       </Text>
-      <Text as='span' variant='B2'>
+      <Text as='span' variant='small'>
         인라인 텍스트 (span 요소)
       </Text>
-      <Text as='div' variant='B1'>
+      <Text as='div' variant='body'>
         블록 텍스트 (div 요소)
       </Text>
       <ul className='ml-4'>
-        <Text as='li' variant='B2'>
+        <Text as='li' variant='small'>
           목록 아이템 (li 요소)
         </Text>
       </ul>
       <table>
-        <Text as='caption' variant='C'>
+        <Text as='caption' variant='caption'>
           테이블 캡션 (caption 요소)
         </Text>
       </table>
-      <Text as='blockquote' variant='B1' className='border-l-4 pl-4'>
+      <Text as='blockquote' variant='body' className='border-l-4 pl-4'>
         인용구 텍스트 (blockquote 요소)
       </Text>
-      <Text as='strong' variant='B1'>
+      <Text as='strong' variant='body'>
         강조된 텍스트 (strong 요소)
       </Text>
-      <Text as='em' variant='B2'>
+      <Text as='em' variant='small'>
         이탤릭 텍스트 (em 요소)
       </Text>
     </div>
@@ -177,7 +177,7 @@ export const Styling: Story = {
   render: () => (
     <div className='space-y-8'>
       <div>
-        <Text variant='ST' className='mb-4'>
+        <Text variant='subtitle' className='mb-4'>
           색상 커스터마이징
         </Text>
         <div className='space-y-2'>
@@ -190,7 +190,7 @@ export const Styling: Story = {
       </div>
 
       <div style={{ width: '300px' }}>
-        <Text variant='ST' className='mb-4'>
+        <Text variant='subtitle' className='mb-4'>
           텍스트 정렬
         </Text>
         <div className='space-y-2 border p-4 rounded bg-gray-50'>
@@ -204,7 +204,7 @@ export const Styling: Story = {
       </div>
 
       <div>
-        <Text variant='ST' className='mb-4'>
+        <Text variant='subtitle' className='mb-4'>
           너비 제한
         </Text>
         <div className='space-y-4'>
