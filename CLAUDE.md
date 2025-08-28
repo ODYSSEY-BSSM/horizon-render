@@ -32,15 +32,17 @@ pnpm --filter web build    # Build NextJS app
 
 ### Packages
 - **`@horizon/tokens`**: Design system foundation - colors, typography, layout tokens, icon system
-- **`@horizon/ui`**: React components using class-variance-authority pattern
+- **`@horizon/ui`**: React components using emotion/styled pattern
+- **`@horizon/hooks`**: Shared React hooks and utilities
 - **`apps/editor`**: React Flow based visual editor (React + Vite)
 - **`apps/web`**: Main web application (NextJS)
+- **`apps/storybook`**: Component development and documentation
 
 ### Key Architectural Patterns
 
 **Design Token System**: All design decisions centralized in `@horizon/tokens`, auto-integrated into Tailwind CSS via custom plugins. Components consume tokens, never hard-coded values.
 
-**Component Architecture**: Follow the Text component pattern - variant-based with class-variance-authority, TypeScript-first, accessibility built-in. Components export both React component and Tailwind utilities.
+**Component Architecture**: Follow the Text component pattern - variant-based with @emotion/styled, TypeScript-first, accessibility built-in. Components export both React component and Tailwind utilities.
 
 **Workspace Dependencies**: Packages reference each other via `workspace:*` in package.json. Shared configs live in `/configs` directory.
 
@@ -50,7 +52,7 @@ Design tokens automatically become Tailwind utilities. Custom icon utilities gen
 ## Development Patterns
 
 ### Component Development
-1. Start in `@horizon/ui` with component + variants using `cva()`
+1. Start in `@horizon/ui` with component + variants using `@emotion/styled`
 2. Export component and any related utilities
 3. Update package index.ts exports
 
@@ -73,7 +75,7 @@ Design tokens automatically become Tailwind utilities. Custom icon utilities gen
 Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts` for available tokens before creating components.
 
 ### Code Quality Standards
-- **Biome Configuration**: 2-space indent, 100 char line width, double quotes, semicolons
+- **Biome Configuration**: 2-space indent, 100 char line width, single quotes, semicolons
 - **Commit Format**: Korean descriptions with conventional commit types (see README)
 - **Pre-commit hooks**: lint-staged runs Biome on changed files
 - **TypeScript**: Strict mode enabled, path aliases configured
@@ -93,7 +95,7 @@ Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typ
 
 ## Important Files to Check
 - `packages/tokens/src/*` - Design system tokens
-- `packages/ui/src/components/text/*` - Reference component implementation  
+- `packages/ui/src/Text/*` - Reference component implementation  
 - `biome.json` - Code formatting rules
 - Root `package.json` - Workspace scripts and dependencies
 - `configs/` - Shared TypeScript/Vite/Vitest configurations
