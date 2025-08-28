@@ -142,7 +142,6 @@ const StyledText = styled.div<StyledTextProps>`
           fontWeight: tokens.fontWeight.medium,
           lineHeight: tokens.lineHeight[16],
           letterSpacing: tokens.letterSpacing[5],
-          textTransform: 'uppercase',
         };
     }
   }}
