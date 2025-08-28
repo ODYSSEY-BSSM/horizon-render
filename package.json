@@ -14,8 +14,8 @@
     "test": "pnpm -r test",
     "editor": "pnpm --filter editor dev",
     "build-editor": "pnpm --filter editor build",
-    "storybook": "pnpm --filter @horizon/ui storybook",
-    "build-storybook": "pnpm --filter @horizon/ui build-storybook",
+    "storybook": "pnpm --filter @horizon/storybook dev",
+    "build-storybook": "pnpm --filter @horizon/storybook build",
     "clean": "find . -name 'dist' -type d -exec rm -rf {} + && find . -name 'node_modules' -type d -exec rm -rf {} +",
     "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "prepare": "husky"

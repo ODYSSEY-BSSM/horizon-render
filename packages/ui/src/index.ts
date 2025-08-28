@@ -1,5 +1,5 @@
-export { Text } from './components/Text/Text';
-export { Icon } from './components/Icon/Icon';
-export { Divider } from './components/Divider/Divider';
-export { Button } from './components/Button/Button';
-export { TextField } from './components/TextField/TextField';
+export { Text } from './Text';
+export { Icon } from './Icon';
+export { Divider } from './Divider';
+export { Button } from './Button';
+export { TextField } from './TextField';

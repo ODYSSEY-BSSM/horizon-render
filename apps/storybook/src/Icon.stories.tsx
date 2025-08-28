@@ -1,5 +1,6 @@
+import { Icon } from '@horizon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Icon } from './Icon';
+import React from 'react';
 
 const meta: Meta<typeof Icon> = {
   title: 'Components/Icon',
@@ -69,31 +70,31 @@ export const Default: Story = {
 
 export const AllVariants: Story = {
   render: () => (
-    <div className='space-y-6'>
-      <div className='flex gap-6 items-end'>
-        <div className='text-center'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-end' }}>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='star' variant='XS' />
-          <div className='text-xs mt-1 text-gray-600'>XS (16px)</div>
+          <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>XS (16px)</div>
         </div>
-        <div className='text-center'>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='star' variant='SM' />
-          <div className='text-xs mt-1 text-gray-600'>SM (20px)</div>
+          <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>SM (20px)</div>
         </div>
-        <div className='text-center'>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='star' variant='MD' />
-          <div className='text-xs mt-1 text-gray-600'>MD (24px)</div>
+          <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>MD (24px)</div>
         </div>
-        <div className='text-center'>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='star' variant='LG' />
-          <div className='text-xs mt-1 text-gray-600'>LG (32px)</div>
+          <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>LG (32px)</div>
         </div>
-        <div className='text-center'>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='star' variant='XL' />
-          <div className='text-xs mt-1 text-gray-600'>XL (40px)</div>
+          <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>XL (40px)</div>
         </div>
       </div>
 
-      <div className='text-sm text-gray-500'>
+      <div style={{ fontSize: '14px', color: '#6b7280' }}>
         💡 각 variant는 크기에 맞게 최적화된 font-weight와 optical-size를 사용합니다
       </div>
     </div>
@@ -113,26 +114,26 @@ export const AllVariants: Story = {
 
 export const Filled: Story = {
   render: () => (
-    <div className='space-y-4'>
-      <div className='flex gap-4 items-center'>
-        <div className='text-center'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='favorite' filled={false} />
-          <div className='text-xs mt-1'>Outline</div>
+          <div style={{ fontSize: '12px', marginTop: '4px' }}>Outline</div>
         </div>
-        <div className='text-center'>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='favorite' filled={true} />
-          <div className='text-xs mt-1'>Filled</div>
+          <div style={{ fontSize: '12px', marginTop: '4px' }}>Filled</div>
         </div>
       </div>
 
-      <div className='flex gap-4 items-center'>
-        <div className='text-center'>
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='star' filled={false} />
-          <div className='text-xs mt-1'>Outline</div>
+          <div style={{ fontSize: '12px', marginTop: '4px' }}>Outline</div>
         </div>
-        <div className='text-center'>
+        <div style={{ textAlign: 'center' }}>
           <Icon name='star' filled={true} />
-          <div className='text-xs mt-1'>Filled</div>
+          <div style={{ fontSize: '12px', marginTop: '4px' }}>Filled</div>
         </div>
       </div>
     </div>
@@ -154,43 +155,43 @@ export const Filled: Story = {
 
 export const CustomSizing: Story = {
   render: () => (
-    <div className='space-y-6'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <div className='text-sm mb-2 font-medium'>Custom Sizes</div>
-        <div className='flex gap-4 items-center'>
-          <div className='text-center'>
+        <div style={{ fontSize: '14px', marginBottom: '8px', fontWeight: '500' }}>Custom Sizes</div>
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' size={16} />
-            <div className='text-xs mt-1'>16px</div>
+            <div style={{ fontSize: '12px', marginTop: '4px' }}>16px</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' size={24} />
-            <div className='text-xs mt-1'>24px</div>
+            <div style={{ fontSize: '12px', marginTop: '4px' }}>24px</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' size={32} />
-            <div className='text-xs mt-1'>32px</div>
+            <div style={{ fontSize: '12px', marginTop: '4px' }}>32px</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' size={48} />
-            <div className='text-xs mt-1'>48px</div>
+            <div style={{ fontSize: '12px', marginTop: '4px' }}>48px</div>
           </div>
         </div>
       </div>
 
       <div>
-        <div className='text-sm mb-2 font-medium'>String Sizes</div>
-        <div className='flex gap-4 items-center'>
-          <div className='text-center'>
+        <div style={{ fontSize: '14px', marginBottom: '8px', fontWeight: '500' }}>String Sizes</div>
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' size='1rem' />
-            <div className='text-xs mt-1'>1rem</div>
+            <div style={{ fontSize: '12px', marginTop: '4px' }}>1rem</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' size='1.5rem' />
-            <div className='text-xs mt-1'>1.5rem</div>
+            <div style={{ fontSize: '12px', marginTop: '4px' }}>1.5rem</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' size='2rem' />
-            <div className='text-xs mt-1'>2rem</div>
+            <div style={{ fontSize: '12px', marginTop: '4px' }}>2rem</div>
           </div>
         </div>
       </div>
@@ -215,52 +216,56 @@ export const CustomSizing: Story = {
 
 export const Colors: Story = {
   render: () => (
-    <div className='space-y-6'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <div className='text-sm mb-3 font-medium'>Semantic Colors</div>
+        <div style={{ fontSize: '14px', marginBottom: '12px', fontWeight: '500' }}>
+          Semantic Colors
+        </div>
         <div className='flex gap-6 items-center'>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='check_circle' color='#059669' />
-            <div className='text-xs mt-1 text-gray-600'>Success</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Success</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='error' color='#dc2626' />
-            <div className='text-xs mt-1 text-gray-600'>Error</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Error</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='warning' color='#f59e0b' />
-            <div className='text-xs mt-1 text-gray-600'>Warning</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Warning</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='info' color='#3b82f6' />
-            <div className='text-xs mt-1 text-gray-600'>Info</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Info</div>
           </div>
         </div>
       </div>
 
       <div>
-        <div className='text-sm mb-3 font-medium'>Brand Colors</div>
+        <div style={{ fontSize: '14px', marginBottom: '12px', fontWeight: '500' }}>
+          Brand Colors
+        </div>
         <div className='flex gap-6 items-center'>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='palette' color='#6366f1' />
-            <div className='text-xs mt-1 text-gray-600'>Primary</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Primary</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='palette' color='#8b5cf6' />
-            <div className='text-xs mt-1 text-gray-600'>Secondary</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Secondary</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='palette' color='#10b981' />
-            <div className='text-xs mt-1 text-gray-600'>Accent</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Accent</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='palette' color='#6b7280' />
-            <div className='text-xs mt-1 text-gray-600'>Neutral</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>Neutral</div>
           </div>
         </div>
       </div>
 
-      <div className='text-sm text-gray-500'>
+      <div style={{ fontSize: '14px', color: '#6b7280' }}>
         💡 색상은 CSS color 값(hex, rgb, hsl 등)을 모두 지원합니다
       </div>
     </div>
@@ -305,105 +310,117 @@ export const Playground: Story = {
 
 export const CommonIcons: Story = {
   render: () => (
-    <div className='space-y-8'>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
       <div>
-        <div className='text-sm mb-3 font-medium'>Navigation Icons</div>
-        <div className='grid grid-cols-6 gap-4'>
-          <div className='text-center'>
+        <div style={{ fontSize: '14px', marginBottom: '12px', fontWeight: '500' }}>
+          Navigation Icons
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '16px' }}>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='home' />
-            <div className='text-xs mt-1 text-gray-600'>home</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>home</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='search' />
-            <div className='text-xs mt-1 text-gray-600'>search</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>search</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='menu' />
-            <div className='text-xs mt-1 text-gray-600'>menu</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>menu</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='close' />
-            <div className='text-xs mt-1 text-gray-600'>close</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>close</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='arrow_back' />
-            <div className='text-xs mt-1 text-gray-600'>arrow_back</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>arrow_back</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='arrow_forward' />
-            <div className='text-xs mt-1 text-gray-600'>arrow_forward</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>
+              arrow_forward
+            </div>
           </div>
         </div>
       </div>
 
       <div>
-        <div className='text-sm mb-3 font-medium'>Action Icons</div>
-        <div className='grid grid-cols-6 gap-4'>
-          <div className='text-center'>
+        <div style={{ fontSize: '14px', marginBottom: '12px', fontWeight: '500' }}>
+          Action Icons
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '16px' }}>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='settings' />
-            <div className='text-xs mt-1 text-gray-600'>settings</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>settings</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='favorite' />
-            <div className='text-xs mt-1 text-gray-600'>favorite</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>favorite</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='notifications' />
-            <div className='text-xs mt-1 text-gray-600'>notifications</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>
+              notifications
+            </div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='account_circle' />
-            <div className='text-xs mt-1 text-gray-600'>account_circle</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>
+              account_circle
+            </div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='edit' />
-            <div className='text-xs mt-1 text-gray-600'>edit</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>edit</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='delete' />
-            <div className='text-xs mt-1 text-gray-600'>delete</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>delete</div>
           </div>
         </div>
       </div>
 
       <div>
-        <div className='text-sm mb-3 font-medium'>Status Icons</div>
-        <div className='grid grid-cols-6 gap-4'>
-          <div className='text-center'>
+        <div style={{ fontSize: '14px', marginBottom: '12px', fontWeight: '500' }}>
+          Status Icons
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '16px' }}>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='check_circle' color='#059669' />
-            <div className='text-xs mt-1 text-gray-600'>check_circle</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>check_circle</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='error' color='#dc2626' />
-            <div className='text-xs mt-1 text-gray-600'>error</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>error</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='warning' color='#f59e0b' />
-            <div className='text-xs mt-1 text-gray-600'>warning</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>warning</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='info' color='#3b82f6' />
-            <div className='text-xs mt-1 text-gray-600'>info</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>info</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='help' color='#6b7280' />
-            <div className='text-xs mt-1 text-gray-600'>help</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>help</div>
           </div>
-          <div className='text-center'>
+          <div style={{ textAlign: 'center' }}>
             <Icon name='visibility' />
-            <div className='text-xs mt-1 text-gray-600'>visibility</div>
+            <div style={{ fontSize: '12px', marginTop: '4px', color: '#6b7280' }}>visibility</div>
           </div>
         </div>
       </div>
 
-      <div className='text-xs text-gray-500 mt-4'>
+      <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '16px' }}>
         💡 Material Symbols에서 제공하는 2000+ 아이콘을 모두 사용할 수 있습니다.
         <br />
         전체 아이콘 목록은{' '}
         <a
           href='https://fonts.google.com/icons'
           target='_blank'
-          className='text-blue-600 hover:underline'
+          style={{ color: '#3b82f6', textDecoration: 'none' }}
           rel='noreferrer'
         >
           Google Fonts Icons

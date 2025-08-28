@@ -1,0 +1,25 @@
+{
+  "name": "@horizon/storybook",
+  "version": "1.0.0",
+  "description": "Storybook for Horizon UI components",
+  "private": true,
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@horizon/ui": "workspace:*",
+    "@horizon/tokens": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "storybook": "^8.4.7",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32"
+  }
+}
