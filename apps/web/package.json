@@ -2,6 +2,7 @@
   "name": "web",
   "version": "1.0.0",
   "description": "NextJS web application for Horizon Render",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
