@@ -155,7 +155,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <StyledInputWrapper>
           {hasIcon && icon && (
             <StyledIconWrapper>
-              <Icon name={icon} variant='sm' color='neutral.400' />
+              <Icon name={icon} variant='SM' color='neutral.400' />
             </StyledIconWrapper>
           )}
           <StyledInput
