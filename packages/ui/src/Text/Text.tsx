@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
+import { useMemo } from 'react';
 
 type ColorToken =
   | `primary.${keyof typeof tokens.colors.primary}`
@@ -58,7 +59,7 @@ const createTextStyle = (
   font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
   font-weight: ${tokens.fontWeight[fontWeight]};
   line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
-  letter-spacing: ${(tokens.letterSpacing as any)[letterSpacing]};
+  letter-spacing: ${(tokens.letterSpacing as Record<string | number, string>)[letterSpacing]};
   ${textTransform ? `text-transform: ${textTransform};` : ''}
 `;
 
@@ -97,40 +98,53 @@ interface StyledTextProps {
   ellipsis?: boolean;
 }
 
+const getColorValue = (color: ColorToken | undefined): string => {
+  if (!color) return 'inherit';
+  const [colorGroup, shade] = color.split('.') as [keyof typeof tokens.colors, string];
+  const colorObject = tokens.colors[colorGroup];
+  return (colorObject as Record<string, string>)[shade];
+};
+
+const getWidthValue = (width: string | number | undefined): string => {
+  if (!width) return 'auto';
+  return typeof width === 'number' ? `${width}px` : width;
+};
+
+const ellipsisStyles = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const StyledText = styled.div<StyledTextProps>`
-    font-family: 'SUIT Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: ${tokens.fontFamily.suit.join(', ')};
     margin: 0;
 
     ${({ variant }) => getTextStyle(variant)}
 
-    color: ${({ color }) => {
-      if (!color) return 'inherit';
-      const [colorGroup, shade] = color.split('.') as [keyof typeof tokens.colors, string];
-      return (tokens.colors[colorGroup] as any)[shade];
-    }};
-    width: ${({ width }) => (width ? (typeof width === 'number' ? `${width}px` : width) : 'auto')};
+    color: ${({ color }) => getColorValue(color)};
+    width: ${({ width }) => getWidthValue(width)};
     text-align: ${({ textAlign = 'left' }) => textAlign};
     white-space: ${({ whiteSpace = 'normal', ellipsis }) => (ellipsis ? 'nowrap' : whiteSpace)};
 
-    ${({ ellipsis }) =>
-      ellipsis &&
-      css`
-        overflow: hidden;
-        text-overflow: ellipsis;
-    `}
+    ${({ ellipsis }) => ellipsis && ellipsisStyles}
 `;
 
-interface TextProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
+type BaseTextProps = {
   variant?: TextVariant;
-  as?: AllowedHTMLElement;
   children: React.ReactNode;
   color?: ColorToken;
   width?: string | number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
   whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
   ellipsis?: boolean;
-  htmlFor?: string;
-}
+};
+
+type TextPropsWithAs<T extends AllowedHTMLElement> = BaseTextProps &
+  Omit<React.HTMLAttributes<HTMLElement>, 'color'> & {
+    as?: T;
+  } & (T extends 'label' ? { htmlFor?: string } : Record<string, never>);
+
+type TextProps = TextPropsWithAs<AllowedHTMLElement>;
 
 export const Text = ({
   variant = 'B1',
@@ -141,10 +155,13 @@ export const Text = ({
   textAlign,
   whiteSpace,
   ellipsis = false,
-  htmlFor,
   ...restProps
 }: TextProps) => {
-  const element = as || getSemanticElement(variant);
+  const element = useMemo(() => as || getSemanticElement(variant), [as, variant]);
+
+  const htmlFor = 'htmlFor' in restProps ? restProps.htmlFor : undefined;
+  const otherProps =
+    'htmlFor' in restProps ? (({ htmlFor, ...rest }) => rest)(restProps) : restProps;
 
   return (
     <StyledText
@@ -156,7 +173,7 @@ export const Text = ({
       whiteSpace={whiteSpace}
       ellipsis={ellipsis}
       {...(htmlFor && element === 'label' && { htmlFor })}
-      {...restProps}
+      {...otherProps}
     >
       {children}
     </StyledText>
