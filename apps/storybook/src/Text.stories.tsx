@@ -54,20 +54,20 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Text variant='H1'>H1 - Heading 1</Text>
-      <Text variant='H2'>H2 - Heading 2</Text>
-      <Text variant='H3'>H3 - Heading 3</Text>
-      <Text variant='ST'>ST - Subtitle</Text>
-      <Text variant='B1'>B1 - Body 1</Text>
-      <Text variant='B2'>B2 - Body 2</Text>
-      <Text variant='C'>C - Caption</Text>
-      <Text variant='O'>O - Overline</Text>
+      <Text variant='H1'>H1 - 헤딩 1</Text>
+      <Text variant='H2'>H2 - 헤딩 2</Text>
+      <Text variant='H3'>H3 - 헤딩 3</Text>
+      <Text variant='ST'>ST - 서브타이틀</Text>
+      <Text variant='B1'>B1 - 본문 1</Text>
+      <Text variant='B2'>B2 - 본문 2</Text>
+      <Text variant='C'>C - 캡션</Text>
+      <Text variant='O'>O - 오버라인</Text>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'All available typography variants',
+        story: '모든 타이포그래피 변형 예시',
       },
     },
   },
@@ -76,16 +76,16 @@ export const Variants: Story = {
 export const Colors: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <Text color='#3b82f6'>Blue text</Text>
-      <Text color='#dc2626'>Red text</Text>
-      <Text color='#059669'>Green text</Text>
-      <Text color='#7c3aed'>Purple text</Text>
+      <Text color='#3b82f6'>파란색 텍스트</Text>
+      <Text color='#dc2626'>빨간색 텍스트</Text>
+      <Text color='#059669'>초록색 텍스트</Text>
+      <Text color='#7c3aed'>보라색 텍스트</Text>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'Custom text colors',
+        story: '커스텀 텍스트 색상',
       },
     },
   },
@@ -94,18 +94,18 @@ export const Colors: Story = {
 export const Alignment: Story = {
   render: () => (
     <div style={{ width: '300px', border: '1px solid #e5e7eb', padding: '16px' }}>
-      <Text textAlign='left'>Left aligned text</Text>
-      <Text textAlign='center'>Center aligned text</Text>
-      <Text textAlign='right'>Right aligned text</Text>
+      <Text textAlign='left'>왼쪽 정렬 텍스트</Text>
+      <Text textAlign='center'>가운데 정렬 텍스트</Text>
+      <Text textAlign='right'>오른쪽 정렬 텍스트</Text>
       <Text textAlign='justify'>
-        Justified text that spans multiple lines to demonstrate the justify alignment behavior.
+        여러 줄로 표시되는 텍스트로, 양쪽 정렬(Justify) 동작을 보여줍니다.
       </Text>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'Text alignment options',
+        story: '텍스트 정렬 옵션',
       },
     },
   },
@@ -115,17 +115,17 @@ export const Ellipsis: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div style={{ width: '200px', border: '1px solid #e5e7eb', padding: '8px' }}>
-        <Text ellipsis>This is a very long text that will be truncated with ellipsis</Text>
+        <Text ellipsis>너무 긴 텍스트는 말줄임표로 잘립니다</Text>
       </div>
       <div style={{ width: '200px', border: '1px solid #e5e7eb', padding: '8px' }}>
-        <Text>This is a very long text that will wrap to multiple lines</Text>
+        <Text>너무 긴 텍스트는 여러 줄로 자동 줄바꿈됩니다</Text>
       </div>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'Text overflow handling with ellipsis',
+        story: '말줄임표(ellipsis) 텍스트 오버플로우 처리',
       },
     },
   },
