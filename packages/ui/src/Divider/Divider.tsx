@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
+import { useMemo } from 'react';
 
 export const DIVIDER_CONSTANTS = {
   SPACING: {
@@ -30,6 +31,20 @@ const getSpacingValue = (spacing: DividerSpacing | number | undefined) => {
   return typeof spacing === 'string' ? DIVIDER_CONSTANTS.SPACING[spacing] : `${spacing}px`;
 };
 
+const getBorderStyle = () => `${tokens.stroke.weight} solid ${tokens.stroke.color}`;
+
+const createSpacingStyles = (orientation: DividerOrientation, spacingValue: string) => {
+  return orientation === 'horizontal'
+    ? css`
+        margin-top: ${spacingValue};
+        margin-bottom: ${spacingValue};
+      `
+    : css`
+        margin-left: ${spacingValue};
+        margin-right: ${spacingValue};
+      `;
+};
+
 const StyledDividerContainer = styled.div<DividerStyleProps>`
   display: flex;
   align-items: center;
@@ -47,31 +62,21 @@ const StyledDividerContainer = styled.div<DividerStyleProps>`
   ${({ spacing, orientation }) => {
     const spacingValue = getSpacingValue(spacing);
     if (!spacingValue) return '';
-
-    return orientation === 'horizontal'
-      ? css`
-      margin-top: ${spacingValue};
-      margin-bottom: ${spacingValue};
-    `
-      : css`
-      margin-left: ${spacingValue};
-      margin-right: ${spacingValue};
-    `;
+    return createSpacingStyles(orientation, spacingValue);
   }}
 `;
 
 const StyledDividerLine = styled.div<{ orientation: DividerOrientation }>`
   flex: 1;
-  border-color: ${tokens.colors.neutral[300]};
   
   ${({ orientation }) =>
     orientation === 'horizontal'
       ? css`
-    border-top: 1px solid;
-  `
+          border-top: ${getBorderStyle()};
+        `
       : css`
-    border-left: 1px solid;
-  `}
+          border-left: ${getBorderStyle()};
+        `}
 `;
 
 const StyledDividerContent = styled.div<{ orientation: DividerOrientation }>`
@@ -87,33 +92,25 @@ const StyledDividerContent = styled.div<{ orientation: DividerOrientation }>`
 
 const StyledVerticalDivider = styled.div<DividerStyleProps>`
   height: 100%;
-  border-left: 1px solid ${tokens.colors.neutral[300]};
+  border-left: ${getBorderStyle()};
   
   ${({ spacing }) => {
     const spacingValue = getSpacingValue(spacing);
     if (!spacingValue) return '';
-
-    return css`
-      margin-left: ${spacingValue};
-      margin-right: ${spacingValue};
-    `;
+    return createSpacingStyles('vertical', spacingValue);
   }}
 `;
 
 const StyledHorizontalDivider = styled.hr<DividerStyleProps>`
   width: 100%;
   border: none;
-  border-top: 1px solid ${tokens.colors.neutral[300]};
+  border-top: ${getBorderStyle()};
   margin: 0;
   
   ${({ spacing }) => {
     const spacingValue = getSpacingValue(spacing);
     if (!spacingValue) return '';
-
-    return css`
-      margin-top: ${spacingValue};
-      margin-bottom: ${spacingValue};
-    `;
+    return createSpacingStyles('horizontal', spacingValue);
   }}
 `;
 
@@ -130,6 +127,17 @@ export const Divider = ({
   ...props
 }: DividerProps) => {
   const hasChildren = Boolean(children);
+
+  const accessibilityProps = useMemo(() => {
+    if (orientation === 'vertical') {
+      return {
+        role: 'separator',
+        'aria-orientation': 'vertical' as const,
+        tabIndex: -1,
+      };
+    }
+    return {};
+  }, [orientation]);
 
   if (hasChildren) {
     return (
@@ -152,9 +160,7 @@ export const Divider = ({
         orientation={orientation}
         spacing={spacing}
         hasChildren={hasChildren}
-        role='separator'
-        aria-orientation='vertical'
-        tabIndex={-1}
+        {...accessibilityProps}
         {...props}
       />
     );
