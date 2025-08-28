@@ -1,27 +1,21 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
+import type { CSSProperties } from 'react';
+import { toPx } from '../toPx';
 
 export type TextVariant = 'H1' | 'H2' | 'H3' | 'ST' | 'B1' | 'B2' | 'C' | 'O';
 
 export type AllowedHTMLElement = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span' | 'div' | 'label';
-
-interface StyledTextProps {
-  variant: TextVariant;
-  color?: string;
-  width?: string | number;
-  textAlign?: 'left' | 'center' | 'right' | 'justify';
-  whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
-  ellipsis?: boolean;
-}
 
 export interface TextProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
   variant?: TextVariant;
   children: React.ReactNode;
   color?: string;
   width?: string | number;
-  textAlign?: 'left' | 'center' | 'right' | 'justify';
-  whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
+  textAlign?: CSSProperties['textAlign'];
+  whiteSpace?: CSSProperties['whiteSpace'];
   ellipsis?: boolean;
   as?: AllowedHTMLElement;
   htmlFor?: string;
@@ -46,65 +40,68 @@ const getDefaultElement = (variant: TextVariant): AllowedHTMLElement => {
   }
 };
 
-const variantStyles = {
-  H1: {
+const variantStyles: Record<TextVariant, ReturnType<typeof css>> = {
+  H1: css({
     fontSize: tokens.fontSize[32],
     fontWeight: tokens.fontWeight.heavy,
     lineHeight: tokens.lineHeight[44],
     letterSpacing: tokens.letterSpacing['-2'],
-  },
-  H2: {
+  }),
+  H2: css({
     fontSize: tokens.fontSize[24],
     fontWeight: tokens.fontWeight.extrabold,
     lineHeight: tokens.lineHeight[34],
     letterSpacing: tokens.letterSpacing['-1.5'],
-  },
-  H3: {
+  }),
+  H3: css({
     fontSize: tokens.fontSize[20],
     fontWeight: tokens.fontWeight.bold,
     lineHeight: tokens.lineHeight[28],
     letterSpacing: tokens.letterSpacing['-1'],
-  },
-  ST: {
+  }),
+  ST: css({
     fontSize: tokens.fontSize[18],
     fontWeight: tokens.fontWeight.semibold,
     lineHeight: tokens.lineHeight[26],
     letterSpacing: tokens.letterSpacing[0],
-  },
-  B1: {
+  }),
+  B1: css({
     fontSize: tokens.fontSize[16],
     fontWeight: tokens.fontWeight.regular,
     lineHeight: tokens.lineHeight[24],
     letterSpacing: tokens.letterSpacing[0],
-  },
-  B2: {
+  }),
+  B2: css({
     fontSize: tokens.fontSize[14],
     fontWeight: tokens.fontWeight.light,
     lineHeight: tokens.lineHeight[22],
     letterSpacing: tokens.letterSpacing[0],
-  },
-  C: {
+  }),
+  C: css({
     fontSize: tokens.fontSize[12],
     fontWeight: tokens.fontWeight.extralight,
     lineHeight: tokens.lineHeight[18],
     letterSpacing: tokens.letterSpacing[1],
-  },
-  O: {
+  }),
+  O: css({
     fontSize: tokens.fontSize[11],
     fontWeight: tokens.fontWeight.medium,
     lineHeight: tokens.lineHeight[16],
     letterSpacing: tokens.letterSpacing[5],
-  },
+  }),
 };
+
+const shouldForwardProp = (prop: string) =>
+  ['variant', 'ellipsis', 'whiteSpace', 'textAlign', 'width', 'color'].indexOf(prop) === -1;
 
 export const Text = ({
   variant = 'B1',
   as,
   children,
-  color,
-  width,
-  textAlign,
-  whiteSpace,
+  color = 'inherit',
+  width = 'auto',
+  textAlign = 'left',
+  whiteSpace = 'normal',
   ellipsis = false,
   ...restProps
 }: TextProps) => {
@@ -126,19 +123,28 @@ export const Text = ({
   );
 };
 
-const StyledText = styled.div<StyledTextProps>`
+interface StyledTextProps {
+  variant: TextVariant;
+  color?: string;
+  width?: string | number;
+  textAlign?: CSSProperties['textAlign'];
+  whiteSpace?: CSSProperties['whiteSpace'];
+  ellipsis?: boolean;
+}
+
+const StyledText = styled('div', { shouldForwardProp })<StyledTextProps>`
     font-family: ${tokens.fontFamily.suit.join(', ')};
-    margin: 0;
-    color: ${({ color = 'inherit' }) => color};
-    width: ${({ width }) => (width ? (typeof width === 'number' ? `${width}px` : width) : 'auto')};
-    text-align: ${({ textAlign = 'left' }) => textAlign};
-    white-space: ${({ whiteSpace = 'normal', ellipsis }) => (ellipsis ? 'nowrap' : whiteSpace)};
+    ${({ color }) => color && `color: ${color};`}
+    width: ${({ width }) => toPx(width)};
+    text-align: ${({ textAlign }) => textAlign};
+    ${({ whiteSpace, ellipsis }) =>
+      ellipsis
+        ? {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }
+        : { whiteSpace }};
 
     ${({ variant }) => variantStyles[variant]};
-
-    ${({ ellipsis }) =>
-      ellipsis && {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      }}
 `;
