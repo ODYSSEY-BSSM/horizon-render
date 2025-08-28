@@ -1,77 +1,35 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { useMemo } from 'react';
+import { toPx } from '../toPx';
 
-type ColorToken =
-  | `primary.${keyof typeof tokens.colors.primary}`
-  | `accent.${keyof typeof tokens.colors.accent}`
-  | `neutral.${keyof typeof tokens.colors.neutral}`
-  | `warning.${keyof typeof tokens.colors.warning}`;
+export type IconVariant = 'XS' | 'SM' | 'MD' | 'LG' | 'XL';
 
-export type IconVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-
-const iconSizes = {
-  xs: { size: 16, weight: tokens.fontWeight.light, opsz: tokens.icons.opticalSize[20] },
-  sm: { size: 20, weight: tokens.fontWeight.regular, opsz: tokens.icons.opticalSize[24] },
-  md: { size: 24, weight: tokens.fontWeight.regular, opsz: tokens.icons.opticalSize[24] },
-  lg: { size: 32, weight: tokens.fontWeight.medium, opsz: tokens.icons.opticalSize[40] },
-  xl: { size: 40, weight: tokens.fontWeight.semibold, opsz: tokens.icons.opticalSize[48] },
-} as const;
-
-const getColorValue = (color: ColorToken | undefined): string => {
-  if (!color) return 'inherit';
-  const [colorGroup, shade] = color.split('.') as [keyof typeof tokens.colors, string];
-  const colorObject = tokens.colors[colorGroup];
-  return (colorObject as Record<string, string>)[shade];
-};
-
-const getSizeValue = (variant: IconVariant, size: number | string | undefined): string => {
-  if (size) return typeof size === 'number' ? `${size}px` : size;
-  return `${iconSizes[variant].size}px`;
-};
-
-const getAccessibilityProps = (decorative: boolean, ariaLabel?: string, name?: string) => {
-  if (decorative) return { 'aria-hidden': true };
-  return { 'aria-label': ariaLabel || name };
-};
-
-interface StyledIconProps {
-  variant: IconVariant;
-  filled: boolean;
-  size?: number | string;
-  color?: ColorToken;
-}
-
-const StyledIcon = styled.span<StyledIconProps>`
-  font-family: ${tokens.fontFamily.icon.join(', ')};
-  user-select: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  
-  font-size: ${({ variant, size }) => getSizeValue(variant, size)};
-  color: ${({ color }) => getColorValue(color)};
-  
-  font-variation-settings: 
-    'FILL' ${({ filled }) => (filled ? '1' : '0')},
-    'wght' ${({ variant }) => iconSizes[variant].weight},
-    'GRAD' ${tokens.icons.grade[0]},
-    'opsz' ${({ variant }) => iconSizes[variant].opsz};
-`;
-
-interface IconProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
+export interface IconProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
   name: string;
   variant?: IconVariant;
   filled?: boolean;
   size?: number | string;
-  color?: ColorToken;
+  color?: string;
   decorative?: boolean;
 }
 
+const iconSizes = {
+  XS: { size: 16, wght: tokens.fontWeight.light, opsz: tokens.icons.opticalSize[20] },
+  SM: { size: 20, wght: tokens.fontWeight.regular, opsz: tokens.icons.opticalSize[24] },
+  MD: { size: 24, wght: tokens.fontWeight.regular, opsz: tokens.icons.opticalSize[24] },
+  LG: { size: 32, wght: tokens.fontWeight.medium, opsz: tokens.icons.opticalSize[40] },
+  XL: { size: 40, wght: tokens.fontWeight.semibold, opsz: tokens.icons.opticalSize[48] },
+} as const;
+
+const shouldForwardProp = (prop: string) =>
+  ['variant', 'filled', 'size', 'color', 'decorative'].indexOf(prop) === -1;
+
 export const Icon = ({
   name,
-  variant = 'md',
+  variant = 'MD',
   filled = false,
   size,
   color,
@@ -79,10 +37,10 @@ export const Icon = ({
   'aria-label': ariaLabel,
   ...restProps
 }: IconProps) => {
-  const accessibilityProps = useMemo(
-    () => getAccessibilityProps(decorative, ariaLabel, name),
-    [decorative, ariaLabel, name]
-  );
+  const accessibilityProps = useMemo(() => {
+    if (decorative) return { 'aria-hidden': true };
+    return { 'aria-label': ariaLabel || name };
+  }, [decorative, ariaLabel, name]);
 
   return (
     <StyledIcon
@@ -97,3 +55,31 @@ export const Icon = ({
     </StyledIcon>
   );
 };
+
+interface StyledIconProps {
+  variant: IconVariant;
+  filled: boolean;
+  size?: number | string;
+  color?: string;
+}
+
+const StyledIcon = styled('span', { shouldForwardProp })<StyledIconProps>`
+  font-family: ${tokens.fontFamily.icon.join(', ')};
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  ${({ color }) => color && `color: ${color};`}
+  ${({ size }) => size && `font-size: ${toPx(size)};`}
+  
+  ${({ variant, filled }) => {
+    const fillValue = filled ? '1' : '0';
+    const settings = iconSizes[variant];
+
+    return css({
+      fontSize: `${settings.size}px`,
+      fontVariationSettings: `'FILL' ${fillValue}, 'wght' ${settings.wght}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${settings.opsz}`,
+    });
+  }}
+`;
