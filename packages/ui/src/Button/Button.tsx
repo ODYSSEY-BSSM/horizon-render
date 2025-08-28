@@ -1,15 +1,11 @@
+/**
+ * FIXME: 현재 variant 'contained'랑 'outlined' 크기가 다름. 확인 후 수정 이슈 요청
+ */
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import { cloneElement, isValidElement } from 'react';
-
-export const ICON_CONSTANTS = {
-  FILL: {
-    FILLED: '1',
-    OUTLINED: '0',
-  },
-} as const;
+import { cloneElement, isValidElement, useMemo } from 'react';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonVariant = 'contained' | 'outlined';
@@ -23,102 +19,90 @@ interface ButtonStyleProps {
   disabled: boolean;
 }
 
-const getTextStyles = (size: ButtonSize) => {
-  const styles = {
-    small: css`
-      font-size: 13px;
-      font-weight: ${tokens.fontWeight.semibold};
-      line-height: 18px;
-      letter-spacing: normal;
-    `,
-    medium: css`
-      font-size: 14px;
-      font-weight: ${tokens.fontWeight.semibold};
-      line-height: 20px;
-      letter-spacing: normal;
-    `,
-    large: css`
-      font-size: 16px;
-      font-weight: ${tokens.fontWeight.semibold};
-      line-height: 24px;
-      letter-spacing: normal;
-    `,
-  };
-  return styles[size];
-};
+const createTextStyle = (fontSize: number, lineHeight: number) => css`
+  font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
+  font-weight: ${tokens.fontWeight.semibold};
+  line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
+  letter-spacing: ${tokens.letterSpacing[0]};
+`;
+
+const TEXT_STYLES = {
+  small: createTextStyle(13, 18),
+  medium: createTextStyle(14, 20),
+  large: createTextStyle(16, 24),
+} as const;
+
+const getTextStyles = (size: ButtonSize) => TEXT_STYLES[size];
+
+const ICON_CONFIGS = {
+  small: { fontSize: 16, fontWeight: 'regular' as const, grad: 0, opsz: 20 },
+  medium: { fontSize: 20, fontWeight: 'regular' as const, grad: 0, opsz: 24 },
+  large: { fontSize: 24, fontWeight: 'medium' as const, grad: 25, opsz: 40 },
+} as const;
 
 const getIconStyles = (size: ButtonSize) => {
-  const styles = {
-    small: {
-      fontSize: '16px',
-      fontWeight: tokens.fontWeight.regular,
-      wght: tokens.fontWeight.regular,
-      grad: tokens.icons.grade[0],
-      opsz: tokens.icons.opticalSize[20],
-    },
-    medium: {
-      fontSize: '20px',
-      fontWeight: tokens.fontWeight.regular,
-      wght: tokens.fontWeight.regular,
-      grad: tokens.icons.grade[0],
-      opsz: tokens.icons.opticalSize[24],
-    },
-    large: {
-      fontSize: '24px',
-      fontWeight: tokens.fontWeight.medium,
-      wght: tokens.fontWeight.medium,
-      grad: tokens.icons.grade[25],
-      opsz: tokens.icons.opticalSize[40],
-    },
+  const config = ICON_CONFIGS[size];
+  return {
+    fontSize: `${config.fontSize}px`,
+    fontWeight: tokens.fontWeight[config.fontWeight],
+    wght: tokens.fontWeight[config.fontWeight],
+    grad: tokens.icons.grade[config.grad as keyof typeof tokens.icons.grade],
+    opsz: tokens.icons.opticalSize[config.opsz as keyof typeof tokens.icons.opticalSize],
   };
-  return styles[size];
 };
 
-const getGapSize = (size: ButtonSize) => {
-  const gaps = {
-    small: '6px',
-    medium: '8px',
-    large: '10px',
-  };
-  return gaps[size];
-};
+const GAP_SIZES = {
+  small: '6px',
+  medium: '8px',
+  large: '10px',
+} as const;
 
-const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
+const getGapSize = (size: ButtonSize) => GAP_SIZES[size];
+
+const HORIZONTAL_PADDINGS = {
+  small: '16px',
+  medium: '20px',
+  large: '24px',
+} as const;
+
+const VERTICAL_PADDING = '10px';
+const ICON_PADDING = '10px';
+
+const getPadding = (size: ButtonSize, iconPosition: IconPosition, variant: ButtonVariant) => {
+  const borderWidth = variant === 'outlined' ? 2 : 0;
+  const adjustedVerticalPadding = `calc(${VERTICAL_PADDING} - ${borderWidth}px)`;
+  const adjustedIconPadding = `calc(${ICON_PADDING} - ${borderWidth}px)`;
+
   if (iconPosition === 'only') {
-    return '10px';
+    return borderWidth > 0 ? adjustedIconPadding : ICON_PADDING;
   }
 
-  const horizontal = {
-    small: '16px',
-    medium: '20px',
-    large: '24px',
-  };
-
-  const vertical = '10px';
+  const horizontal = `calc(${HORIZONTAL_PADDINGS[size]} - ${borderWidth}px)`;
 
   if (iconPosition === 'left') {
-    return `${vertical} ${horizontal[size]} ${vertical} 10px`;
+    return `${adjustedVerticalPadding} ${horizontal} ${adjustedVerticalPadding} ${adjustedIconPadding}`;
   }
   if (iconPosition === 'right') {
-    return `${vertical} 10px ${vertical} ${horizontal[size]}`;
+    return `${adjustedVerticalPadding} ${adjustedIconPadding} ${adjustedVerticalPadding} ${horizontal}`;
   }
 
-  return `${vertical} ${horizontal[size]}`;
+  return `${adjustedVerticalPadding} ${horizontal}`;
 };
 
 const StyledButton = styled.button<ButtonStyleProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: 'SUIT Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-family: ${tokens.fontFamily.suit.join(', ')};
   user-select: none;
   transition: all 0.2s ease-in-out;
-  border: none;
+  border: 0 solid transparent;
   cursor: pointer;
   flex-shrink: 0;
+  box-sizing: border-box;
   
   gap: ${({ size }) => getGapSize(size)};
-  padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
+  padding: ${({ size, iconPosition, variant }) => getPadding(size, iconPosition, variant)};
   border-radius: ${({ rounded }) => (rounded ? '50px' : '8px')};
   
   ${({ size }) => getTextStyles(size)}
@@ -140,24 +124,27 @@ const StyledButton = styled.button<ButtonStyleProps>`
       : css`
           background-color: transparent;
           color: ${tokens.colors.primary[500]};
-          border: 1.5px solid ${tokens.colors.primary[500]};
+          box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
           
           &:hover:not(:disabled) {
             background-color: ${tokens.colors.primary[600]};
             color: white;
-            border-color: ${tokens.colors.primary[600]};
+            box-shadow: inset 0 0 0 2px ${tokens.colors.primary[600]};
           }
           
           &:active:not(:disabled) {
             background-color: ${tokens.colors.primary[900]};
             color: white;
-            border-color: ${tokens.colors.primary[900]};
+            box-shadow: inset 0 0 0 2px ${tokens.colors.primary[900]};
           }
         `}
   
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px ${tokens.colors.primary[200]};
+    box-shadow: ${({ variant }) =>
+      variant === 'outlined'
+        ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
+        : `0 0 0 2px ${tokens.colors.primary[200]}`};
   }
   
   &:disabled {
@@ -167,13 +154,13 @@ const StyledButton = styled.button<ButtonStyleProps>`
       variant === 'contained' ? tokens.colors.neutral[200] : 'transparent'};
     color: ${({ variant }) =>
       variant === 'contained' ? tokens.colors.neutral[400] : tokens.colors.neutral[300]};
-    border-color: ${({ variant }) =>
-      variant === 'outlined' ? tokens.colors.neutral[300] : 'transparent'};
+    box-shadow: ${({ variant }) =>
+      variant === 'outlined' ? `inset 0 0 0 2px ${tokens.colors.neutral[300]}` : 'none'};
   }
 `;
 
 const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
-  font-family: 'Material Symbols Rounded';
+  font-family: ${tokens.fontFamily.icon.join(', ')};
   user-select: none;
   
   ${({ size, filled }) => {
@@ -181,21 +168,13 @@ const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
     return css`
       font-size: ${iconStyles.fontSize};
       font-weight: ${iconStyles.fontWeight};
-      font-variation-settings: 'FILL' ${filled ? ICON_CONSTANTS.FILL.FILLED : ICON_CONSTANTS.FILL.OUTLINED}, 
+      font-variation-settings: 
+        'FILL' ${filled ? tokens.icons.fill[1] : tokens.icons.fill[0]}, 
         'wght' ${iconStyles.wght}, 
         'GRAD' ${iconStyles.grad}, 
         'opsz' ${iconStyles.opsz};
     `;
   }}
-  
-  &.loading {
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
 `;
 
 const StyledText = styled.span<{ size: ButtonSize }>`
@@ -213,8 +192,6 @@ interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   asChild?: boolean;
-  loading?: boolean;
-  loadingText?: string;
 }
 
 export const Button = ({
@@ -228,41 +205,25 @@ export const Button = ({
   disabled = false,
   type = 'button',
   asChild = false,
-  loading = false,
-  loadingText,
   ...props
 }: ButtonProps) => {
-  const isDisabled = disabled || loading;
+  const isDisabled = disabled;
 
-  const renderIcon = (position: 'left' | 'right') => {
-    if (!iconName || icon === 'none') return null;
-    if (icon !== position && icon !== 'only') return null;
+  const renderIcon = useMemo(
+    () => (position: 'left' | 'right') => {
+      if (!iconName || icon === 'none') return null;
+      if (icon !== position && icon !== 'only') return null;
 
-    return (
-      <StyledIcon size={size} filled={iconFilled} aria-hidden={icon !== 'only'}>
-        {iconName}
-      </StyledIcon>
-    );
-  };
-
-  const renderLoadingIcon = () => (
-    <StyledIcon size={size} filled={false} className='loading' aria-hidden='true'>
-      refresh
-    </StyledIcon>
+      return (
+        <StyledIcon size={size} filled={iconFilled} aria-hidden={icon !== 'only'}>
+          {iconName}
+        </StyledIcon>
+      );
+    },
+    [iconName, icon, size, iconFilled]
   );
 
-  const renderContent = () => {
-    if (loading) {
-      return (
-        <>
-          {renderLoadingIcon()}
-          {(loadingText || children) && (
-            <StyledText size={size}>{loadingText || children}</StyledText>
-          )}
-        </>
-      );
-    }
-
+  const content = useMemo(() => {
     if (icon === 'only') {
       return renderIcon('left');
     }
@@ -274,9 +235,7 @@ export const Button = ({
         {renderIcon('right')}
       </>
     );
-  };
-
-  const content = renderContent();
+  }, [icon, children, size, renderIcon]);
 
   const buttonProps = {
     size,
@@ -285,9 +244,7 @@ export const Button = ({
     rounded,
     disabled: isDisabled,
     'aria-disabled': isDisabled,
-    ...(loading && { 'aria-busy': true }),
-    ...(icon === 'only' && iconName && !loading && { 'aria-label': iconName }),
-    ...(loading && loadingText && { 'aria-label': loadingText }),
+    ...(icon === 'only' && iconName && { 'aria-label': iconName }),
     ...props,
   };
 
