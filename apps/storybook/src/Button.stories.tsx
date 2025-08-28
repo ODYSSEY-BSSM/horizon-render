@@ -14,8 +14,7 @@ const meta: Meta<typeof Button> = {
 
 ## 접근성 기능
 
-- **자동 ARIA 속성**: \`aria-disabled\`, \`aria-busy\`, \`aria-label\` 자동 설정
-- **로딩 상태**: 접근성을 고려한 스피너와 상태 안내
+- **자동 ARIA 속성**: \`aria-disabled\`, \`aria-label\` 자동 설정
 - **아이콘 전용 버튼**: \`iconName\`에서 자동으로 \`aria-label\` 생성
 - **폴리모픽**: \`asChild\`를 사용해 다양한 HTML 요소로 렌더링
 - **키보드 내비게이션**: 완전한 키보드 지원
@@ -24,7 +23,6 @@ const meta: Meta<typeof Button> = {
 ## 주요 기능
 
 - 다양한 크기와 변형
-- 커스텀 텍스트가 있는 로딩 상태
 - 아이콘 위치 지정 (왼쪽, 오른쪽, 아이콘만)
 - 채워진/테두리 아이콘 스타일
 - 폼 통합 (submit, reset, button 타입)
@@ -65,14 +63,6 @@ const meta: Meta<typeof Button> = {
     iconFilled: {
       control: 'boolean',
       description: '아이콘의 채워진 버전 사용 여부',
-    },
-    loading: {
-      control: 'boolean',
-      description: '로딩 상태 - 스피너를 표시하고 버튼을 비활성화',
-    },
-    loadingText: {
-      control: 'text',
-      description: '로딩 시 표시할 텍스트 (기본값은 children 텍스트)',
     },
     type: {
       control: 'select',
@@ -221,6 +211,14 @@ export const Disabled: Story = {
           비활성화
         </Button>
       </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <Button icon='left' iconName='download'>
+          다운로드
+        </Button>
+        <Button icon='left' iconName='download' disabled>
+          비활성화
+        </Button>
+      </div>
     </div>
   ),
   parameters: {
@@ -295,52 +293,6 @@ export const AllCombinations: Story = {
 // 테두리 변형
 <Button size="medium" variant="outlined">텍스트</Button>
 <Button size="medium" variant="outlined" icon="left" iconName="add">아이콘 왼쪽</Button>`,
-      },
-    },
-  },
-};
-
-export const LoadingStates: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button>정상 상태</Button>
-        <Button loading>로딩 중</Button>
-        <Button loading loadingText='저장 중...'>
-          저장하기
-        </Button>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button variant='outlined'>정상 상태</Button>
-        <Button variant='outlined' loading>
-          로딩 중
-        </Button>
-        <Button variant='outlined' loading loadingText='업로드 중...'>
-          파일 업로드
-        </Button>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button icon='left' iconName='download'>
-          다운로드
-        </Button>
-        <Button icon='left' iconName='download' loading loadingText='다운로드 중...'>
-          다운로드
-        </Button>
-        <Button icon='only' iconName='refresh' />
-        <Button icon='only' iconName='refresh' loading />
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          '로딩 상태는 자동으로 버튼을 비활성화하고 스피너를 표시합니다. 접근성을 위해 aria-busy가 포함됩니다.',
-      },
-      source: {
-        code: `<Button loading>로딩 중</Button>
-<Button loading loadingText="저장 중...">저장하기</Button>
-<Button icon="left" iconName="download" loading loadingText="다운로드 중...">다운로드</Button>`,
       },
     },
   },
@@ -427,21 +379,13 @@ export const AsChild: Story = {
           </a>
         </Button>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button loading loadingText='로딩 중...'>
-          로딩 버튼
-        </Button>
-        <Button loading loadingText='페이지 로딩 중...' asChild>
-          <a href='/loading-page'>링크 + 로딩</a>
-        </Button>
-      </div>
     </div>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          'asChild prop을 사용하면 앵커 같은 다른 요소에 버튼 스타일을 적용할 수 있습니다. 모든 버튼 기능(로딩, 아이콘 등)이 asChild와 함께 작동합니다.',
+          'asChild prop을 사용하면 앵커 같은 다른 요소에 버튼 스타일을 적용할 수 있습니다. 모든 버튼 기능(아이콘 등)이 asChild와 함께 작동합니다.',
       },
       source: {
         code: `<Button asChild>
@@ -465,8 +409,6 @@ export const Playground: Story = {
     disabled: false,
     iconName: 'add',
     iconFilled: false,
-    loading: false,
-    loadingText: '',
     type: 'button',
     asChild: false,
   },
