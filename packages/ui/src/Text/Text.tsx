@@ -3,6 +3,12 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 
+type ColorToken =
+  | `primary.${keyof typeof tokens.colors.primary}`
+  | `accent.${keyof typeof tokens.colors.accent}`
+  | `neutral.${keyof typeof tokens.colors.neutral}`
+  | `warning.${keyof typeof tokens.colors.warning}`;
+
 export type TextVariant = 'H1' | 'H2' | 'H3' | 'ST' | 'B1' | 'B2' | 'C' | 'O';
 
 export type AllowedHTMLElement =
@@ -42,80 +48,54 @@ const getSemanticElement = (variant: TextVariant): AllowedHTMLElement => {
   return mapping[variant];
 };
 
+const createTextStyle = (
+  fontSize: number,
+  fontWeight: keyof typeof tokens.fontWeight,
+  lineHeight: number,
+  letterSpacing: keyof typeof tokens.letterSpacing,
+  textTransform?: string
+) => css`
+  font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
+  font-weight: ${tokens.fontWeight[fontWeight]};
+  line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
+  letter-spacing: ${(tokens.letterSpacing as any)[letterSpacing]};
+  ${textTransform ? `text-transform: ${textTransform};` : ''}
+`;
+
 const textStyles = {
-  h1: css`
-    font-size: 32px;
-    font-weight: ${tokens.fontWeight.heavy};
-    line-height: 44px;
-    letter-spacing: -0.02em;
-  `,
-  h2: css`
-    font-size: 24px;
-    font-weight: ${tokens.fontWeight.extrabold};
-    line-height: 34px;
-    letter-spacing: -0.015em;
-  `,
-  h3: css`
-    font-size: 20px;
-    font-weight: ${tokens.fontWeight.bold};
-    line-height: 28px;
-    letter-spacing: -0.01em;
-  `,
-  subtitle: css`
-    font-size: 18px;
-    font-weight: ${tokens.fontWeight.semibold};
-    line-height: 26px;
-    letter-spacing: normal;
-  `,
-  body: css`
-    font-size: 16px;
-    font-weight: ${tokens.fontWeight.regular};
-    line-height: 24px;
-    letter-spacing: normal;
-  `,
-  small: css`
-    font-size: 14px;
-    font-weight: ${tokens.fontWeight.light};
-    line-height: 22px;
-    letter-spacing: normal;
-  `,
-  caption: css`
-    font-size: 12px;
-    font-weight: ${tokens.fontWeight.extralight};
-    line-height: 18px;
-    letter-spacing: 0.01em;
-  `,
-  overline: css`
-    font-size: 11px;
-    font-weight: ${tokens.fontWeight.medium};
-    line-height: 16px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  `,
+  h1: createTextStyle(32, 'heavy', 44, '-2'),
+  h2: createTextStyle(24, 'extrabold', 34, '-1.5'),
+  h3: createTextStyle(20, 'bold', 28, '-1'),
+  subtitle: createTextStyle(18, 'semibold', 26, 0),
+  body: createTextStyle(16, 'regular', 24, 0),
+  small: createTextStyle(14, 'light', 22, 0),
+  caption: createTextStyle(12, 'extralight', 18, 1),
+  overline: createTextStyle(11, 'medium', 16, 5, 'uppercase'),
 } as const;
+
+const STYLE_MAPPING: Record<TextVariant, keyof typeof textStyles> = {
+  H1: 'h1',
+  H2: 'h2',
+  H3: 'h3',
+  ST: 'subtitle',
+  B1: 'body',
+  B2: 'small',
+  C: 'caption',
+  O: 'overline',
+};
+
+const getTextStyle = (variant: TextVariant) => {
+  return textStyles[STYLE_MAPPING[variant]];
+};
 
 interface StyledTextProps {
   variant: TextVariant;
-  color?: string;
+  color?: ColorToken;
   width?: string | number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
   whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
   ellipsis?: boolean;
 }
-
-const getTextStyle = (variant: TextVariant) => {
-  const styleMapping: Record<TextVariant, keyof typeof textStyles> = {
-    H1: 'h1',
-    H2: 'h2',
-    H3: 'h3',
-    ST: 'subtitle',
-    B1: 'body',
-    B2: 'small',
-    C: 'caption',
-    O: 'overline',
-  };
-  return textStyles[styleMapping[variant]];
-};
 
 const StyledText = styled.div<StyledTextProps>`
     font-family: 'SUIT Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -123,7 +103,11 @@ const StyledText = styled.div<StyledTextProps>`
 
     ${({ variant }) => getTextStyle(variant)}
 
-    color: ${({ color }) => color || 'inherit'};
+    color: ${({ color }) => {
+      if (!color) return 'inherit';
+      const [colorGroup, shade] = color.split('.') as [keyof typeof tokens.colors, string];
+      return (tokens.colors[colorGroup] as any)[shade];
+    }};
     width: ${({ width }) => (width ? (typeof width === 'number' ? `${width}px` : width) : 'auto')};
     text-align: ${({ textAlign = 'left' }) => textAlign};
     white-space: ${({ whiteSpace = 'normal', ellipsis }) => (ellipsis ? 'nowrap' : whiteSpace)};
@@ -140,7 +124,7 @@ interface TextProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
   variant?: TextVariant;
   as?: AllowedHTMLElement;
   children: React.ReactNode;
-  color?: string;
+  color?: ColorToken;
   width?: string | number;
   textAlign?: 'left' | 'center' | 'right' | 'justify';
   whiteSpace?: 'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line';
@@ -171,7 +155,7 @@ export const Text = ({
       textAlign={textAlign}
       whiteSpace={whiteSpace}
       ellipsis={ellipsis}
-      {...(htmlFor && { htmlFor })}
+      {...(htmlFor && element === 'label' && { htmlFor })}
       {...restProps}
     >
       {children}
