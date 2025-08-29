@@ -7,7 +7,7 @@ import type { CSSProperties } from 'react';
 
 export type AllowedHTMLElement = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span' | 'div' | 'label';
 
-export interface TextProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
+export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
   children: React.ReactNode;
   color?: string;

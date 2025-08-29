@@ -5,7 +5,7 @@ import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { useMemo } from 'react';
 
-export interface IconProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
+export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   name: string;
   variant?: IconVariant;
   filled?: boolean;
