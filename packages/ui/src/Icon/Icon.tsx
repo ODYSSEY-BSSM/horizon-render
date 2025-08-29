@@ -1,11 +1,9 @@
-import { css } from '@emotion/react';
+import { type IconVariant, iconVariantStyles } from '@/constants';
+import { toPx } from '@/toPx';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { useMemo } from 'react';
-import { toPx } from '../toPx';
-
-export type IconVariant = 'XS' | 'SM' | 'MD' | 'LG' | 'XL';
 
 export interface IconProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
   name: string;
@@ -15,14 +13,6 @@ export interface IconProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, '
   color?: string;
   decorative?: boolean;
 }
-
-const iconSizes = {
-  XS: { size: 16, wght: tokens.fontWeight.light, opsz: tokens.icons.opticalSize[20] },
-  SM: { size: 20, wght: tokens.fontWeight.regular, opsz: tokens.icons.opticalSize[24] },
-  MD: { size: 24, wght: tokens.fontWeight.regular, opsz: tokens.icons.opticalSize[24] },
-  LG: { size: 32, wght: tokens.fontWeight.medium, opsz: tokens.icons.opticalSize[40] },
-  XL: { size: 40, wght: tokens.fontWeight.semibold, opsz: tokens.icons.opticalSize[48] },
-} as const;
 
 const shouldForwardProp = (prop: string) =>
   ['variant', 'filled', 'size', 'color', 'decorative'].indexOf(prop) === -1;
@@ -73,13 +63,7 @@ const StyledIcon = styled('span', { shouldForwardProp })<StyledIconProps>`
   ${({ color }) => color && `color: ${color};`}
   ${({ size }) => size && `font-size: ${toPx(size)};`}
   
-  ${({ variant, filled }) => {
-    const fillValue = filled ? '1' : '0';
-    const settings = iconSizes[variant];
-
-    return css({
-      fontSize: `${settings.size}px`,
-      fontVariationSettings: `'FILL' ${fillValue}, 'wght' ${settings.wght}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${settings.opsz}`,
-    });
-  }}
+  ${({ variant }) => iconVariantStyles[variant]}
+  
+  ${({ filled }) => filled && 'font-variation-settings: "FILL" 1 !important;'}
 `;
