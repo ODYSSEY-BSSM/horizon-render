@@ -2,12 +2,15 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import React from 'react';
 
-type DividerOrientation = 'horizontal' | 'vertical';
+type HorizontalProps = Omit<React.ComponentPropsWithoutRef<'hr'>, 'children'> & {
+  orientation?: 'horizontal';
+};
 
-export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
-  orientation?: DividerOrientation;
-  className?: string;
-}
+type VerticalProps = React.ComponentPropsWithoutRef<'div'> & {
+  orientation: 'vertical';
+};
+
+export type DividerProps = HorizontalProps | VerticalProps;
 
 export const Divider = React.forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
   ({ orientation = 'horizontal', ...props }, ref) => {
