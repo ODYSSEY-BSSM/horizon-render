@@ -25,7 +25,8 @@ pnpm verify                # Full pipeline: lint + typecheck + test + build
 pnpm build                 # Build all packages and apps
 pnpm test                  # Run tests (Vitest + @testing-library/react)
 pnpm build-editor          # Build editor app (React + Vite)
-pnpm --filter web build    # Build NextJS app
+pnpm build-storybook       # Build Storybook with dependencies
+pnpm clean                 # Clean all dist and node_modules folders
 ```
 
 ## Architecture & Monorepo Structure
@@ -76,7 +77,7 @@ Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typ
 
 ### Code Quality Standards
 - **Biome Configuration**: 2-space indent, 100 char line width, single quotes, semicolons
-- **Commit Format**: Korean descriptions with conventional commit types (see README)
+- **Commit Format**: Korean descriptions with conventional commit types - feat/fix/refactor/docs/build/ci/perf/test/chore/hotfix (see README)
 - **Pre-commit hooks**: lint-staged runs Biome on changed files
 - **TypeScript**: Strict mode enabled, path aliases configured
 
@@ -99,3 +100,4 @@ Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typ
 - `biome.json` - Code formatting rules
 - Root `package.json` - Workspace scripts and dependencies
 - `configs/` - Shared TypeScript/Vite/Vitest configurations
+- `pnpm-workspace.yaml` - Workspace package definitions
