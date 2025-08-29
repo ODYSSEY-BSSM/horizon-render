@@ -4,17 +4,17 @@ import React from 'react';
 
 type DividerOrientation = 'horizontal' | 'vertical';
 
-export interface DividerProps {
+export interface DividerProps extends React.HTMLAttributes<HTMLElement> {
   orientation?: DividerOrientation;
   className?: string;
 }
 
-export const Divider = React.forwardRef<HTMLElement, DividerProps>(
+export const Divider = React.forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
   ({ orientation = 'horizontal', ...props }, ref) => {
     if (orientation === 'vertical') {
       return (
         <StyledVerticalDivider
-          ref={ref as React.Ref<HTMLDivElement>}
+          ref={ref as React.ForwardedRef<HTMLDivElement>}
           {...props}
           role='separator'
           aria-orientation='vertical'
@@ -22,7 +22,7 @@ export const Divider = React.forwardRef<HTMLElement, DividerProps>(
       );
     }
 
-    return <StyledDivider ref={ref as React.Ref<HTMLHRElement>} {...props} />;
+    return <StyledDivider ref={ref as React.ForwardedRef<HTMLHRElement>} {...props} />;
   }
 );
 
