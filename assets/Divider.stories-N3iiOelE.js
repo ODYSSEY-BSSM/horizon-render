@@ -1,4 +1,4 @@
-import{D as t,T as e}from"./index-tJulI_bx.js";import"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const _={title:"Components/Divider",component:t,parameters:{layout:"padded",docs:{description:{component:`
+import{D as t,T as e}from"./index-BZY4dgmr.js";import"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const _={title:"Components/Divider",component:t,parameters:{layout:"padded",docs:{description:{component:`
 시각적 구분을 위한 간단한 구분선 컴포넌트입니다. 수평/수직 방향, 간격 옵션, 텍스트 콘텐츠를 지원합니다.
 
 ## 주요 기능
