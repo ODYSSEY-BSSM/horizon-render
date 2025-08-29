@@ -3,7 +3,6 @@ import { toPx } from '@/toPx';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import { useMemo } from 'react';
 
 export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
   name: string;
@@ -27,18 +26,13 @@ export const Icon = ({
   'aria-label': ariaLabel,
   ...restProps
 }: IconProps) => {
-  const accessibilityProps = useMemo(() => {
-    if (decorative) return { 'aria-hidden': true };
-    return { 'aria-label': ariaLabel || name };
-  }, [decorative, ariaLabel, name]);
-
   return (
     <StyledIcon
       variant={variant}
       filled={filled}
       size={size}
       color={color}
-      {...accessibilityProps}
+      aria-hidden={true}
       {...restProps}
     >
       {name}
@@ -59,11 +53,11 @@ const StyledIcon = styled('span', { shouldForwardProp })<StyledIconProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  
+
   ${({ color }) => color && `color: ${color};`}
   ${({ size }) => size && `font-size: ${toPx(size)};`}
-  
+
   ${({ variant }) => iconVariantStyles[variant]}
-  
+
   ${({ filled }) => filled && 'font-variation-settings: "FILL" 1 !important;'}
 `;
