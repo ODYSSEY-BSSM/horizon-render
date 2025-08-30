@@ -1,6 +1,3 @@
-/**
- * FIXME: 현재 variant 'contained'랑 'outlined' 크기가 다름. 확인 후 수정 이슈 요청
- */
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
@@ -11,12 +8,17 @@ type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonVariant = 'contained' | 'outlined';
 type IconPosition = 'none' | 'left' | 'right' | 'only';
 
-interface ButtonStyleProps {
-  size: ButtonSize;
-  variant: ButtonVariant;
-  iconPosition: IconPosition;
-  rounded: boolean;
-  disabled: boolean;
+interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+  size?: ButtonSize;
+  icon?: IconPosition;
+  variant?: ButtonVariant;
+  rounded?: boolean;
+  children?: React.ReactNode;
+  iconName?: string;
+  iconFilled?: boolean;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  asChild?: boolean;
 }
 
 const createTextStyle = (fontSize: number, lineHeight: number) => css`
@@ -66,132 +68,38 @@ const HORIZONTAL_PADDINGS = {
 } as const;
 
 const VERTICAL_PADDING = '10px';
-const ICON_PADDING = '10px';
 
-const getPadding = (size: ButtonSize, iconPosition: IconPosition, variant: ButtonVariant) => {
-  const borderWidth = variant === 'outlined' ? 2 : 0;
-  const adjustedVerticalPadding = `calc(${VERTICAL_PADDING} - ${borderWidth}px)`;
-  const adjustedIconPadding = `calc(${ICON_PADDING} - ${borderWidth}px)`;
+const ICON_PADDINGS = {
+  small: '10px',
+  medium: '12px',
+  large: '14px',
+} as const;
+
+const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
+  const iconPadding = ICON_PADDINGS[size];
 
   if (iconPosition === 'only') {
-    return borderWidth > 0 ? adjustedIconPadding : ICON_PADDING;
+    return VERTICAL_PADDING;
   }
 
-  const horizontal = `calc(${HORIZONTAL_PADDINGS[size]} - ${borderWidth}px)`;
+  const horizontal = HORIZONTAL_PADDINGS[size];
 
   if (iconPosition === 'left') {
-    return `${adjustedVerticalPadding} ${horizontal} ${adjustedVerticalPadding} ${adjustedIconPadding}`;
+    return `${VERTICAL_PADDING} ${horizontal} ${VERTICAL_PADDING} ${iconPadding}`;
   }
   if (iconPosition === 'right') {
-    return `${adjustedVerticalPadding} ${adjustedIconPadding} ${adjustedVerticalPadding} ${horizontal}`;
+    return `${VERTICAL_PADDING} ${iconPadding} ${VERTICAL_PADDING} ${horizontal}`;
   }
 
-  return `${adjustedVerticalPadding} ${horizontal}`;
+  return `${VERTICAL_PADDING} ${horizontal}`;
 };
 
-const StyledButton = styled.button<ButtonStyleProps>`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: ${tokens.fontFamily.suit.join(', ')};
-  user-select: none;
-  transition: all 0.2s ease-in-out;
-  border: 0 solid transparent;
-  cursor: pointer;
-  flex-shrink: 0;
-  box-sizing: border-box;
-  
-  gap: ${({ size }) => getGapSize(size)};
-  padding: ${({ size, iconPosition, variant }) => getPadding(size, iconPosition, variant)};
-  border-radius: ${({ rounded }) => (rounded ? '50px' : '8px')};
-  
-  ${({ size }) => getTextStyles(size)}
-  
-  ${({ variant }) =>
-    variant === 'contained'
-      ? css`
-          background-color: ${tokens.colors.primary[500]};
-          color: white;
-          
-          &:hover:not(:disabled) {
-            background-color: ${tokens.colors.primary[700]};
-          }
-          
-          &:active:not(:disabled) {
-            background-color: ${tokens.colors.primary[900]};
-          }
-        `
-      : css`
-          background-color: transparent;
-          color: ${tokens.colors.primary[500]};
-          box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
-          
-          &:hover:not(:disabled) {
-            background-color: ${tokens.colors.primary[600]};
-            color: white;
-            box-shadow: inset 0 0 0 2px ${tokens.colors.primary[600]};
-          }
-          
-          &:active:not(:disabled) {
-            background-color: ${tokens.colors.primary[900]};
-            color: white;
-            box-shadow: inset 0 0 0 2px ${tokens.colors.primary[900]};
-          }
-        `}
-  
-  &:focus-visible {
-    outline: none;
-    box-shadow: ${({ variant }) =>
-      variant === 'outlined'
-        ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
-        : `0 0 0 2px ${tokens.colors.primary[200]}`};
-  }
-  
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.6;
-    background-color: ${({ variant }) =>
-      variant === 'contained' ? tokens.colors.neutral[200] : 'transparent'};
-    color: ${({ variant }) =>
-      variant === 'contained' ? tokens.colors.neutral[400] : tokens.colors.neutral[300]};
-    box-shadow: ${({ variant }) =>
-      variant === 'outlined' ? `inset 0 0 0 2px ${tokens.colors.neutral[300]}` : 'none'};
-  }
-`;
-
-const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
-  font-family: ${tokens.fontFamily.icon.join(', ')};
-  user-select: none;
-  
-  ${({ size, filled }) => {
-    const iconStyles = getIconStyles(size);
-    return css`
-      font-size: ${iconStyles.fontSize};
-      font-weight: ${iconStyles.fontWeight};
-      font-variation-settings: 
-        'FILL' ${filled ? tokens.icons.fill[1] : tokens.icons.fill[0]}, 
-        'wght' ${iconStyles.wght}, 
-        'GRAD' ${iconStyles.grad}, 
-        'opsz' ${iconStyles.opsz};
-    `;
-  }}
-`;
-
-const StyledText = styled.span<{ size: ButtonSize }>`
-  ${({ size }) => getTextStyles(size)}
-`;
-
-interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
-  size?: ButtonSize;
-  icon?: IconPosition;
-  variant?: ButtonVariant;
-  rounded?: boolean;
-  children?: React.ReactNode;
-  iconName?: string;
-  iconFilled?: boolean;
-  disabled?: boolean;
-  type?: 'button' | 'submit' | 'reset';
-  asChild?: boolean;
+interface StyledButtonProps {
+  size: ButtonSize;
+  variant: ButtonVariant;
+  iconPosition: IconPosition;
+  rounded: boolean;
+  disabled: boolean;
 }
 
 export const Button = ({
@@ -270,3 +178,95 @@ export const Button = ({
     </StyledButton>
   );
 };
+
+const StyledButton = styled.button<StyledButtonProps>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ${tokens.fontFamily.suit.join(', ')};
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+  border: 0 solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  
+  gap: ${({ size }) => getGapSize(size)};
+  padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
+  border-radius: ${({ rounded }) => (rounded ? '50px' : '8px')};
+  
+  ${({ size }) => getTextStyles(size)}
+  
+  ${({ variant }) =>
+    variant === 'contained'
+      ? css`
+          background-color: ${tokens.colors.primary[500]};
+          color: white;
+          
+          &:hover:not(:disabled) {
+            background-color: ${tokens.colors.primary[700]};
+          }
+          
+          &:active:not(:disabled) {
+            background-color: ${tokens.colors.primary[900]};
+          }
+        `
+      : css`
+          background-color: transparent;
+          color: ${tokens.colors.primary[500]};
+          box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
+          
+          &:hover:not(:disabled) {
+            background-color: ${tokens.colors.primary[600]};
+            color: white;
+            box-shadow: inset 0 0 0 2px ${tokens.colors.primary[600]};
+          }
+          
+          &:active:not(:disabled) {
+            background-color: ${tokens.colors.primary[900]};
+            color: white;
+            box-shadow: inset 0 0 0 2px ${tokens.colors.primary[900]};
+          }
+        `}
+  
+  &:focus-visible {
+    outline: none;
+    box-shadow: ${({ variant }) =>
+      variant === 'outlined'
+        ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
+        : `0 0 0 2px ${tokens.colors.primary[200]}`};
+  }
+  
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    background-color: ${({ variant }) =>
+      variant === 'contained' ? tokens.colors.neutral[200] : 'transparent'};
+    color: ${({ variant }) =>
+      variant === 'contained' ? tokens.colors.neutral[400] : tokens.colors.neutral[300]};
+    box-shadow: ${({ variant }) =>
+      variant === 'outlined' ? `inset 0 0 0 2px ${tokens.colors.neutral[300]}` : 'none'};
+  }
+`;
+
+const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
+  font-family: ${tokens.fontFamily.icon.join(', ')};
+  user-select: none;
+  
+  ${({ size, filled }) => {
+    const iconStyles = getIconStyles(size);
+    return css`
+      font-size: ${iconStyles.fontSize};
+      font-weight: ${iconStyles.fontWeight};
+      font-variation-settings: 
+        'FILL' ${filled ? tokens.icons.fill[1] : tokens.icons.fill[0]}, 
+        'wght' ${iconStyles.wght}, 
+        'GRAD' ${iconStyles.grad}, 
+        'opsz' ${iconStyles.opsz};
+    `;
+  }}
+`;
+
+const StyledText = styled.span<{ size: ButtonSize }>`
+  ${({ size }) => getTextStyles(size)}
+`;
