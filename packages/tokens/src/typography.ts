@@ -1,6 +1,6 @@
 export const fontFamily = {
   suit: ['SUIT Variable', 'sans-serif'],
-  icon: ['Material Symbols Outlined', 'monospace'],
+  icon: ['Material Symbols Rounded', 'monospace'],
 } as const;
 
 export const fontWeight = {

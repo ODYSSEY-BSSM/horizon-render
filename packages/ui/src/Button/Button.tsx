@@ -1,22 +1,26 @@
-/**
- * FIXME: 현재 variant 'contained'랑 'outlined' 크기가 다름. 확인 후 수정 이슈 요청
- */
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import { cloneElement, isValidElement, useMemo } from 'react';
+import { cloneElement, isValidElement } from 'react';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonVariant = 'contained' | 'outlined';
 type IconPosition = 'none' | 'left' | 'right' | 'only';
 
-interface ButtonStyleProps {
-  size: ButtonSize;
-  variant: ButtonVariant;
-  iconPosition: IconPosition;
-  rounded: boolean;
-  disabled: boolean;
+interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+  size?: ButtonSize;
+  iconLeft?: boolean;
+  iconRight?: boolean;
+  iconOnly?: boolean;
+  variant?: ButtonVariant;
+  rounded?: boolean;
+  children?: React.ReactNode;
+  iconName?: string;
+  iconFilled?: boolean;
+  disabled?: boolean;
+  asChild?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const createTextStyle = (fontSize: number, lineHeight: number) => css`
@@ -66,30 +70,132 @@ const HORIZONTAL_PADDINGS = {
 } as const;
 
 const VERTICAL_PADDING = '10px';
-const ICON_PADDING = '10px';
 
-const getPadding = (size: ButtonSize, iconPosition: IconPosition, variant: ButtonVariant) => {
-  const borderWidth = variant === 'outlined' ? 2 : 0;
-  const adjustedVerticalPadding = `calc(${VERTICAL_PADDING} - ${borderWidth}px)`;
-  const adjustedIconPadding = `calc(${ICON_PADDING} - ${borderWidth}px)`;
+const ICON_PADDINGS = {
+  small: '10px',
+  medium: '12px',
+  large: '14px',
+} as const;
+
+const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
+  const iconPadding = ICON_PADDINGS[size];
+  const horizontal = HORIZONTAL_PADDINGS[size];
 
   if (iconPosition === 'only') {
-    return borderWidth > 0 ? adjustedIconPadding : ICON_PADDING;
+    return VERTICAL_PADDING;
   }
-
-  const horizontal = `calc(${HORIZONTAL_PADDINGS[size]} - ${borderWidth}px)`;
-
   if (iconPosition === 'left') {
-    return `${adjustedVerticalPadding} ${horizontal} ${adjustedVerticalPadding} ${adjustedIconPadding}`;
+    return `${VERTICAL_PADDING} ${horizontal} ${VERTICAL_PADDING} ${iconPadding}`;
   }
   if (iconPosition === 'right') {
-    return `${adjustedVerticalPadding} ${adjustedIconPadding} ${adjustedVerticalPadding} ${horizontal}`;
+    return `${VERTICAL_PADDING} ${iconPadding} ${VERTICAL_PADDING} ${horizontal}`;
   }
 
-  return `${adjustedVerticalPadding} ${horizontal}`;
+  return `${VERTICAL_PADDING} ${horizontal}`;
 };
 
-const StyledButton = styled.button<ButtonStyleProps>`
+export const Button = ({
+  size = 'medium',
+  iconLeft = false,
+  iconRight = false,
+  iconOnly = false,
+  variant = 'contained',
+  rounded = false,
+  children,
+  iconName = 'check',
+  iconFilled = false,
+  disabled = false,
+  type = 'button',
+  asChild = false,
+  ...props
+}: ButtonProps) => {
+  const isDisabled = disabled;
+
+  const getIconPosition = (): IconPosition => {
+    const activeProps = [iconLeft, iconRight, iconOnly].filter(Boolean);
+
+    if (activeProps.length > 1) {
+      console.warn(
+        'Button component: Multiple icon props are active simultaneously. Only one of iconLeft, iconRight, or iconOnly should be true at a time. Using iconOnly as priority.'
+      );
+    }
+
+    if (iconOnly) return 'only';
+    if (iconLeft) return 'left';
+    if (iconRight) return 'right';
+    return 'none';
+  };
+
+  const iconPosition = getIconPosition();
+
+  const renderIcon = (position: 'left' | 'right') => {
+    if (!iconName || iconPosition === 'none') return null;
+    if (iconPosition !== position && iconPosition !== 'only') return null;
+
+    return (
+      <StyledIcon size={size} filled={iconFilled} aria-hidden={!iconOnly}>
+        {iconName}
+      </StyledIcon>
+    );
+  };
+
+  const content = (() => {
+    if (iconOnly) {
+      return renderIcon('left');
+    }
+
+    return (
+      <>
+        {renderIcon('left')}
+        {children && <StyledText size={size}>{children}</StyledText>}
+        {renderIcon('right')}
+      </>
+    );
+  })();
+
+  const buttonProps = {
+    size,
+    variant,
+    iconPosition,
+    rounded,
+    disabled: isDisabled,
+    'aria-disabled': isDisabled,
+    ...(iconOnly && iconName && { 'aria-label': iconName }),
+    ...props,
+  };
+
+  if (asChild) {
+    if (!children || !isValidElement(children)) {
+      console.warn(
+        'Button component: asChild=true requires a single valid React element as children'
+      );
+      return null;
+    }
+
+    const child = children as React.ReactElement<React.HTMLAttributes<HTMLElement>>;
+
+    return cloneElement(child, {
+      ...buttonProps,
+      children: content,
+    });
+  }
+
+  return (
+    <StyledButton {...buttonProps} type={type}>
+      {content}
+    </StyledButton>
+  );
+};
+
+interface StyledButtonProps {
+  size: ButtonSize;
+  variant: ButtonVariant;
+  iconPosition: IconPosition;
+  rounded: boolean;
+  disabled: boolean;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +208,7 @@ const StyledButton = styled.button<ButtonStyleProps>`
   box-sizing: border-box;
   
   gap: ${({ size }) => getGapSize(size)};
-  padding: ${({ size, iconPosition, variant }) => getPadding(size, iconPosition, variant)};
+  padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
   border-radius: ${({ rounded }) => (rounded ? '50px' : '8px')};
   
   ${({ size }) => getTextStyles(size)}
@@ -147,16 +253,14 @@ const StyledButton = styled.button<ButtonStyleProps>`
         : `0 0 0 2px ${tokens.colors.primary[200]}`};
   }
   
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.6;
-    background-color: ${({ variant }) =>
-      variant === 'contained' ? tokens.colors.neutral[200] : 'transparent'};
-    color: ${({ variant }) =>
-      variant === 'contained' ? tokens.colors.neutral[400] : tokens.colors.neutral[300]};
-    box-shadow: ${({ variant }) =>
-      variant === 'outlined' ? `inset 0 0 0 2px ${tokens.colors.neutral[300]}` : 'none'};
-  }
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      pointer-events: none;
+      background-color: ${tokens.colors.neutral[300]};
+      color: ${tokens.colors.neutral[500]};
+      box-shadow: none;
+    `}
 `;
 
 const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
@@ -180,93 +284,3 @@ const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
 const StyledText = styled.span<{ size: ButtonSize }>`
   ${({ size }) => getTextStyles(size)}
 `;
-
-interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
-  size?: ButtonSize;
-  icon?: IconPosition;
-  variant?: ButtonVariant;
-  rounded?: boolean;
-  children?: React.ReactNode;
-  iconName?: string;
-  iconFilled?: boolean;
-  disabled?: boolean;
-  type?: 'button' | 'submit' | 'reset';
-  asChild?: boolean;
-}
-
-export const Button = ({
-  size = 'medium',
-  icon = 'none',
-  variant = 'contained',
-  rounded = false,
-  children,
-  iconName = 'check',
-  iconFilled = false,
-  disabled = false,
-  type = 'button',
-  asChild = false,
-  ...props
-}: ButtonProps) => {
-  const isDisabled = disabled;
-
-  const renderIcon = useMemo(
-    () => (position: 'left' | 'right') => {
-      if (!iconName || icon === 'none') return null;
-      if (icon !== position && icon !== 'only') return null;
-
-      return (
-        <StyledIcon size={size} filled={iconFilled} aria-hidden={icon !== 'only'}>
-          {iconName}
-        </StyledIcon>
-      );
-    },
-    [iconName, icon, size, iconFilled]
-  );
-
-  const content = useMemo(() => {
-    if (icon === 'only') {
-      return renderIcon('left');
-    }
-
-    return (
-      <>
-        {renderIcon('left')}
-        {children && <StyledText size={size}>{children}</StyledText>}
-        {renderIcon('right')}
-      </>
-    );
-  }, [icon, children, size, renderIcon]);
-
-  const buttonProps = {
-    size,
-    variant,
-    iconPosition: icon,
-    rounded,
-    disabled: isDisabled,
-    'aria-disabled': isDisabled,
-    ...(icon === 'only' && iconName && { 'aria-label': iconName }),
-    ...props,
-  };
-
-  if (asChild) {
-    if (!children || !isValidElement(children)) {
-      console.warn(
-        'Button component: asChild=true requires a single valid React element as children'
-      );
-      return null;
-    }
-
-    const child = children as React.ReactElement<React.HTMLAttributes<HTMLElement>>;
-
-    return cloneElement(child, {
-      ...buttonProps,
-      children: content,
-    });
-  }
-
-  return (
-    <StyledButton {...buttonProps} type={type}>
-      {content}
-    </StyledButton>
-  );
-};
