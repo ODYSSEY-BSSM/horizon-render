@@ -2,32 +2,39 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import { cloneElement, isValidElement } from 'react';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonVariant = 'contained' | 'outlined';
 type IconPosition = 'none' | 'left' | 'right' | 'only';
 
-interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+interface ButtonProps<T extends React.ElementType = 'button'> {
+  as?: T;
   size?: ButtonSize;
-  iconLeft?: boolean;
-  iconRight?: boolean;
-  iconOnly?: boolean;
+  iconPosition?: IconPosition;
   variant?: ButtonVariant;
   rounded?: boolean;
   children?: React.ReactNode;
   iconName?: string;
   iconFilled?: boolean;
   disabled?: boolean;
-  asChild?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  ariaLabel?: string;
+}
+
+interface StyledButtonProps {
+  size: ButtonSize;
+  variant: ButtonVariant;
+  iconPosition: IconPosition;
+  rounded: boolean;
+  disabled: boolean;
+  $isDisabledLink?: boolean;
 }
 
 const createTextStyle = (fontSize: number, lineHeight: number) => css`
-  font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
-  font-weight: ${tokens.fontWeight.semibold};
-  line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
-  letter-spacing: ${tokens.letterSpacing[0]};
+    font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
+    font-weight: ${tokens.fontWeight.semibold};
+    line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
+    letter-spacing: ${tokens.letterSpacing[0]};
 `;
 
 const TEXT_STYLES = {
@@ -94,11 +101,10 @@ const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
   return `${VERTICAL_PADDING} ${horizontal}`;
 };
 
-export const Button = ({
+export const Button = <T extends React.ElementType = 'button'>({
+  as,
   size = 'medium',
-  iconLeft = false,
-  iconRight = false,
-  iconOnly = false,
+  iconPosition = 'none',
   variant = 'contained',
   rounded = false,
   children,
@@ -106,181 +112,166 @@ export const Button = ({
   iconFilled = false,
   disabled = false,
   type = 'button',
-  asChild = false,
+  ariaLabel,
   ...props
-}: ButtonProps) => {
+}: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) => {
   const isDisabled = disabled;
 
-  const getIconPosition = (): IconPosition => {
-    const activeProps = [iconLeft, iconRight, iconOnly].filter(Boolean);
-
-    if (activeProps.length > 1) {
-      console.warn(
-        'Button component: Multiple icon props are active simultaneously. Only one of iconLeft, iconRight, or iconOnly should be true at a time. Using iconOnly as priority.'
-      );
-    }
-
-    if (iconOnly) return 'only';
-    if (iconLeft) return 'left';
-    if (iconRight) return 'right';
-    return 'none';
-  };
-
-  const iconPosition = getIconPosition();
-
-  const renderIcon = (position: 'left' | 'right') => {
+  const renderIcon = () => {
     if (!iconName || iconPosition === 'none') return null;
-    if (iconPosition !== position && iconPosition !== 'only') return null;
 
     return (
-      <StyledIcon size={size} filled={iconFilled} aria-hidden={!iconOnly}>
+      <StyledIcon size={size} filled={iconFilled} aria-hidden={iconPosition !== 'only'}>
         {iconName}
       </StyledIcon>
     );
   };
 
   const content = (() => {
-    if (iconOnly) {
-      return renderIcon('left');
+    if (iconPosition === 'only') {
+      return renderIcon();
     }
 
     return (
       <>
-        {renderIcon('left')}
+        {iconPosition === 'left' && renderIcon()}
         {children && <StyledText size={size}>{children}</StyledText>}
-        {renderIcon('right')}
+        {iconPosition === 'right' && renderIcon()}
       </>
     );
   })();
 
-  const buttonProps = {
+  const Component = as || 'button';
+  const isLink = Component === 'a' || (typeof Component === 'string' && Component === 'Link');
+
+  const finalProps = {
     size,
     variant,
     iconPosition,
     rounded,
     disabled: isDisabled,
     'aria-disabled': isDisabled,
-    ...(iconOnly && iconName && { 'aria-label': iconName }),
+    'aria-label': iconPosition === 'only' ? ariaLabel || iconName : undefined,
+    ...(isLink ? {} : { type, role: 'button' }),
+    tabIndex: isDisabled ? -1 : 0,
+    onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
+      if (!isDisabled && e.key === 'Space') {
+        e.preventDefault();
+        (props.onClick as (e: React.SyntheticEvent) => void)?.(e);
+      }
+      props.onKeyDown?.(e);
+    },
     ...props,
   };
 
-  if (asChild) {
-    if (!children || !isValidElement(children)) {
-      console.warn(
-        'Button component: asChild=true requires a single valid React element as children'
-      );
-      return null;
-    }
-
-    const child = children as React.ReactElement<React.HTMLAttributes<HTMLElement>>;
-
-    return cloneElement(child, {
-      ...buttonProps,
-      children: content,
-    });
+  if (isDisabled && isLink) {
+    return (
+      <StyledButton as='span' {...finalProps} aria-disabled='true' $isDisabledLink>
+        {content}
+      </StyledButton>
+    );
   }
 
   return (
-    <StyledButton {...buttonProps} type={type}>
+    <StyledButton as={Component} {...finalProps}>
       {content}
     </StyledButton>
   );
 };
 
-interface StyledButtonProps {
-  size: ButtonSize;
-  variant: ButtonVariant;
-  iconPosition: IconPosition;
-  rounded: boolean;
-  disabled: boolean;
-}
+const StyledButton = styled('button')<StyledButtonProps>`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ${tokens.fontFamily.suit.join(', ')};
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+    border: 0 solid transparent;
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+    flex-shrink: 0;
+    box-sizing: border-box;
+    text-decoration: none;
 
-const StyledButton = styled.button<StyledButtonProps>`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: ${tokens.fontFamily.suit.join(', ')};
-  user-select: none;
-  transition: all 0.2s ease-in-out;
-  border: 0 solid transparent;
-  cursor: pointer;
-  flex-shrink: 0;
-  box-sizing: border-box;
-  
-  gap: ${({ size }) => getGapSize(size)};
-  padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
-  border-radius: ${({ rounded }) => (rounded ? '50px' : '8px')};
-  
-  ${({ size }) => getTextStyles(size)}
-  
-  ${({ variant }) =>
-    variant === 'contained'
-      ? css`
+    gap: ${({ size }) => getGapSize(size)};
+    padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
+    border-radius: ${({ rounded }) => (rounded ? '50px' : '8px')};
+
+    ${({ size }) => getTextStyles(size)}
+
+    ${({ variant }) =>
+      variant === 'contained'
+        ? css`
           background-color: ${tokens.colors.primary[500]};
           color: white;
-          
+
           &:hover:not(:disabled) {
             background-color: ${tokens.colors.primary[700]};
           }
-          
+
           &:active:not(:disabled) {
             background-color: ${tokens.colors.primary[900]};
-          }
-        `
-      : css`
+          }`
+        : css`
           background-color: transparent;
           color: ${tokens.colors.primary[500]};
           box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
-          
+
           &:hover:not(:disabled) {
             background-color: ${tokens.colors.primary[600]};
             color: white;
             box-shadow: inset 0 0 0 2px ${tokens.colors.primary[600]};
           }
-          
+
           &:active:not(:disabled) {
             background-color: ${tokens.colors.primary[900]};
             color: white;
             box-shadow: inset 0 0 0 2px ${tokens.colors.primary[900]};
           }
         `}
-  
-  &:focus-visible {
-    outline: none;
-    box-shadow: ${({ variant }) =>
-      variant === 'outlined'
-        ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
-        : `0 0 0 2px ${tokens.colors.primary[200]}`};
-  }
-  
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      pointer-events: none;
-      background-color: ${tokens.colors.neutral[300]};
-      color: ${tokens.colors.neutral[500]};
-      box-shadow: none;
-    `}
-`;
 
-const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
-  font-family: ${tokens.fontFamily.icon.join(', ')};
-  user-select: none;
-  
-  ${({ size, filled }) => {
-    const iconStyles = getIconStyles(size);
-    return css`
-      font-size: ${iconStyles.fontSize};
-      font-weight: ${iconStyles.fontWeight};
-      font-variation-settings: 
-        'FILL' ${filled ? tokens.icons.fill[1] : tokens.icons.fill[0]}, 
-        'wght' ${iconStyles.wght}, 
-        'GRAD' ${iconStyles.grad}, 
-        'opsz' ${iconStyles.opsz};
-    `;
-  }}
+    &:focus-visible {
+        outline: none;
+        box-shadow: ${({ variant }) =>
+          variant === 'outlined'
+            ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
+            : `0 0 0 2px ${tokens.colors.primary[200]}`};
+    }
+
+    ${({ disabled }) =>
+      disabled &&
+      css`
+                pointer-events: none;
+                background-color: ${tokens.colors.neutral[300]};
+                color: ${tokens.colors.neutral[500]};
+                box-shadow: none;
+            `}
+    
+    ${({ $isDisabledLink }) =>
+      $isDisabledLink &&
+      css`
+                pointer-events: none;
+                opacity: 0.5;
+            `}
 `;
 
 const StyledText = styled.span<{ size: ButtonSize }>`
-  ${({ size }) => getTextStyles(size)}
+    ${({ size }) => getTextStyles(size)}
+`;
+
+const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
+    font-family: ${tokens.fontFamily.icon.join(', ')};
+    user-select: none;
+
+    ${({ size, filled }) => {
+      const iconStyles = getIconStyles(size);
+      return css`
+            font-size: ${iconStyles.fontSize};
+            font-weight: ${iconStyles.fontWeight};
+            font-variation-settings:
+                    'FILL' ${filled ? tokens.icons.fill[1] : tokens.icons.fill[0]},
+                    'wght' ${iconStyles.wght},
+                    'GRAD' ${iconStyles.grad},
+                    'opsz' ${iconStyles.opsz};
+        `;
+    }}
 `;
