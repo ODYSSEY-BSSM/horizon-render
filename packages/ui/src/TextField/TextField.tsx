@@ -65,7 +65,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       if (!error || !errorMessage) return null;
 
       return (
-        <StyledErrorMessage id={errorId} role='alert' aria-live='polite'>
+        <StyledErrorMessage id={errorId} role='alert'>
           <Text variant='C' color={tokens.colors.warning[200]} textAlign='center'>
             {errorMessage}
           </Text>
@@ -89,6 +89,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <StyledInputWrapper width={width}>
           {renderIcon()}
           <StyledInput
+            {...restProps}
             id={resolvedId}
             ref={ref}
             hasError={error}
@@ -97,7 +98,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             onChange={handleChange}
             aria-invalid={error || undefined}
             aria-describedby={error && errorMessage ? errorId : undefined}
-            {...restProps}
           />
         </StyledInputWrapper>
         {renderErrorMessage()}
