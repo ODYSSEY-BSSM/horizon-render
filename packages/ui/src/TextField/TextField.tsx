@@ -129,7 +129,7 @@ const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : (width ?? '100%'))};
 `;
 
-const StyledIconWrapper = styled.div`
+const StyledIconWrapper = styled.label`
   position: absolute;
   left: 12px;
   top: 50%;
