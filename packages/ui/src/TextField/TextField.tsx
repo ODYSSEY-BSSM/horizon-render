@@ -6,114 +6,7 @@ import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { forwardRef, useCallback, useId, useState } from 'react';
 
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-interface StyledInputWrapperProps {
-  width?: string | number;
-}
-
-const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
-  position: relative;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width || '400px')};
-`;
-
-const StyledIconWrapper = styled.div`
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-`;
-
-const shouldForwardProp = (prop: string) => ['hasError', 'hasIcon', 'filled'].indexOf(prop) === -1;
-
-interface StyledInputProps {
-  hasError: boolean;
-  hasIcon: boolean;
-  filled: boolean;
-}
-
-const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
-  display: flex;
-  height: 40px;
-  width: 100%;
-  align-items: center;
-  border-radius: ${tokens.rounding.object};
-  border: ${tokens.stroke.weight} solid;
-  background-color: white;
-  padding: 10px 12px;
-  font-size: ${tokens.fontSize[14]};
-  font-weight: ${tokens.fontWeight.light};
-  line-height: ${tokens.lineHeight[22]};
-  font-family: ${tokens.fontFamily.suit.join(', ')};
-  color: black;
-  transition: all 0.2s ease-in-out;
-
-  &::placeholder {
-    color: ${tokens.colors.neutral[400]};
-  }
-
-  &:focus {
-    outline: none;
-    border-width: 2px;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  ${({ hasIcon }) =>
-    hasIcon &&
-    css`
-      padding-left: 36px;
-    `}
-
-  ${({ hasError }) =>
-    hasError &&
-    css`
-      border-color: ${tokens.colors.warning[200]};
-      
-      &:focus {
-        border-color: ${tokens.colors.warning[200]};
-      }
-    `}
-  
-  ${({ filled, hasError }) =>
-    !hasError &&
-    filled &&
-    css`
-      border-color: ${tokens.colors.primary[500]};
-      
-      &:focus {
-        border-color: ${tokens.colors.primary[500]};
-      }
-    `}
-  
-  ${({ filled, hasError }) =>
-    !hasError &&
-    !filled &&
-    css`
-      border-color: ${tokens.colors.neutral[300]};
-      
-      &:focus {
-        border-color: ${tokens.colors.primary[500]};
-      }
-    `}
-`;
-
-const StyledErrorMessage = styled.div`
-  text-align: center;
-`;
-
-export interface TextFieldProps
+interface TextFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
   label?: string;
   icon?: string;
@@ -123,6 +16,8 @@ export interface TextFieldProps
   labelClassName?: string;
   width?: string | number;
 }
+
+const shouldForwardProp = (prop: string) => ['hasError', 'hasIcon', 'filled'].indexOf(prop) === -1;
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
@@ -209,3 +104,108 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 );
 
 TextField.displayName = 'TextField';
+
+interface StyledInputWrapperProps {
+  width?: string | number;
+}
+
+interface StyledInputProps {
+  hasError: boolean;
+  hasIcon: boolean;
+  filled: boolean;
+}
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
+  position: relative;
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width || '400px')};
+`;
+
+const StyledIconWrapper = styled.div`
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+`;
+
+const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: center;
+  border-radius: ${tokens.rounding.object};
+  border: ${tokens.stroke.weight} solid;
+  background-color: white;
+  padding: 10px 12px;
+  font-size: ${tokens.fontSize[14]};
+  font-weight: ${tokens.fontWeight.light};
+  line-height: ${tokens.lineHeight[22]};
+  font-family: ${tokens.fontFamily.suit.join(', ')};
+  color: black;
+  transition: all 0.2s ease-in-out;
+
+  &::placeholder {
+    color: ${tokens.colors.neutral[400]};
+  }
+
+  &:focus {
+    outline: none;
+    border-width: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  ${({ hasIcon }) =>
+    hasIcon &&
+    css`
+      padding-left: 36px;
+    `}
+
+  ${({ hasError }) =>
+    hasError &&
+    css`
+      border-color: ${tokens.colors.warning[200]};
+      
+      &:focus {
+        border-color: ${tokens.colors.warning[200]};
+      }
+    `}
+  
+  ${({ filled, hasError }) =>
+    !hasError &&
+    filled &&
+    css`
+      border-color: ${tokens.colors.primary[500]};
+      
+      &:focus {
+        border-color: ${tokens.colors.primary[500]};
+      }
+    `}
+  
+  ${({ filled, hasError }) =>
+    !hasError &&
+    !filled &&
+    css`
+      border-color: ${tokens.colors.neutral[300]};
+      
+      &:focus {
+        border-color: ${tokens.colors.primary[500]};
+      }
+    `}
+`;
+
+const StyledErrorMessage = styled.div`
+  text-align: center;
+`;
