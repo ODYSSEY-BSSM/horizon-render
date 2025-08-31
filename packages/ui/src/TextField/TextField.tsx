@@ -6,27 +6,24 @@ import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { forwardRef, useCallback, useId, useState } from 'react';
 
-interface TextFieldStyleProps {
-  hasError: boolean;
-  hasIcon: boolean;
-  filled: boolean;
-}
-
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${tokens.grid.gutterWidth};
+  gap: 4px;
 `;
 
-const StyledInputWrapper = styled.div`
+interface StyledInputWrapperProps {
+  width?: string | number;
+}
+
+const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
   position: relative;
-  width: 100%;
-  max-width: 400px;
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width || '400px')};
 `;
 
 const StyledIconWrapper = styled.div`
   position: absolute;
-  left: ${tokens.grid.gutterWidth};
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -35,7 +32,15 @@ const StyledIconWrapper = styled.div`
   pointer-events: none;
 `;
 
-const StyledInput = styled.input<TextFieldStyleProps>`
+const shouldForwardProp = (prop: string) => ['hasError', 'hasIcon', 'filled'].indexOf(prop) === -1;
+
+interface StyledInputProps {
+  hasError: boolean;
+  hasIcon: boolean;
+  filled: boolean;
+}
+
+const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
   display: flex;
   height: 40px;
   width: 100%;
@@ -43,7 +48,7 @@ const StyledInput = styled.input<TextFieldStyleProps>`
   border-radius: ${tokens.rounding.object};
   border: ${tokens.stroke.weight} solid;
   background-color: white;
-  padding: 10px ${tokens.grid.gutterWidth};
+  padding: 10px 12px;
   font-size: ${tokens.fontSize[14]};
   font-weight: ${tokens.fontWeight.light};
   line-height: ${tokens.lineHeight[22]};
@@ -68,76 +73,109 @@ const StyledInput = styled.input<TextFieldStyleProps>`
   ${({ hasIcon }) =>
     hasIcon &&
     css`
-      padding-left: 44px;
+      padding-left: 36px;
     `}
 
   ${({ hasError }) =>
     hasError &&
     css`
-    border-color: ${tokens.colors.warning[200]};
-    
-    &:focus {
       border-color: ${tokens.colors.warning[200]};
-    }
-  `}
+      
+      &:focus {
+        border-color: ${tokens.colors.warning[200]};
+      }
+    `}
   
   ${({ filled, hasError }) =>
     !hasError &&
     filled &&
     css`
-    border-color: ${tokens.colors.primary[500]};
-    
-    &:focus {
       border-color: ${tokens.colors.primary[500]};
-    }
-  `}
+      
+      &:focus {
+        border-color: ${tokens.colors.primary[500]};
+      }
+    `}
   
   ${({ filled, hasError }) =>
     !hasError &&
     !filled &&
     css`
-    border-color: ${tokens.colors.neutral[300]};
-    
-    &:focus {
-      border-color: ${tokens.colors.primary[500]};
-    }
-  `}
+      border-color: ${tokens.colors.neutral[300]};
+      
+      &:focus {
+        border-color: ${tokens.colors.primary[500]};
+      }
+    `}
 `;
 
 const StyledErrorMessage = styled.div`
-  margin-top: 4px;
+  text-align: center;
 `;
 
-interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface TextFieldProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
   label?: string;
   icon?: string;
   error?: boolean;
   errorMessage?: string;
   containerClassName?: string;
   labelClassName?: string;
+  width?: string | number;
 }
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
-    { label, icon, error = false, errorMessage, containerClassName, labelClassName, ...props },
+    {
+      label,
+      icon,
+      error = false,
+      errorMessage,
+      containerClassName,
+      labelClassName,
+      width,
+      ...restProps
+    },
     ref
   ) => {
     const inputId = useId();
-    const [internalValue, setInternalValue] = useState(props.defaultValue ?? '');
+    const [internalValue, setInternalValue] = useState(restProps.defaultValue ?? '');
 
     const hasIcon = !!icon;
-    const currentValue = props.value !== undefined ? props.value : internalValue;
-    const filled = !!String(currentValue).trim();
+    const currentValue = restProps.value !== undefined ? restProps.value : internalValue;
+    const isFilled = !!String(currentValue).trim();
 
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (props.value === undefined) {
+        if (restProps.value === undefined) {
           setInternalValue(e.target.value);
         }
-        props.onChange?.(e);
+        restProps.onChange?.(e);
       },
-      [props.value, props.onChange]
+      [restProps.value, restProps.onChange]
     );
+
+    const renderIcon = () => {
+      if (!hasIcon || !icon) return null;
+
+      return (
+        <StyledIconWrapper>
+          <Icon name={icon} variant='SM' color={tokens.colors.neutral[400]} />
+        </StyledIconWrapper>
+      );
+    };
+
+    const renderErrorMessage = () => {
+      if (!error || !errorMessage) return null;
+
+      return (
+        <StyledErrorMessage>
+          <Text variant='C' color={tokens.colors.warning[200]} textAlign='center'>
+            {errorMessage}
+          </Text>
+        </StyledErrorMessage>
+      );
+    };
 
     return (
       <StyledContainer className={containerClassName}>
@@ -145,36 +183,26 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           <Text
             as='label'
             variant='O'
-            color='neutral.400'
+            color={isFilled || error ? 'black' : tokens.colors.neutral[400]}
             htmlFor={inputId}
             className={labelClassName}
           >
             {label}
           </Text>
         )}
-        <StyledInputWrapper>
-          {hasIcon && icon && (
-            <StyledIconWrapper>
-              <Icon name={icon} variant='SM' color='neutral.400' />
-            </StyledIconWrapper>
-          )}
+        <StyledInputWrapper width={width}>
+          {renderIcon()}
           <StyledInput
             id={inputId}
             ref={ref}
             hasError={error}
             hasIcon={hasIcon}
-            filled={filled}
+            filled={isFilled}
             onChange={handleChange}
-            {...props}
+            {...restProps}
           />
         </StyledInputWrapper>
-        {error && errorMessage && (
-          <StyledErrorMessage>
-            <Text variant='C' color='warning.200'>
-              {errorMessage}
-            </Text>
-          </StyledErrorMessage>
-        )}
+        {renderErrorMessage()}
       </StyledContainer>
     );
   }
