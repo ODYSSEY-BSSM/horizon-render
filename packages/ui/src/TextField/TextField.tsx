@@ -126,7 +126,7 @@ const StyledContainer = styled.div`
 
 const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
   position: relative;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width || '400px')};
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : (width ?? '100%'))};
 `;
 
 const StyledIconWrapper = styled.div`

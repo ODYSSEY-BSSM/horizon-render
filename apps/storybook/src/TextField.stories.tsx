@@ -53,6 +53,7 @@ export const Default: Story = {
   args: {
     label: '이름',
     placeholder: '이름을 입력하세요',
+    width: '400px',
   },
   parameters: {
     docs: {
@@ -66,9 +67,21 @@ export const Default: Story = {
 export const WithIcon: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField icon='search' label='검색' placeholder='검색어를 입력하세요' />
-      <TextField icon='mail' label='이메일' placeholder='example@email.com' type='email' />
-      <TextField icon='lock' label='비밀번호' placeholder='비밀번호 입력' type='password' />
+      <TextField icon='search' label='검색' placeholder='검색어를 입력하세요' width='400px' />
+      <TextField
+        icon='mail'
+        label='이메일'
+        placeholder='example@email.com'
+        type='email'
+        width='400px'
+      />
+      <TextField
+        icon='lock'
+        label='비밀번호'
+        placeholder='비밀번호 입력'
+        type='password'
+        width='400px'
+      />
     </div>
   ),
   parameters: {
@@ -96,8 +109,15 @@ export const ErrorState: Story = {
         defaultValue='잘못된이메일'
         error
         errorMessage='올바른 이메일 형식이 아닙니다'
+        width='400px'
       />
-      <TextField icon='warning' label='필수 입력' error errorMessage='필수 입력 항목입니다' />
+      <TextField
+        icon='warning'
+        label='필수 입력'
+        error
+        errorMessage='필수 입력 항목입니다'
+        width='400px'
+      />
     </div>
   ),
   parameters: {
@@ -123,9 +143,9 @@ export const ErrorState: Story = {
 export const FilledState: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField label='빈 상태' placeholder='내용을 입력하세요' />
-      <TextField label='입력된 상태' defaultValue='홍길동' />
-      <TextField label='제어된 상태' value='실시간 값' onChange={() => {}} />
+      <TextField label='빈 상태' placeholder='내용을 입력하세요' width='400px' />
+      <TextField label='입력된 상태' defaultValue='홍길동' width='400px' />
+      <TextField label='제어된 상태' value='실시간 값' onChange={() => {}} width='400px' />
     </div>
   ),
   parameters: {
@@ -147,8 +167,8 @@ export const FilledState: Story = {
 export const Disabled: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField label='비활성화' placeholder='입력 불가' disabled />
-      <TextField label='값 포함 비활성화' defaultValue='읽기 전용' disabled />
+      <TextField label='비활성화' placeholder='입력 불가' disabled width='400px' />
+      <TextField label='값 포함 비활성화' defaultValue='읽기 전용' disabled width='400px' />
     </div>
   ),
   parameters: {
@@ -175,14 +195,27 @@ export const FormExample: Story = {
     >
       <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '16px' }}>회원가입</h3>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-        <TextField icon='person' label='이름' placeholder='홍길동' />
-        <TextField icon='mail' label='이메일' placeholder='example@email.com' type='email' />
-        <TextField icon='lock' label='비밀번호' placeholder='8자 이상' type='password' />
+        <TextField icon='person' label='이름' placeholder='홍길동' width='400px' />
+        <TextField
+          icon='mail'
+          label='이메일'
+          placeholder='example@email.com'
+          type='email'
+          width='400px'
+        />
+        <TextField
+          icon='lock'
+          label='비밀번호'
+          placeholder='8자 이상'
+          type='password'
+          width='400px'
+        />
         <TextField
           icon='verified_user'
           label='비밀번호 확인'
           placeholder='비밀번호 재입력'
           type='password'
+          width='400px'
         />
       </div>
       <TextField
@@ -213,7 +246,7 @@ export const WidthVariations: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '600px' }}>
       <TextField label='Compact (250px)' placeholder='좁은 필드' width={250} />
-      <TextField label='Standard (400px)' placeholder='표준 필드' />
+      <TextField label='Standard (400px)' placeholder='표준 필드' width='400px' />
       <TextField label='Full Width' placeholder='전체 너비' width='100%' />
     </div>
   ),
