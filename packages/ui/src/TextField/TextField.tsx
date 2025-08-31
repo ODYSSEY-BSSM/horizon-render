@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import { forwardRef, useCallback, useId, useMemo, useState } from 'react';
+import { forwardRef, useCallback, useId, useState } from 'react';
 
 interface TextFieldStyleProps {
   hasError: boolean;
@@ -15,17 +15,18 @@ interface TextFieldStyleProps {
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: ${tokens.grid.gutterWidth};
 `;
 
 const StyledInputWrapper = styled.div`
   position: relative;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
 `;
 
 const StyledIconWrapper = styled.div`
   position: absolute;
-  left: 12px;
+  left: ${tokens.grid.gutterWidth};
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -39,15 +40,14 @@ const StyledInput = styled.input<TextFieldStyleProps>`
   height: 40px;
   width: 100%;
   align-items: center;
-  gap: 8px;
-  border-radius: 8px;
-  border: 1px solid;
+  border-radius: ${tokens.rounding.object};
+  border: ${tokens.stroke.weight} solid;
   background-color: white;
-  padding: 10px 12px;
-  font-size: 14px;
+  padding: 10px ${tokens.grid.gutterWidth};
+  font-size: ${tokens.fontSize[14]};
   font-weight: ${tokens.fontWeight.light};
-  line-height: 22px;
-  font-family: 'SUIT Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: ${tokens.lineHeight[22]};
+  font-family: ${tokens.fontFamily.suit.join(', ')};
   color: black;
   transition: all 0.2s ease-in-out;
 
@@ -65,47 +65,47 @@ const StyledInput = styled.input<TextFieldStyleProps>`
     opacity: 0.5;
   }
 
-  /* Icon padding */
   ${({ hasIcon }) =>
     hasIcon &&
     css`
-    padding-left: 44px;
+      padding-left: 44px;
+    `}
+
+  ${({ hasError }) =>
+    hasError &&
+    css`
+    border-color: ${tokens.colors.warning[200]};
+    
+    &:focus {
+      border-color: ${tokens.colors.warning[200]};
+    }
   `}
-
-  /* Border colors based on state */
-  ${({ hasError, filled }) => {
-    if (hasError) {
-      return css`
-        border-color: ${tokens.colors.warning[200]};
-        
-        &:focus {
-          border-color: ${tokens.colors.warning[200]};
-        }
-      `;
+  
+  ${({ filled, hasError }) =>
+    !hasError &&
+    filled &&
+    css`
+    border-color: ${tokens.colors.primary[500]};
+    
+    &:focus {
+      border-color: ${tokens.colors.primary[500]};
     }
-
-    if (filled) {
-      return css`
-        border-color: ${tokens.colors.primary[500]};
-        
-        &:focus {
-          border-color: ${tokens.colors.primary[500]};
-        }
-      `;
+  `}
+  
+  ${({ filled, hasError }) =>
+    !hasError &&
+    !filled &&
+    css`
+    border-color: ${tokens.colors.neutral[300]};
+    
+    &:focus {
+      border-color: ${tokens.colors.primary[500]};
     }
-
-    return css`
-      border-color: ${tokens.colors.neutral[300]};
-      
-      &:focus {
-        border-color: ${tokens.colors.primary[500]};
-      }
-    `;
-  }}
+  `}
 `;
 
 const StyledErrorMessage = styled.div`
-  margin-top: 3px;
+  margin-top: 4px;
 `;
 
 interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -123,11 +123,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     ref
   ) => {
     const inputId = useId();
-    const [internalValue, setInternalValue] = useState(props.defaultValue || '');
+    const [internalValue, setInternalValue] = useState(props.defaultValue ?? '');
 
-    const hasIcon = useMemo(() => !!icon, [icon]);
+    const hasIcon = !!icon;
     const currentValue = props.value !== undefined ? props.value : internalValue;
-    const filled = useMemo(() => !!currentValue, [currentValue]);
+    const filled = !!String(currentValue).trim();
 
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,7 +170,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         </StyledInputWrapper>
         {error && errorMessage && (
           <StyledErrorMessage>
-            <Text variant='C' color='warning.200' textAlign='center'>
+            <Text variant='C' color='warning.200'>
               {errorMessage}
             </Text>
           </StyledErrorMessage>
