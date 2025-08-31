@@ -33,7 +33,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     },
     ref
   ) => {
-    const inputId = useId();
+    const resolvedId = (restProps.id as string | undefined) ?? useId();
+    const errorId = `${resolvedId}-error`;
     const [internalValue, setInternalValue] = useState(restProps.defaultValue ?? '');
 
     const hasIcon = !!icon;
@@ -64,7 +65,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       if (!error || !errorMessage) return null;
 
       return (
-        <StyledErrorMessage>
+        <StyledErrorMessage id={errorId} role='alert' aria-live='polite'>
           <Text variant='C' color={tokens.colors.warning[200]} textAlign='center'>
             {errorMessage}
           </Text>
@@ -79,7 +80,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             as='label'
             variant='O'
             color={isFilled || error ? 'black' : tokens.colors.neutral[400]}
-            htmlFor={inputId}
+            htmlFor={resolvedId}
             className={labelClassName}
           >
             {label}
@@ -88,12 +89,14 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <StyledInputWrapper width={width}>
           {renderIcon()}
           <StyledInput
-            id={inputId}
+            id={resolvedId}
             ref={ref}
             hasError={error}
             hasIcon={hasIcon}
             filled={isFilled}
             onChange={handleChange}
+            aria-invalid={error || undefined}
+            aria-describedby={error && errorMessage ? errorId : undefined}
             {...restProps}
           />
         </StyledInputWrapper>
