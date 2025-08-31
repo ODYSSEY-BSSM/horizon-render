@@ -1,10 +1,10 @@
+import { Icon } from '@/Icon';
+import { Text } from '@/Text';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { forwardRef, useCallback, useId, useMemo, useState } from 'react';
-import { Icon } from '../Icon';
-import { Text } from '../Text';
 
 interface TextFieldStyleProps {
   hasError: boolean;
