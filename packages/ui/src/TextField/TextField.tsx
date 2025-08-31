@@ -55,7 +55,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       if (!hasIcon || !icon) return null;
 
       return (
-        <StyledIconWrapper>
+        <StyledIconWrapper aria-hidden>
           <Icon name={icon} variant='SM' color={tokens.colors.neutral[400]} />
         </StyledIconWrapper>
       );
@@ -129,7 +129,7 @@ const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : (width ?? '100%'))};
 `;
 
-const StyledIconWrapper = styled.label`
+const StyledIconWrapper = styled.div`
   position: absolute;
   left: 12px;
   top: 50%;
