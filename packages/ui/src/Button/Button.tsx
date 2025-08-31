@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 
-type ButtonSize = 'small' | 'medium' | 'large';
-type ButtonVariant = 'contained' | 'outlined';
-type IconPosition = 'none' | 'left' | 'right' | 'only';
+export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonVariant = 'contained' | 'outlined';
+export type IconPosition = 'none' | 'left' | 'right' | 'only';
 
-interface ButtonProps<T extends React.ElementType = 'button'> {
+export interface ButtonProps<T extends React.ElementType = 'button'> {
   as?: T;
   size?: ButtonSize;
   iconPosition?: IconPosition;
@@ -18,23 +18,14 @@ interface ButtonProps<T extends React.ElementType = 'button'> {
   iconFilled?: boolean;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  ariaLabel?: string;
-}
-
-interface StyledButtonProps {
-  size: ButtonSize;
-  variant: ButtonVariant;
-  iconPosition: IconPosition;
-  rounded: boolean;
-  disabled: boolean;
-  $isDisabledLink?: boolean;
+  'aria-label'?: string;
 }
 
 const createTextStyle = (fontSize: number, lineHeight: number) => css`
-    font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
-    font-weight: ${tokens.fontWeight.semibold};
-    line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
-    letter-spacing: ${tokens.letterSpacing[0]};
+  font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
+  font-weight: ${tokens.fontWeight.semibold};
+  line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
+  letter-spacing: ${tokens.letterSpacing[0]};
 `;
 
 const TEXT_STYLES = {
@@ -101,6 +92,10 @@ const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
   return `${VERTICAL_PADDING} ${horizontal}`;
 };
 
+const shouldForwardProp = (prop: string) =>
+  ['size', 'variant', 'iconPosition', 'rounded', 'disabled', '$isDisabledLink'].indexOf(prop) ===
+  -1;
+
 export const Button = <T extends React.ElementType = 'button'>({
   as,
   size = 'medium',
@@ -112,10 +107,12 @@ export const Button = <T extends React.ElementType = 'button'>({
   iconFilled = false,
   disabled = false,
   type = 'button',
-  ariaLabel,
-  ...props
+  'aria-label': ariaLabel,
+  onKeyDown,
+  ...restProps
 }: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) => {
-  const isDisabled = disabled;
+  const element = as || 'button';
+  const isLink = element === 'a' || (typeof element === 'string' && element === 'Link');
 
   const renderIcon = () => {
     if (!iconName || iconPosition === 'none') return null;
@@ -141,30 +138,27 @@ export const Button = <T extends React.ElementType = 'button'>({
     );
   })();
 
-  const Component = as || 'button';
-  const isLink = Component === 'a' || (typeof Component === 'string' && Component === 'Link');
-
   const finalProps = {
     size,
     variant,
     iconPosition,
     rounded,
-    disabled: isDisabled,
-    'aria-disabled': isDisabled,
+    disabled,
+    'aria-disabled': disabled,
     'aria-label': iconPosition === 'only' ? ariaLabel || iconName : undefined,
     ...(isLink ? {} : { type, role: 'button' }),
-    tabIndex: isDisabled ? -1 : 0,
+    tabIndex: disabled ? -1 : 0,
     onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
-      if (!isDisabled && e.key === 'Space') {
+      if (!disabled && e.key === 'Space') {
         e.preventDefault();
-        (props.onClick as (e: React.SyntheticEvent) => void)?.(e);
+        (restProps.onClick as (e: React.SyntheticEvent) => void)?.(e);
       }
-      props.onKeyDown?.(e);
+      onKeyDown?.(e);
     },
-    ...props,
+    ...restProps,
   };
 
-  if (isDisabled && isLink) {
+  if (disabled && isLink) {
     return (
       <StyledButton as='span' {...finalProps} aria-disabled='true' $isDisabledLink>
         {content}
@@ -173,13 +167,22 @@ export const Button = <T extends React.ElementType = 'button'>({
   }
 
   return (
-    <StyledButton as={Component} {...finalProps}>
+    <StyledButton as={element} {...finalProps}>
       {content}
     </StyledButton>
   );
 };
 
-const StyledButton = styled('button')<StyledButtonProps>`
+interface StyledButtonProps {
+  size: ButtonSize;
+  variant: ButtonVariant;
+  iconPosition: IconPosition;
+  rounded: boolean;
+  disabled: boolean;
+  $isDisabledLink?: boolean;
+}
+
+const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
     display: inline-flex;
     align-items: center;
     justify-content: center;
