@@ -21,10 +21,13 @@ export interface ButtonProps<T extends React.ElementType = 'button'> {
   'aria-label'?: string;
 }
 
-const createTextStyle = (fontSize: number, lineHeight: number) => css`
-  font-size: ${tokens.fontSize[fontSize as keyof typeof tokens.fontSize]};
+const createTextStyle = (
+  fontSize: keyof typeof tokens.fontSize,
+  lineHeight: keyof typeof tokens.lineHeight
+) => css`
+  font-size: ${tokens.fontSize[fontSize]};
   font-weight: ${tokens.fontWeight.semibold};
-  line-height: ${tokens.lineHeight[lineHeight as keyof typeof tokens.lineHeight]};
+  line-height: ${tokens.lineHeight[lineHeight]};
   letter-spacing: ${tokens.letterSpacing[0]};
 `;
 
