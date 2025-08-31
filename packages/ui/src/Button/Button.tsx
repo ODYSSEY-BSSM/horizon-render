@@ -19,6 +19,8 @@ export interface ButtonProps<T extends React.ElementType = 'button'> {
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   'aria-label'?: string;
+  onClick?: (e: React.SyntheticEvent<HTMLElement>) => void;
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 }
 
 const createTextStyle = (
@@ -111,6 +113,7 @@ export const Button = <T extends React.ElementType = 'button'>({
   disabled = false,
   type = 'button',
   'aria-label': ariaLabel,
+  onClick,
   onKeyDown,
   ...restProps
 }: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) => {
@@ -151,14 +154,14 @@ export const Button = <T extends React.ElementType = 'button'>({
     'aria-label': iconPosition === 'only' ? ariaLabel || iconName : undefined,
     ...(isLink ? {} : { type, role: 'button' }),
     tabIndex: disabled ? -1 : 0,
+    ...restProps,
     onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
-      if (!disabled && e.key === 'Space') {
+      if (!disabled && e.key === ' ') {
         e.preventDefault();
-        (restProps.onClick as (e: React.SyntheticEvent) => void)?.(e);
+        onClick?.(e);
       }
       onKeyDown?.(e);
     },
-    ...restProps,
   };
 
   if (disabled && isLink) {
