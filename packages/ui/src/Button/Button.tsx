@@ -98,8 +98,7 @@ const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
 };
 
 const shouldForwardProp = (prop: string) =>
-  ['size', 'variant', 'iconPosition', 'rounded', 'disabled', '$isDisabledLink'].indexOf(prop) ===
-  -1;
+  ['size', 'variant', 'iconPosition', 'rounded', '$isDisabledLink'].indexOf(prop) === -1;
 
 export const Button = <T extends React.ElementType = 'button'>({
   as,
