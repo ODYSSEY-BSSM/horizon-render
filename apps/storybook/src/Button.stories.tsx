@@ -38,10 +38,10 @@ const meta: Meta<typeof Button> = {
       options: ['small', 'medium', 'large'],
       description: '버튼의 크기',
     },
-    icon: {
+    iconPosition: {
       control: 'select',
       options: ['none', 'left', 'right', 'only'],
-      description: '아이콘 위치. "only"는 자동 aria-label이 있는 아이콘 전용 버튼을 생성',
+      description: '아이콘 위치',
     },
     variant: {
       control: 'select',
@@ -69,9 +69,9 @@ const meta: Meta<typeof Button> = {
       options: ['button', 'submit', 'reset'],
       description: '폼 상호작용을 위한 버튼 타입',
     },
-    asChild: {
-      control: 'boolean',
-      description: '자식 요소로 렌더링 (예: <a> 태그) - 폴리모픽 패턴 사용',
+    as: {
+      control: 'text',
+      description: '다른 HTML 요소로 렌더링 (예: a)',
     },
   },
 };
@@ -134,32 +134,32 @@ export const WithIcons: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button icon='left' iconName='add'>
+        <Button iconPosition='left' iconName='add'>
           아이템 추가
         </Button>
-        <Button icon='right' iconName='arrow_forward'>
+        <Button iconPosition='right' iconName='arrow_forward'>
           다음
         </Button>
-        <Button icon='only' iconName='search' />
+        <Button iconPosition='only' iconName='search' />
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button variant='outlined' icon='left' iconName='download'>
+        <Button variant='outlined' iconPosition='left' iconName='download'>
           다운로드
         </Button>
-        <Button variant='outlined' icon='right' iconName='send'>
+        <Button variant='outlined' iconPosition='right' iconName='send'>
           전송
         </Button>
-        <Button variant='outlined' icon='only' iconName='favorite' />
+        <Button variant='outlined' iconPosition='only' iconName='favorite' />
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button icon='left' iconName='star' iconFilled>
+        <Button iconPosition='left' iconName='star' iconFilled>
           즐겨찾기 (Filled)
         </Button>
-        <Button icon='left' iconName='star'>
+        <Button iconPosition='left' iconName='star'>
           즐겨찾기 (Outlined)
         </Button>
-        <Button icon='only' iconName='favorite' iconFilled />
-        <Button icon='only' iconName='favorite' />
+        <Button iconPosition='only' iconName='favorite' iconFilled />
+        <Button iconPosition='only' iconName='favorite' />
       </div>
     </div>
   ),
@@ -170,10 +170,10 @@ export const WithIcons: Story = {
           'iconFilled prop을 사용하여 아이콘을 채워진 또는 테두리 스타일로 설정할 수 있습니다. 아이콘 전용 버튼은 접근성을 위해 iconName에서 자동으로 aria-label을 받습니다.',
       },
       source: {
-        code: `<Button icon="left" iconName="add">아이템 추가</Button>
-<Button icon="right" iconName="arrow_forward">다음</Button>
-<Button icon="only" iconName="search" />
-<Button icon="left" iconName="star" iconFilled>즐겨찾기 (Filled)</Button>`,
+        code: `<Button iconPosition="left" iconName="add">아이템 추가</Button>
+<Button iconPosition="right" iconName="arrow_forward">다음</Button>
+<Button iconPosition="only" iconName="search" />
+<Button iconPosition="left" iconName="star" iconFilled>즐겨찾기 (Filled)</Button>`,
       },
     },
   },
@@ -184,7 +184,7 @@ export const Rounded: Story = {
     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
       <Button rounded={false}>각진 모서리</Button>
       <Button rounded={true}>둥근 모서리</Button>
-      <Button rounded={true} icon='only' iconName='favorite' />
+      <Button rounded={true} iconPosition='only' iconName='favorite' />
     </div>
   ),
   parameters: {
@@ -192,7 +192,7 @@ export const Rounded: Story = {
       source: {
         code: `<Button rounded={false}>각진 모서리</Button>
 <Button rounded={true}>둥근 모서리</Button>
-<Button rounded={true} icon="only" iconName="favorite" />`,
+<Button rounded={true} iconPosition="only" iconName="favorite" />`,
       },
     },
   },
@@ -212,10 +212,10 @@ export const Disabled: Story = {
         </Button>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button icon='left' iconName='download'>
+        <Button iconPosition='left' iconName='download'>
           다운로드
         </Button>
-        <Button icon='left' iconName='download' disabled>
+        <Button iconPosition='left' iconName='download' disabled>
           비활성화
         </Button>
       </div>
@@ -245,13 +245,13 @@ export const AllCombinations: Story = {
                 {size === 'small' ? '작음' : size === 'medium' ? '보통' : '큼'}
               </span>
               <Button size={size}>텍스트</Button>
-              <Button size={size} icon='left' iconName='add'>
+              <Button size={size} iconPosition='left' iconName='add'>
                 아이콘 왼쪽
               </Button>
-              <Button size={size} icon='right' iconName='arrow_forward'>
+              <Button size={size} iconPosition='right' iconName='arrow_forward'>
                 아이콘 오른쪽
               </Button>
-              <Button size={size} icon='only' iconName='search' />
+              <Button size={size} iconPosition='only' iconName='search' />
             </div>
           ))}
         </div>
@@ -268,13 +268,13 @@ export const AllCombinations: Story = {
               <Button size={size} variant='outlined'>
                 텍스트
               </Button>
-              <Button size={size} variant='outlined' icon='left' iconName='add'>
+              <Button size={size} variant='outlined' iconPosition='left' iconName='add'>
                 아이콘 왼쪽
               </Button>
-              <Button size={size} variant='outlined' icon='right' iconName='arrow_forward'>
+              <Button size={size} variant='outlined' iconPosition='right' iconName='arrow_forward'>
                 아이콘 오른쪽
               </Button>
-              <Button size={size} variant='outlined' icon='only' iconName='search' />
+              <Button size={size} variant='outlined' iconPosition='only' iconName='search' />
             </div>
           ))}
         </div>
@@ -286,13 +286,13 @@ export const AllCombinations: Story = {
       source: {
         code: `// 모든 크기와 아이콘 조합
 <Button size="small">텍스트</Button>
-<Button size="small" icon="left" iconName="add">아이콘 왼쪽</Button>
-<Button size="small" icon="right" iconName="arrow_forward">아이콘 오른쪽</Button>
-<Button size="small" icon="only" iconName="search" />
+<Button size="small" iconPosition="left" iconName="add">아이콘 왼쪽</Button>
+<Button size="small" iconPosition="right" iconName="arrow_forward">아이콘 오른쪽</Button>
+<Button size="small" iconPosition="only" iconName="search" />
 
 // 테두리 변형
 <Button size="medium" variant="outlined">텍스트</Button>
-<Button size="medium" variant="outlined" icon="left" iconName="add">아이콘 왼쪽</Button>`,
+<Button size="medium" variant="outlined" iconPosition="left" iconName="add">아이콘 왼쪽</Button>`,
       },
     },
   },
@@ -331,7 +331,7 @@ export const FormButtons: Story = {
         />
       </div>
       <div style={{ display: 'flex', gap: '8px' }}>
-        <Button type='submit' icon='right' iconName='send'>
+        <Button type='submit' iconPosition='right' iconName='send'>
           제출
         </Button>
         <Button type='reset' variant='outlined'>
@@ -363,20 +363,23 @@ export const AsChild: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Button>일반 버튼</Button>
-        <Button asChild>
-          <a href='https://github.com' target='_blank' rel='noopener noreferrer'>
-            GitHub 링크
-          </a>
+        <Button as='a' href='https://github.com' target='_blank' rel='noopener noreferrer'>
+          GitHub 링크
         </Button>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <Button variant='outlined' icon='left' iconName='download'>
+        <Button variant='outlined' iconPosition='left' iconName='download'>
           일반 다운로드
         </Button>
-        <Button variant='outlined' icon='left' iconName='download' asChild>
-          <a href='/files/sample.pdf' download>
-            파일 다운로드
-          </a>
+        <Button
+          variant='outlined'
+          iconPosition='left'
+          iconName='download'
+          as='a'
+          href='/files/sample.pdf'
+          download
+        >
+          파일 다운로드
         </Button>
       </div>
     </div>
@@ -391,7 +394,7 @@ export const AsChild: Story = {
         code: `<Button asChild>
   <a href="/page">버튼으로 표시된 링크</a>
 </Button>
-<Button variant="outlined" icon="left" iconName="download" asChild>
+<Button variant="outlined" iconPosition="left" iconName="download" as="a">
   <a href="/file.pdf" download>파일 다운로드</a>
 </Button>`,
       },
@@ -403,7 +406,7 @@ export const Playground: Story = {
   args: {
     children: '클릭해보세요!',
     size: 'medium',
-    icon: 'none',
+    iconPosition: 'none',
     variant: 'contained',
     rounded: false,
     disabled: false,
@@ -417,7 +420,7 @@ export const Playground: Story = {
       source: {
         code: `<Button 
   size="medium"
-  icon="none"
+  iconPosition="none"
   variant="contained"
   rounded={false}
   disabled={false}
