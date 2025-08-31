@@ -118,7 +118,8 @@ export const Button = <T extends React.ElementType = 'button'>({
   ...restProps
 }: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) => {
   const element = as || 'button';
-  const isLink = element === 'a' || (typeof element === 'string' && element === 'Link');
+  const isNativeButton = element === 'button';
+  const isLink = element === 'a' || 'href' in restProps;
 
   const renderIcon = () => {
     if (!iconName || iconPosition === 'none') return null;
@@ -152,16 +153,17 @@ export const Button = <T extends React.ElementType = 'button'>({
     disabled,
     'aria-disabled': disabled,
     'aria-label': iconPosition === 'only' ? ariaLabel || iconName : undefined,
-    ...(isLink ? {} : { type, role: 'button' }),
-    tabIndex: disabled ? -1 : 0,
+    ...(isNativeButton ? { type } : { role: 'button', tabIndex: disabled ? -1 : 0 }),
     ...restProps,
-    onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
-      if (!disabled && e.key === ' ') {
-        e.preventDefault();
-        onClick?.(e);
-      }
-      onKeyDown?.(e);
-    },
+    ...(!isNativeButton && {
+      onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
+        if (!disabled && (e.key === ' ' || e.key === 'Enter')) {
+          e.preventDefault();
+          onClick?.(e);
+        }
+        onKeyDown?.(e);
+      },
+    }),
   };
 
   if (disabled && isLink) {
@@ -196,7 +198,7 @@ const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
     user-select: none;
     transition: all 0.2s ease-in-out;
     border: 0 solid transparent;
-    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
     flex-shrink: 0;
     box-sizing: border-box;
     text-decoration: none;
