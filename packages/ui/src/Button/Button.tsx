@@ -194,7 +194,7 @@ const StyledButton = styled('button')<StyledButtonProps>`
 
     gap: ${({ size }) => getGapSize(size)};
     padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
-    border-radius: ${({ rounded }) => (rounded ? '50px' : '8px')};
+    border-radius: ${({ rounded }) => (rounded ? '20px' : '8px')};
 
     ${({ size }) => getTextStyles(size)}
 
@@ -237,13 +237,13 @@ const StyledButton = styled('button')<StyledButtonProps>`
             : `0 0 0 2px ${tokens.colors.primary[200]}`};
     }
 
-    ${({ disabled }) =>
+    ${({ disabled, variant }) =>
       disabled &&
       css`
                 pointer-events: none;
-                background-color: ${tokens.colors.neutral[300]};
-                color: ${tokens.colors.neutral[500]};
-                box-shadow: none;
+                background-color: ${variant === 'outlined' ? 'transparent' : tokens.colors.neutral[300]};
+                color: ${variant === 'outlined' ? tokens.colors.neutral[300] : 'white'};
+                box-shadow: ${variant === 'outlined' ? `inset 0 0 0 2px ${tokens.colors.neutral[300]}` : 'none'};
             `}
     
     ${({ $isDisabledLink }) =>
