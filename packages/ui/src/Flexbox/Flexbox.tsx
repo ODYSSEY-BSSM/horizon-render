@@ -41,8 +41,9 @@ export const Flexbox = ({
   width,
   height,
   grow,
+  shrink,
   basis,
-  inline,
+  inline = false,
   children,
   className,
   ...restProps
@@ -57,6 +58,7 @@ export const Flexbox = ({
       width={width}
       height={height}
       grow={grow}
+      shrink={shrink}
       basis={basis}
       inline={inline}
       className={className}
@@ -68,7 +70,7 @@ export const Flexbox = ({
 };
 
 const StyledFlexbox = styled('div', { shouldForwardProp })<FlexboxProps>`
-  display: flex;
+  display: ${({ inline }) => (inline ? 'inline-flex' : 'flex')};
   flex-direction: ${({ direction }) => direction};
   justify-content: ${({ justify }) => justify};
   align-items: ${({ align }) => align};
