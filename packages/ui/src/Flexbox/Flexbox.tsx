@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import type React from 'react';
 
-interface FlexBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+interface FlexboxProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: React.CSSProperties['flexDirection'];
   justify?: React.CSSProperties['justifyContent'];
   align?: React.CSSProperties['alignItems'];
@@ -32,7 +32,7 @@ const shouldForwardProp = (prop: string) =>
     'inline',
   ].indexOf(prop) === -1;
 
-export const FlexBox = ({
+export const Flexbox = ({
   direction = 'row',
   justify = 'flex-start',
   align = 'stretch',
@@ -46,9 +46,9 @@ export const FlexBox = ({
   children,
   className,
   ...restProps
-}: FlexBoxProps) => {
+}: FlexboxProps) => {
   return (
-    <StyledFlexBox
+    <StyledFlexbox
       direction={direction}
       justify={justify}
       align={align}
@@ -63,11 +63,11 @@ export const FlexBox = ({
       {...restProps}
     >
       {children}
-    </StyledFlexBox>
+    </StyledFlexbox>
   );
 };
 
-const StyledFlexBox = styled('div', { shouldForwardProp })<FlexBoxProps>`
+const StyledFlexbox = styled('div', { shouldForwardProp })<FlexboxProps>`
   display: flex;
   flex-direction: ${({ direction }) => direction};
   justify-content: ${({ justify }) => justify};
