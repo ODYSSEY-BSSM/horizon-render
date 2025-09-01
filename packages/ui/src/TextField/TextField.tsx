@@ -9,6 +9,8 @@ import { forwardRef, useCallback, useId, useState } from 'react';
 interface TextFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
   id?: string;
+  value?: string | number;
+  defaultValue?: string | number;
   label?: string;
   icon?: string;
   error?: boolean;
@@ -24,6 +26,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
       id,
+      value,
+      defaultValue,
+      onChange,
       label,
       icon,
       error = false,
@@ -37,20 +42,20 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   ) => {
     const resolvedId = id ?? useId();
     const errorId = `${resolvedId}-error`;
-    const [internalValue, setInternalValue] = useState(restProps.defaultValue ?? '');
+    const [internalValue, setInternalValue] = useState(String(defaultValue ?? ''));
 
     const hasIcon = !!icon;
-    const currentValue = restProps.value !== undefined ? restProps.value : internalValue;
+    const currentValue = value !== undefined ? value : internalValue;
     const isFilled = !!String(currentValue).trim();
 
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (restProps.value === undefined) {
+        if (value === undefined) {
           setInternalValue(e.target.value);
         }
-        restProps.onChange?.(e);
+        onChange?.(e);
       },
-      [restProps.value, restProps.onChange]
+      [value, onChange]
     );
 
     const renderIcon = () => {
@@ -100,6 +105,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             onChange={handleChange}
             aria-invalid={error || undefined}
             aria-describedby={error && errorMessage ? errorId : undefined}
+            value={currentValue}
           />
         </StyledInputWrapper>
         {renderErrorMessage()}
