@@ -8,6 +8,7 @@ import { forwardRef, useCallback, useId, useState } from 'react';
 
 interface TextFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
+  id?: string;
   label?: string;
   icon?: string;
   error?: boolean;
@@ -22,6 +23,7 @@ const shouldForwardProp = (prop: string) => ['hasError', 'hasIcon', 'filled'].in
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
+      id,
       label,
       icon,
       error = false,
@@ -33,7 +35,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     },
     ref
   ) => {
-    const resolvedId = (restProps.id as string | undefined) ?? useId();
+    const resolvedId = id ?? useId();
     const errorId = `${resolvedId}-error`;
     const [internalValue, setInternalValue] = useState(restProps.defaultValue ?? '');
 
