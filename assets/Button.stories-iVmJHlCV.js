@@ -1,4 +1,4 @@
-import{B as t}from"./index-CVK6zkMZ.js";import{R as e}from"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const K={title:"Components/Button",component:t,parameters:{layout:"centered",docs:{description:{component:`
+import{B as t}from"./index-DNtC2V_S.js";import{R as e}from"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const K={title:"Components/Button",component:t,parameters:{layout:"centered",docs:{description:{component:`
 외부 의존성 없이 구축된 다용도 버튼 컴포넌트로, 포괄적인 접근성 지원을 제공합니다.
 
 ## 접근성 기능
