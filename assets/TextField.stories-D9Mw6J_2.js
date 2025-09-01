@@ -1,4 +1,4 @@
-import{a as l}from"./index-DNtC2V_S.js";import{R as e}from"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const P={title:"Components/TextField",component:l,parameters:{layout:"centered",docs:{description:{component:`
+import{a as l}from"./index-7M7lxx1R.js";import{R as e}from"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const P={title:"Components/TextField",component:l,parameters:{layout:"centered",docs:{description:{component:`
 사용자 입력을 위한 텍스트 필드 컴포넌트입니다. 다양한 상태와 스타일링을 지원하며, 디자인 시스템의 일관성을 유지합니다.
 
 ## ✨ 주요 특징
@@ -115,7 +115,9 @@ import{a as l}from"./index-DNtC2V_S.js";import{R as e}from"./index-GiUgBvb1.js";
   }}>
       <TextField label='빈 상태' placeholder='내용을 입력하세요' width='400px' />
       <TextField label='입력된 상태' defaultValue='홍길동' width='400px' />
-      <TextField label='제어된 상태' value='실시간 값' onChange={() => {}} width='400px' />
+      <TextField label='제어된 상태' value='실시간 값' onChange={() => {
+      /* no-op */
+    }} width='400px' />
     </div>,
   parameters: {
     docs: {
