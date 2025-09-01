@@ -65,7 +65,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       if (!error || !errorMessage) return null;
 
       return (
-        <StyledErrorMessage id={errorId} role='alert'>
+        <StyledErrorMessage id={errorId} aria-live='polite'>
           <Text variant='C' color={tokens.colors.warning[200]} textAlign='center'>
             {errorMessage}
           </Text>
@@ -164,7 +164,6 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 2px;
   }
 
   &:disabled {
@@ -211,6 +210,6 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
     `}
 `;
 
-const StyledErrorMessage = styled.div`
+const StyledErrorMessage = styled.output`
   text-align: center;
 `;
