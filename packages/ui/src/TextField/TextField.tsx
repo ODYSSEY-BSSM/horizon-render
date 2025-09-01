@@ -56,7 +56,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 
       return (
         <StyledIconWrapper aria-hidden>
-          <Icon name={icon} variant='SM' color={tokens.colors.neutral[400]} />
+          <Icon name={icon} variant='SM' color={isFilled ? 'black' : tokens.colors.neutral[400]} />
         </StyledIconWrapper>
       );
     };
@@ -79,7 +79,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           <Text
             as='label'
             variant='O'
-            color={isFilled || error ? 'black' : tokens.colors.neutral[400]}
+            color={isFilled ? 'black' : tokens.colors.neutral[400]}
             htmlFor={resolvedId}
             className={labelClassName}
           >
@@ -146,7 +146,8 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
   width: 100%;
   align-items: center;
   border-radius: ${tokens.rounding.object};
-  border: ${tokens.stroke.weight} solid;
+  border: ${tokens.stroke.weight} solid transparent;
+  box-shadow: inset 0 0 0 ${tokens.stroke.weight};
   background-color: white;
   padding: 10px 12px;
   font-size: ${tokens.fontSize[14]};
@@ -154,6 +155,7 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
   line-height: ${tokens.lineHeight[22]};
   font-family: ${tokens.fontFamily.suit.join(', ')};
   color: black;
+  box-sizing: border-box;
   transition: all 0.2s ease-in-out;
 
   &::placeholder {
@@ -162,7 +164,7 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
 
   &:focus {
     outline: none;
-    border-width: 2px;
+    box-shadow: inset 0 0 0 2px;
   }
 
   &:disabled {
@@ -179,10 +181,10 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
   ${({ hasError }) =>
     hasError &&
     css`
-      border-color: ${tokens.colors.warning[200]};
+      box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.warning[200]};
       
       &:focus {
-        border-color: ${tokens.colors.warning[200]};
+        box-shadow: inset 0 0 0 2px ${tokens.colors.warning[200]};
       }
     `}
   
@@ -190,10 +192,10 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
     !hasError &&
     filled &&
     css`
-      border-color: ${tokens.colors.primary[500]};
+      box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.primary[500]};
       
       &:focus {
-        border-color: ${tokens.colors.primary[500]};
+        box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
       }
     `}
   
@@ -201,10 +203,10 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
     !hasError &&
     !filled &&
     css`
-      border-color: ${tokens.colors.neutral[300]};
+      box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};
       
       &:focus {
-        border-color: ${tokens.colors.primary[500]};
+        box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
       }
     `}
 `;
