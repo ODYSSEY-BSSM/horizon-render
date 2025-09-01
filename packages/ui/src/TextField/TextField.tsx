@@ -183,7 +183,7 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
       box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.warning[200]};
       
       &:focus {
-        box-shadow: inset 0 0 0 2px ${tokens.colors.warning[200]};
+        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.warning[200]};
       }
     `}
   
@@ -194,7 +194,7 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
       box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.primary[500]};
       
       &:focus {
-        box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
+        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
       }
     `}
   
@@ -205,7 +205,7 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
       box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};
       
       &:focus {
-        box-shadow: inset 0 0 0 2px ${tokens.colors.primary[500]};
+        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
       }
     `}
 `;
