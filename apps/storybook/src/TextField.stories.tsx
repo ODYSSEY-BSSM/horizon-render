@@ -145,7 +145,14 @@ export const FilledState: Story = {
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
       <TextField label='빈 상태' placeholder='내용을 입력하세요' width='400px' />
       <TextField label='입력된 상태' defaultValue='홍길동' width='400px' />
-      <TextField label='제어된 상태' value='실시간 값' onChange={() => {}} width='400px' />
+      <TextField
+        label='제어된 상태'
+        value='실시간 값'
+        onChange={() => {
+          /* no-op */
+        }}
+        width='400px'
+      />
     </div>
   ),
   parameters: {

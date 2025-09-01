@@ -38,9 +38,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       width,
       ...restProps
     },
-    ref
+    ref,
   ) => {
-    const resolvedId = id ?? useId();
+    const generatedId = useId();
+    const resolvedId = id ?? generatedId;
     const errorId = `${resolvedId}-error`;
     const [internalValue, setInternalValue] = useState(String(defaultValue ?? ''));
 
@@ -55,7 +56,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         }
         onChange?.(e);
       },
-      [value, onChange]
+      [value, onChange],
     );
 
     const renderIcon = () => {
@@ -111,7 +112,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         {renderErrorMessage()}
       </StyledContainer>
     );
-  }
+  },
 );
 
 TextField.displayName = 'TextField';

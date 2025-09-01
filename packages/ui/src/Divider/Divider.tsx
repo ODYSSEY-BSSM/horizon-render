@@ -26,7 +26,7 @@ export const Divider = React.forwardRef<HTMLHRElement | HTMLDivElement, DividerP
     }
 
     return <StyledDivider ref={ref as React.ForwardedRef<HTMLHRElement>} {...props} />;
-  }
+  },
 );
 
 Divider.displayName = 'Divider';

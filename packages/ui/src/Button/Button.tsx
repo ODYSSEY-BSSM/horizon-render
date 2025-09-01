@@ -25,7 +25,7 @@ export interface ButtonProps<T extends React.ElementType = 'button'> {
 
 const createTextStyle = (
   fontSize: keyof typeof tokens.fontSize,
-  lineHeight: keyof typeof tokens.lineHeight
+  lineHeight: keyof typeof tokens.lineHeight,
 ) => css`
   font-size: ${tokens.fontSize[fontSize]};
   font-weight: ${tokens.fontWeight.semibold};
