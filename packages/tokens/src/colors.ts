@@ -1,4 +1,7 @@
 export const colors = {
+  background: '#FCFDFF',
+  black: '#000000',
+  white: '#FFFFFF',
   primary: {
     100: '#EAF0FB',
     200: '#D4E0F7',
@@ -9,17 +12,6 @@ export const colors = {
     700: '#254BB3',
     800: '#173399',
     900: '#0D2480',
-  },
-  accent: {
-    100: '#FFF4EB',
-    200: '#FFE3CC',
-    300: '#FFCB99',
-    400: '#FFA94D',
-    500: '#FF8800',
-    600: '#DB6F00',
-    700: '#B85700',
-    800: '#944200',
-    900: '#733100',
   },
   neutral: {
     100: '#F2F5FA',
@@ -36,7 +28,8 @@ export const colors = {
     100: '#FFCBC4',
     200: '#FF0000',
   },
-  background: '#FCFDFF',
-  black: '#000000',
-  white: '#ffffff',
+  success: {
+    100: '#CCFFCC',
+    200: '#29CC29',
+  },
 } as const;
