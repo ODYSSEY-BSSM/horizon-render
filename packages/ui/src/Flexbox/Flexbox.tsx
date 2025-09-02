@@ -1,3 +1,4 @@
+import { toPx } from '@/toPx';
 import styled from '@emotion/styled';
 import type React from 'react';
 
@@ -54,12 +55,12 @@ export const Flexbox = ({
       justify={justify}
       align={align}
       wrap={wrap}
-      gap={gap}
-      width={width}
-      height={height}
+      gap={toPx(gap)}
+      width={toPx(width)}
+      height={toPx(height)}
       grow={grow}
       shrink={shrink}
-      basis={basis}
+      basis={toPx(basis)}
       inline={inline}
       className={className}
       {...restProps}
