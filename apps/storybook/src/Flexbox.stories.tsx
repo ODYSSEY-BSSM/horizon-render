@@ -277,7 +277,7 @@ export const Justify: Story = {
               justify: {justify}
             </div>
             <Flexbox
-              justify={justify as any}
+              justify={justify}
               gap='8px'
               width='300px'
               style={{ backgroundColor: '#e5e7eb', padding: '16px', borderRadius: '8px' }}
@@ -318,7 +318,7 @@ export const Align: Story = {
             align: {align}
           </div>
           <Flexbox
-            align={align as any}
+            align={align}
             gap='8px'
             height='120px'
             style={{ backgroundColor: '#e5e7eb', padding: '16px', borderRadius: '8px' }}
