@@ -3,3 +3,4 @@ export { Icon } from './Icon';
 export { Divider } from './Divider';
 export { Button } from './Button';
 export { TextField, PasswordField } from './TextField';
+export { Flexbox } from './Flexbox';
