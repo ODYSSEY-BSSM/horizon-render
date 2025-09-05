@@ -1,8 +1,8 @@
-import { type TextVariant, getTextStyle } from '@/constants';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import type { CSSProperties } from 'react';
+import { type TextVariant, getTextStyle } from './styles';
 
 export type AllowedHTMLElement = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span' | 'div' | 'label';
 
