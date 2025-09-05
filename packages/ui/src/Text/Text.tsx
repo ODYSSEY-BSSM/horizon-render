@@ -1,9 +1,8 @@
-import { type TextVariant, textVariantStyles } from '@/constants';
-import { toPx } from '@/toPx';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import type { CSSProperties } from 'react';
+import { type TextVariant, getTextStyle } from './styles';
 
 export type AllowedHTMLElement = 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span' | 'div' | 'label';
 
@@ -11,7 +10,7 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
   children: React.ReactNode;
   color?: string;
-  width?: string | number;
+  width?: string;
   textAlign?: CSSProperties['textAlign'];
   whiteSpace?: CSSProperties['whiteSpace'];
   ellipsis?: boolean;
@@ -19,27 +18,16 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   htmlFor?: string;
 }
 
-const getDefaultElement = (variant: TextVariant): AllowedHTMLElement => {
-  switch (variant) {
-    case 'H1':
-      return 'h1';
-    case 'H2':
-      return 'h2';
-    case 'H3':
-      return 'h3';
-    case 'ST':
-      return 'h4';
-    case 'B1':
-      return 'p';
-    case 'B2':
-      return 'p';
-    default:
-      return 'span';
-  }
+const defaultElement: Record<TextVariant, AllowedHTMLElement> = {
+  H1: 'h1',
+  H2: 'h2',
+  H3: 'h3',
+  ST: 'h4',
+  B1: 'p',
+  B2: 'p',
+  C: 'span',
+  O: 'span',
 };
-
-const shouldForwardProp = (prop: string) =>
-  ['variant', 'ellipsis', 'whiteSpace', 'textAlign', 'width', 'color'].indexOf(prop) === -1;
 
 export const Text = ({
   variant = 'B1',
@@ -52,17 +40,12 @@ export const Text = ({
   ellipsis = false,
   ...restProps
 }: TextProps) => {
-  const element = as || getDefaultElement(variant);
+  const element = as || defaultElement[variant];
 
   return (
     <StyledText
       as={element}
-      variant={variant}
-      color={color}
-      width={width}
-      textAlign={textAlign}
-      whiteSpace={whiteSpace}
-      ellipsis={ellipsis}
+      {...{ variant, color, width, textAlign, whiteSpace, ellipsis }}
       {...restProps}
     >
       {children}
@@ -72,18 +55,27 @@ export const Text = ({
 
 interface StyledTextProps {
   variant: TextVariant;
-  color?: string;
-  width?: string | number;
-  textAlign?: CSSProperties['textAlign'];
-  whiteSpace?: CSSProperties['whiteSpace'];
-  ellipsis?: boolean;
+  color: string;
+  width: string;
+  textAlign: CSSProperties['textAlign'];
+  whiteSpace: CSSProperties['whiteSpace'];
+  ellipsis: boolean;
 }
 
+const shouldForwardProp = (prop: string): boolean => {
+  const blockedProps = new Set([
+    'variant',
+    'color',
+    'width',
+    'textAlign',
+    'whiteSpace',
+    'ellipsis',
+  ]);
+  return !blockedProps.has(prop);
+};
+
 const StyledText = styled('div', { shouldForwardProp })<StyledTextProps>`
-    font-family: ${tokens.fontFamily.suit.join(', ')};
-    ${({ color }) => color && `color: ${color};`}
-    width: ${({ width }) => toPx(width)};
-    text-align: ${({ textAlign }) => textAlign};
+    ${({ color, textAlign, width }) => ({ color, textAlign, width })};
     ${({ whiteSpace, ellipsis }) =>
       ellipsis
         ? {
@@ -93,5 +85,5 @@ const StyledText = styled('div', { shouldForwardProp })<StyledTextProps>`
           }
         : { whiteSpace }};
 
-    ${({ variant }) => textVariantStyles[variant]};
+    ${({ variant }) => getTextStyle(variant)};
 `;
