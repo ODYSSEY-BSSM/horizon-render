@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import './globals.css';
-import type React from 'react';
 
 export const metadata: Metadata = {
   title: 'Horizon Render',
@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: ReactNode;
+}>) {
   return (
     <html lang='ko'>
       <body>{children}</body>

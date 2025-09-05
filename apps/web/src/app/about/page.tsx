@@ -54,8 +54,8 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <Button asChild size='medium' variant='outlined'>
-          <Link href='/'>홈으로 돌아가기</Link>
+        <Button as={Link} href='/' size='medium' variant='outlined'>
+          홈으로 돌아가기
         </Button>
       </div>
     </div>

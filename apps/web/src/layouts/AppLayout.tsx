@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import type React from 'react';
+import type { ReactNode } from 'react';
 
 interface AppLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {

@@ -1,11 +1,5 @@
-import AppLayout from '../../layouts/AppLayout';
-
 const SignUp = () => {
-  return (
-    <AppLayout>
-      <div>Sign Up Page</div>
-    </AppLayout>
-  );
+  return <div>Sign Up Page</div>;
 };
 
 export default SignUp;
