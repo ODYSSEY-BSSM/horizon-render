@@ -62,7 +62,19 @@ interface StyledTextProps {
   ellipsis: boolean;
 }
 
-const StyledText = styled.div<StyledTextProps>`
+const shouldForwardProp = (prop: string): boolean => {
+  const blockedProps = new Set([
+    'variant',
+    'color',
+    'width',
+    'textAlign',
+    'whiteSpace',
+    'ellipsis',
+  ]);
+  return !blockedProps.has(prop);
+};
+
+const StyledText = styled('div', { shouldForwardProp })<StyledTextProps>`
     ${({ color, textAlign, width }) => ({ color, textAlign, width })};
     ${({ whiteSpace, ellipsis }) =>
       ellipsis
