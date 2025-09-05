@@ -4,55 +4,36 @@ import { tokens } from '@horizon/tokens';
 export type TextVariant = 'H1' | 'H2' | 'H3' | 'ST' | 'B1' | 'B2' | 'C' | 'O';
 export type IconVariant = 'XS' | 'SM' | 'MD' | 'LG' | 'XL';
 
-export const textVariantStyles: Record<TextVariant, ReturnType<typeof css>> = {
-  H1: css({
-    fontSize: tokens.fontSize[32],
-    fontWeight: tokens.fontWeight.heavy,
-    lineHeight: tokens.lineHeight[44],
-    letterSpacing: tokens.letterSpacing['-2'],
-  }),
-  H2: css({
-    fontSize: tokens.fontSize[24],
-    fontWeight: tokens.fontWeight.extrabold,
-    lineHeight: tokens.lineHeight[34],
-    letterSpacing: tokens.letterSpacing['-1.5'],
-  }),
-  H3: css({
-    fontSize: tokens.fontSize[20],
-    fontWeight: tokens.fontWeight.bold,
-    lineHeight: tokens.lineHeight[28],
-    letterSpacing: tokens.letterSpacing['-1'],
-  }),
-  ST: css({
-    fontSize: tokens.fontSize[18],
-    fontWeight: tokens.fontWeight.semibold,
-    lineHeight: tokens.lineHeight[26],
-    letterSpacing: tokens.letterSpacing[0],
-  }),
-  B1: css({
-    fontSize: tokens.fontSize[16],
-    fontWeight: tokens.fontWeight.regular,
-    lineHeight: tokens.lineHeight[24],
-    letterSpacing: tokens.letterSpacing[0],
-  }),
-  B2: css({
-    fontSize: tokens.fontSize[14],
-    fontWeight: tokens.fontWeight.light,
-    lineHeight: tokens.lineHeight[22],
-    letterSpacing: tokens.letterSpacing[0],
-  }),
-  C: css({
-    fontSize: tokens.fontSize[12],
-    fontWeight: tokens.fontWeight.extralight,
-    lineHeight: tokens.lineHeight[18],
-    letterSpacing: tokens.letterSpacing[1],
-  }),
-  O: css({
-    fontSize: tokens.fontSize[11],
-    fontWeight: tokens.fontWeight.medium,
-    lineHeight: tokens.lineHeight[16],
-    letterSpacing: tokens.letterSpacing[5],
-  }),
+const baseTextStyle = css`
+  font-family: ${tokens.fontFamily.suit.join(', ')};
+`;
+
+const makeTextStyle = (
+  fontSize: keyof typeof tokens.fontSize,
+  fontWeight: keyof typeof tokens.fontWeight,
+  lineHeight: keyof typeof tokens.lineHeight,
+  letterSpacing: keyof typeof tokens.letterSpacing,
+) => css`
+  ${baseTextStyle};
+  font-size: ${tokens.fontSize[fontSize]};
+  font-weight: ${tokens.fontWeight[fontWeight]};
+  line-height: ${tokens.lineHeight[lineHeight]};
+  letter-spacing: ${tokens.letterSpacing[letterSpacing]};
+`;
+
+export const getTextStyle = (variant: TextVariant) => {
+  const styles: Record<TextVariant, ReturnType<typeof css>> = {
+    H1: makeTextStyle(32, 'heavy', 44, '-2'),
+    H2: makeTextStyle(24, 'extrabold', 34, '-1.5'),
+    H3: makeTextStyle(20, 'bold', 28, '-1'),
+    ST: makeTextStyle(18, 'semibold', 26, 0),
+    B1: makeTextStyle(16, 'regular', 24, 0),
+    B2: makeTextStyle(14, 'light', 22, 0),
+    C: makeTextStyle(12, 'extralight', 18, 1),
+    O: makeTextStyle(11, 'medium', 16, 5),
+  };
+
+  return styles[variant];
 };
 
 export const iconVariantStyles: Record<IconVariant, ReturnType<typeof css>> = {

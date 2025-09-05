@@ -1,4 +1,4 @@
-import { type TextVariant, textVariantStyles } from '@/constants';
+import { type TextVariant, getTextStyle } from '@/constants';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
@@ -63,7 +63,6 @@ interface StyledTextProps {
 }
 
 const StyledText = styled.div<StyledTextProps>`
-    font-family: ${tokens.fontFamily.suit.join(', ')};
     ${({ color, textAlign, width }) => ({ color, textAlign, width })};
     ${({ whiteSpace, ellipsis }) =>
       ellipsis
@@ -74,5 +73,5 @@ const StyledText = styled.div<StyledTextProps>`
           }
         : { whiteSpace }};
 
-    ${({ variant }) => textVariantStyles[variant]};
+    ${({ variant }) => getTextStyle(variant)};
 `;
