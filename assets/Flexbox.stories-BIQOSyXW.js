@@ -1,4 +1,4 @@
-import{F as t}from"./index-D3Dp33i9.js";import{R as e}from"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const _={title:"Components/Flexbox",component:t,parameters:{layout:"centered",docs:{description:{component:`
+import{F as t}from"./index-amt3la56.js";import{R as e}from"./index-GiUgBvb1.js";import"./jsx-runtime-CDt2p4po.js";const _={title:"Components/Flexbox",component:t,parameters:{layout:"centered",docs:{description:{component:`
 유연한 레이아웃을 위한 Flexbox 컴포넌트입니다. CSS flexbox의 모든 주요 속성을 props로 제공합니다.
 
 ## 주요 기능
