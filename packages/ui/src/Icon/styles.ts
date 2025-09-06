@@ -3,28 +3,23 @@ import { tokens } from '@horizon/tokens';
 
 export type IconVariant = 'XS' | 'SM' | 'MD' | 'LG' | 'XL';
 
+const makeIconStyle = (
+  fontSizePx: string,
+  fontWeight: keyof typeof tokens.fontWeight,
+  opticalSize: keyof typeof tokens.icons.opticalSize,
+) =>
+  css({
+    fontSize: fontSizePx,
+    fontVariationSettings: `'FILL' 0, 'wght' ${tokens.fontWeight[fontWeight]}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[opticalSize]}`,
+  });
+
 export const getIconStyle = (variant: IconVariant) => {
   const styles: Record<IconVariant, ReturnType<typeof css>> = {
-    XS: css({
-      fontSize: '16px',
-      fontVariationSettings: `'FILL' 0, 'wght' ${tokens.fontWeight.light}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[20]}`,
-    }),
-    SM: css({
-      fontSize: '20px',
-      fontVariationSettings: `'FILL' 0, 'wght' ${tokens.fontWeight.regular}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[24]}`,
-    }),
-    MD: css({
-      fontSize: '24px',
-      fontVariationSettings: `'FILL' 0, 'wght' ${tokens.fontWeight.regular}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[24]}`,
-    }),
-    LG: css({
-      fontSize: '32px',
-      fontVariationSettings: `'FILL' 0, 'wght' ${tokens.fontWeight.medium}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[40]}`,
-    }),
-    XL: css({
-      fontSize: '40px',
-      fontVariationSettings: `'FILL' 0, 'wght' ${tokens.fontWeight.semibold}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[48]}`,
-    }),
+    XS: makeIconStyle('16px', 'light', 20),
+    SM: makeIconStyle('20px', 'regular', 24),
+    MD: makeIconStyle('24px', 'regular', 24),
+    LG: makeIconStyle('32px', 'medium', 40),
+    XL: makeIconStyle('40px', 'semibold', 48),
   };
 
   return styles[variant];
