@@ -10,7 +10,7 @@ const makeIconStyle = (
 ) =>
   css({
     fontSize: fontSizePx,
-    fontVariationSettings: `'FILL' 0, 'wght' ${tokens.fontWeight[fontWeight]}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[opticalSize]}`,
+    fontVariationSettings: `'FILL' ${tokens.icons.fill[0]}, 'wght' ${tokens.fontWeight[fontWeight]}, 'GRAD' ${tokens.icons.grade[0]}, 'opsz' ${tokens.icons.opticalSize[opticalSize]}`,
   });
 
 export const getIconStyle = (variant: IconVariant) => {

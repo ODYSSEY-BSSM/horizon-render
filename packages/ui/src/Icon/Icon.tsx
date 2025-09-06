@@ -12,18 +12,11 @@ export interface IconProps extends React.HTMLAttributes<HTMLElement> {
   size?: number | string;
   color?: string;
   as?: AllowedHTMLElement;
+  decorative?: boolean;
 }
 
 const shouldForwardProp = (prop: string) =>
   ['variant', 'filled', 'size', 'color'].indexOf(prop) === -1;
-
-const defaultElement: Record<IconVariant, AllowedHTMLElement> = {
-  XS: 'span',
-  SM: 'span',
-  MD: 'span',
-  LG: 'span',
-  XL: 'span',
-};
 
 export const Icon = ({
   name,
@@ -32,12 +25,16 @@ export const Icon = ({
   size,
   color,
   as,
+  decorative = false,
   ...restProps
 }: IconProps) => {
-  const element = as || defaultElement[variant];
-
   return (
-    <StyledIcon as={element} {...{ variant, filled, size, color }} {...restProps}>
+    <StyledIcon
+      as={as}
+      {...{ variant, filled, size, color }}
+      aria-hidden={decorative}
+      {...restProps}
+    >
       {name}
     </StyledIcon>
   );
