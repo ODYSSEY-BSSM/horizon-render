@@ -1,5 +1,7 @@
 # horizon-render
-For Horizon. DON'T RESET AGAIN, for @justn-hyeok
+Bellissimo Flowing or Roadmap  
+Using **HORIZON**, You Can Do Anything  
+Made By **ODYSSEY**  
 
 # 커밋 타입 가이드
 
