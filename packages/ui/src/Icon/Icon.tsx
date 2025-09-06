@@ -1,20 +1,22 @@
-import { type IconVariant, iconVariantStyles } from '@/constants';
-import { toPx } from '@/toPx';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
+import { type IconVariant, getIconStyle } from './styles';
 
-export interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
+export type AllowedHTMLElement = 'span' | 'i' | 'div' | 'button' | 'label';
+
+export interface IconProps extends React.HTMLAttributes<HTMLElement> {
   name: string;
   variant?: IconVariant;
   filled?: boolean;
   size?: number | string;
   color?: string;
+  as?: AllowedHTMLElement;
   decorative?: boolean;
 }
 
 const shouldForwardProp = (prop: string) =>
-  ['variant', 'filled', 'size', 'color', 'decorative'].indexOf(prop) === -1;
+  ['variant', 'filled', 'size', 'color'].indexOf(prop) === -1;
 
 export const Icon = ({
   name,
@@ -22,17 +24,15 @@ export const Icon = ({
   filled = false,
   size,
   color,
+  as,
   decorative = false,
-  'aria-label': ariaLabel,
   ...restProps
 }: IconProps) => {
   return (
     <StyledIcon
-      variant={variant}
-      filled={filled}
-      size={size}
-      color={color}
-      aria-hidden={true}
+      as={as}
+      {...{ variant, filled, size, color }}
+      aria-hidden={decorative}
       {...restProps}
     >
       {name}
@@ -55,9 +55,10 @@ const StyledIcon = styled('span', { shouldForwardProp })<StyledIconProps>`
   justify-content: center;
 
   ${({ color }) => color && `color: ${color};`}
-  ${({ size }) => size && `font-size: ${toPx(size)};`}
+  ${({ size }) =>
+    size != null ? { fontSize: typeof size === 'number' ? `${size}px` : size } : undefined}
 
-  ${({ variant }) => iconVariantStyles[variant]}
+  ${({ variant }) => getIconStyle(variant)}
 
   ${({ filled }) => filled && 'font-variation-settings: "FILL" 1 !important;'}
 `;
