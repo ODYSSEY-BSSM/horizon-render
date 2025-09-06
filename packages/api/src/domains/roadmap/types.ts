@@ -1,4 +1,3 @@
-// User API와 같은 응답 구조 사용
 import type { ApiResponse } from '../user/types';
 
 // 로드맵 정보
