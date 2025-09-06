@@ -1,4 +1,4 @@
-import type { ApiResponse } from '../user/types';
+import type { ApiResponse } from '../../shared/types';
 
 // 로드맵 정보
 export interface Roadmap {

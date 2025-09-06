@@ -1,12 +1,5 @@
 import { z } from 'zod';
-
-// 기본 응답 구조 스키마
-export const ApiResponseSchema = <T extends z.ZodTypeAny>(dataSchema: T) =>
-  z.object({
-    code: z.string(),
-    message: z.string(),
-    data: dataSchema,
-  });
+import { ApiResponseSchema } from '../../shared/schemas';
 
 // 팀 정보 스키마
 export const TeamSchema = z.object({

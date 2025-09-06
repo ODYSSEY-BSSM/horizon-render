@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // User API에서 가져온 공통 응답 스키마
-import { ApiResponseSchema } from '../user/schemas';
+import { ApiResponseSchema } from '../../shared/schemas';
 
 // 로드맵 정보 스키마
 export const RoadmapSchema = z.object({

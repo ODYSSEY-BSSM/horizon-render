@@ -1,4 +1,4 @@
-import type { ApiResponse } from '../user/types';
+import type { ApiResponse } from '../../shared/types';
 
 // Directory 정보
 export interface Directory {

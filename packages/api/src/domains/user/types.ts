@@ -1,11 +1,6 @@
-// 명세서 기반으로 정확한 타입 정의
+import type { ApiResponse } from '../../shared/types';
 
-// 기본 응답 구조 (명세서에서 확인된 구조)
-export interface ApiResponse<T> {
-  code: string;
-  message: string;
-  data: T;
-}
+// 명세서 기반으로 정확한 타입 정의
 
 // 사용자 정보 (GET /users/info 응답)
 export interface User {

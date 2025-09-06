@@ -1,4 +1,4 @@
-import type { ApiResponse } from '../user/types';
+import type { ApiResponse } from '../../shared/types';
 
 // Team 정보
 export interface Team {
