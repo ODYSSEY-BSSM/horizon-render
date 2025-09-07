@@ -24,10 +24,10 @@ export const Divider = ({
       {...props}
       role='separator'
       aria-orientation='vertical'
-      {...{ length }}
+      length={length}
     />
   ) : (
-    <StyledHorizontalDivider {...props} {...{ length }} />
+    <StyledHorizontalDivider {...props} length={length} />
   );
 };
 
