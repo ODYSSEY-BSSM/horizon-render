@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 
-interface HorizontalProps extends Omit<React.HTMLAttributes<HTMLHRElement>, 'length'> {
+interface HorizontalProps extends React.HTMLAttributes<HTMLHRElement> {
   orientation?: 'horizontal';
   length?: string;
 }
