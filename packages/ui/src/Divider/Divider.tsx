@@ -1,37 +1,28 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import React from 'react';
+import type React from 'react';
 
-type HorizontalProps = Omit<React.ComponentPropsWithoutRef<'hr'>, 'children'> & {
+interface HorizontalProps extends React.HTMLAttributes<HTMLHRElement> {
   orientation?: 'horizontal';
-};
+}
 
-type VerticalProps = React.ComponentPropsWithoutRef<'div'> & {
+interface VerticalProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation: 'vertical';
-};
+}
 
 export type DividerProps = HorizontalProps | VerticalProps;
 
-export const Divider = React.forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
-  ({ orientation = 'horizontal', ...props }, ref) => {
-    if (orientation === 'vertical') {
-      return (
-        <StyledVerticalDivider
-          ref={ref as React.ForwardedRef<HTMLDivElement>}
-          {...props}
-          role='separator'
-          aria-orientation='vertical'
-        />
-      );
-    }
-
-    return <StyledDivider ref={ref as React.ForwardedRef<HTMLHRElement>} {...props} />;
-  },
-);
+export const Divider = ({ orientation = 'horizontal', ...props }: DividerProps) => {
+  return orientation === 'vertical' ? (
+    <StyledVerticalDivider {...props} role='separator' aria-orientation='vertical' />
+  ) : (
+    <StyledHorizontalDivider {...props} />
+  );
+};
 
 Divider.displayName = 'Divider';
 
-const StyledDivider = styled.hr`
+const StyledHorizontalDivider = styled.hr`
     margin: 0;
     border: none;
     width: 100%;
