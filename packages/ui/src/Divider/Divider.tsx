@@ -37,12 +37,17 @@ interface StyledDividerProps {
   length: string;
 }
 
-const StyledHorizontalDivider = styled.hr<StyledDividerProps>`
+const shouldForwardProp = (prop: string): boolean => {
+  const blockedProps = new Set(['length']);
+  return !blockedProps.has(prop);
+};
+
+const StyledHorizontalDivider = styled('hr', { shouldForwardProp })<StyledDividerProps>`
   width: ${({ length }) => length};
   border-top: ${tokens.stroke.weight} solid ${tokens.stroke.color};
 `;
 
-const StyledVerticalDivider = styled.div<StyledDividerProps>`
+const StyledVerticalDivider = styled('div', { shouldForwardProp })<StyledDividerProps>`
   height: ${({ length }) => length};
   display: inline-block;
   border-left: ${tokens.stroke.weight} solid ${tokens.stroke.color};
