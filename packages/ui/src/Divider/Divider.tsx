@@ -12,7 +12,7 @@ interface VerticalProps extends React.HTMLAttributes<HTMLDivElement> {
   length?: string;
 }
 
-export type DividerProps = HorizontalProps | VerticalProps;
+type DividerProps = HorizontalProps | VerticalProps;
 
 export const Divider = ({
   orientation = 'horizontal',
