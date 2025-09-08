@@ -37,8 +37,8 @@ interface StyledDividerProps {
   length: string;
 }
 
+const blockedProps = new Set(['length']);
 const shouldForwardProp = (prop: string): boolean => {
-  const blockedProps = new Set(['length']);
   return !blockedProps.has(prop);
 };
 
