@@ -1,8 +1,10 @@
+import ButtonIcon from '@/Button/ButtonIcon';
+import ButtonText from '@/Button/ButtonText';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import { getGapSize, getIconStyles, getPadding, getTextStyles } from './styles';
+import { getGapSize, getPadding, getTextStyles } from './styles';
 
 export type ButtonSize = 'small' | 'medium' | 'large';
 export type ButtonVariant = 'contained' | 'outlined';
@@ -47,26 +49,20 @@ export const Button = <T extends React.ElementType = 'button'>({
   const isNativeButton = element === 'button';
   const isLink = element === 'a' || 'href' in restProps;
 
-  const renderIcon = () => {
-    if (!iconName || iconPosition === 'none') return null;
-
-    return (
-      <StyledIcon size={size} filled={iconFilled} aria-hidden={iconPosition !== 'only'}>
-        {iconName}
-      </StyledIcon>
-    );
-  };
-
   const content = (() => {
     if (iconPosition === 'only') {
-      return renderIcon();
+      return <ButtonIcon size={size} iconName={iconName} filled={iconFilled} />;
     }
 
     return (
       <>
-        {iconPosition === 'left' && renderIcon()}
-        {children && <StyledText size={size}>{children}</StyledText>}
-        {iconPosition === 'right' && renderIcon()}
+        {iconPosition === 'left' && (
+          <ButtonIcon size={size} iconName={iconName} filled={iconFilled} aria-hidden={true} />
+        )}
+        {children && <ButtonText size={size}>{children}</ButtonText>}
+        {iconPosition === 'right' && (
+          <ButtonIcon size={size} iconName={iconName} filled={iconFilled} aria-hidden={true} />
+        )}
       </>
     );
   })();
@@ -189,15 +185,4 @@ const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
                 pointer-events: none;
                 opacity: 0.5;
             `}
-`;
-
-const StyledText = styled.span<{ size: ButtonSize }>`
-    ${({ size }) => getTextStyles(size)}
-`;
-
-const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
-    font-family: ${tokens.fontFamily.icon.join(', ')};
-    user-select: none;
-
-    ${({ size, filled }) => getIconStyles(size, filled ? 1 : 0)}
 `;
