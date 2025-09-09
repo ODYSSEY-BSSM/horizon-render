@@ -1,47 +1,54 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import React from 'react';
+import type React from 'react';
 
-type HorizontalProps = Omit<React.ComponentPropsWithoutRef<'hr'>, 'children'> & {
+interface HorizontalProps extends React.HTMLAttributes<HTMLHRElement> {
   orientation?: 'horizontal';
-};
+  length?: string;
+}
 
-type VerticalProps = React.ComponentPropsWithoutRef<'div'> & {
+interface VerticalProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation: 'vertical';
+  length?: string;
+}
+
+type DividerProps = HorizontalProps | VerticalProps;
+
+export const Divider = ({
+  orientation = 'horizontal',
+  length = '100%',
+  ...props
+}: DividerProps) => {
+  return orientation === 'vertical' ? (
+    <StyledVerticalDivider
+      {...props}
+      role='separator'
+      aria-orientation='vertical'
+      length={length}
+    />
+  ) : (
+    <StyledHorizontalDivider {...props} length={length} />
+  );
 };
-
-export type DividerProps = HorizontalProps | VerticalProps;
-
-export const Divider = React.forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(
-  ({ orientation = 'horizontal', ...props }, ref) => {
-    if (orientation === 'vertical') {
-      return (
-        <StyledVerticalDivider
-          ref={ref as React.ForwardedRef<HTMLDivElement>}
-          {...props}
-          role='separator'
-          aria-orientation='vertical'
-        />
-      );
-    }
-
-    return <StyledDivider ref={ref as React.ForwardedRef<HTMLHRElement>} {...props} />;
-  },
-);
 
 Divider.displayName = 'Divider';
 
-const StyledDivider = styled.hr`
-    margin: 0;
-    border: none;
-    width: 100%;
-    border-top: ${tokens.stroke.weight} solid ${tokens.stroke.color};
+interface StyledDividerProps {
+  length: string;
+}
+
+const blockedProps = new Set(['length']);
+const shouldForwardProp = (prop: string): boolean => {
+  return !blockedProps.has(prop);
+};
+
+const StyledHorizontalDivider = styled('hr', { shouldForwardProp })<StyledDividerProps>`
+  width: ${({ length }) => length};
+  border-top: ${tokens.stroke.weight} solid ${tokens.stroke.color};
 `;
 
-const StyledVerticalDivider = styled.div`
-  margin: 0;
-  border: none;
-  height: 100%;
+const StyledVerticalDivider = styled('div', { shouldForwardProp })<StyledDividerProps>`
+  height: ${({ length }) => length};
   display: inline-block;
   border-left: ${tokens.stroke.weight} solid ${tokens.stroke.color};
 `;

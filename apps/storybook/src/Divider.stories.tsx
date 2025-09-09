@@ -2,7 +2,7 @@ import { Divider } from '@horizon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-const meta: Meta<typeof Divider> = {
+const meta: Meta<{ orientation?: 'horizontal' | 'vertical'; length?: string }> = {
   title: 'Components/Divider',
   component: Divider,
   parameters: {
@@ -20,9 +20,9 @@ const meta: Meta<typeof Divider> = {
       options: ['horizontal', 'vertical'],
       description: 'Divider orientation',
     },
-    className: {
+    length: {
       control: 'text',
-      description: 'Additional CSS class',
+      description: 'Divider length',
     },
   },
 };
@@ -33,7 +33,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     orientation: 'horizontal',
+    length: '300px',
   },
+  render: (args) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Divider {...args} />
+    </div>
+  ),
 };
 
 export const Orientations: Story = {
@@ -86,35 +92,9 @@ export const WithContent: Story = {
   },
 };
 
-export const CustomSpacing: Story = {
-  render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <div>Content</div>
-      <Divider {...args} className='my-2' />
-      <div>Content with small spacing</div>
-      <Divider {...args} className='my-8' />
-      <div>Content with large spacing</div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'className으로 여백 조정',
-      },
-      source: {
-        code: `
-<Divider className="my-2" />
-<Divider className="my-8" />
-        `.trim(),
-      },
-    },
-  },
-};
-
 export const Playground: Story = {
   args: {
-    orientation: 'horizontal',
-    className: '',
+    ...Default.args,
   },
   parameters: {
     docs: {
