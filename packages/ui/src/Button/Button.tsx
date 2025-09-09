@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
+import { getGapSize, getIconStyles, getPadding, getTextStyles } from './styles';
 
 export type ButtonSize = 'small' | 'medium' | 'large';
 export type ButtonVariant = 'contained' | 'outlined';
@@ -22,80 +23,6 @@ export interface ButtonProps<T extends React.ElementType = 'button'> {
   onClick?: (e: React.SyntheticEvent<HTMLElement>) => void;
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 }
-
-const createTextStyle = (
-  fontSize: keyof typeof tokens.fontSize,
-  lineHeight: keyof typeof tokens.lineHeight,
-) => css`
-  font-size: ${tokens.fontSize[fontSize]};
-  font-weight: ${tokens.fontWeight.semibold};
-  line-height: ${tokens.lineHeight[lineHeight]};
-  letter-spacing: ${tokens.letterSpacing[0]};
-`;
-
-const TEXT_STYLES = {
-  small: createTextStyle(13, 18),
-  medium: createTextStyle(14, 20),
-  large: createTextStyle(16, 24),
-} as const;
-
-const getTextStyles = (size: ButtonSize) => TEXT_STYLES[size];
-
-const ICON_CONFIGS = {
-  small: { fontSize: 16, fontWeight: 'regular' as const, grad: 0, opsz: 20 },
-  medium: { fontSize: 20, fontWeight: 'regular' as const, grad: 0, opsz: 24 },
-  large: { fontSize: 24, fontWeight: 'medium' as const, grad: 25, opsz: 40 },
-} as const;
-
-const getIconStyles = (size: ButtonSize) => {
-  const config = ICON_CONFIGS[size];
-  return {
-    fontSize: `${config.fontSize}px`,
-    fontWeight: tokens.fontWeight[config.fontWeight],
-    wght: tokens.fontWeight[config.fontWeight],
-    grad: tokens.icons.grade[config.grad as keyof typeof tokens.icons.grade],
-    opsz: tokens.icons.opticalSize[config.opsz as keyof typeof tokens.icons.opticalSize],
-  };
-};
-
-const GAP_SIZES = {
-  small: '6px',
-  medium: '8px',
-  large: '10px',
-} as const;
-
-const getGapSize = (size: ButtonSize) => GAP_SIZES[size];
-
-const HORIZONTAL_PADDINGS = {
-  small: '16px',
-  medium: '20px',
-  large: '24px',
-} as const;
-
-const VERTICAL_PADDING = '10px';
-
-const ICON_PADDINGS = {
-  small: '10px',
-  medium: '12px',
-  large: '14px',
-} as const;
-
-const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
-  const iconPadding = ICON_PADDINGS[size];
-  const horizontal = HORIZONTAL_PADDINGS[size];
-
-  if (iconPosition === 'only') {
-    return VERTICAL_PADDING;
-  }
-  if (iconPosition === 'left') {
-    return `${VERTICAL_PADDING} ${horizontal} ${VERTICAL_PADDING} ${iconPadding}`;
-  }
-  if (iconPosition === 'right') {
-    return `${VERTICAL_PADDING} ${iconPadding} ${VERTICAL_PADDING} ${horizontal}`;
-  }
-
-  return `${VERTICAL_PADDING} ${horizontal}`;
-};
 
 const shouldForwardProp = (prop: string) =>
   ['size', 'variant', 'iconPosition', 'rounded', '$isDisabledLink'].indexOf(prop) === -1;
@@ -272,16 +199,5 @@ const StyledIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
     font-family: ${tokens.fontFamily.icon.join(', ')};
     user-select: none;
 
-    ${({ size, filled }) => {
-      const iconStyles = getIconStyles(size);
-      return css`
-            font-size: ${iconStyles.fontSize};
-            font-weight: ${iconStyles.fontWeight};
-            font-variation-settings:
-                    'FILL' ${filled ? tokens.icons.fill[1] : tokens.icons.fill[0]},
-                    'wght' ${iconStyles.wght},
-                    'GRAD' ${iconStyles.grad},
-                    'opsz' ${iconStyles.opsz};
-        `;
-    }}
+    ${({ size, filled }) => getIconStyles(size, filled ? 1 : 0)}
 `;
