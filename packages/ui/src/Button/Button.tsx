@@ -1,29 +1,16 @@
-import ButtonIcon from '@/Button/ButtonIcon';
-import ButtonText from '@/Button/ButtonText';
+import type {
+  ButtonProps,
+  ButtonSize,
+  ButtonVariant,
+  IconPosition,
+  StyledButtonProps,
+} from '@/Button/types';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
+import ButtonIcon from './ButtonIcon';
+import ButtonText from './ButtonText';
 import { getButtonStyle, getGapSize, getPadding } from './styles';
-
-export type ButtonSize = 'small' | 'medium' | 'large';
-export type ButtonVariant = 'contained' | 'outlined';
-export type IconPosition = 'none' | 'left' | 'right' | 'only';
-
-export interface ButtonProps<T extends React.ElementType = 'button'> {
-  as?: T;
-  size?: ButtonSize;
-  iconPosition?: IconPosition;
-  variant?: ButtonVariant;
-  rounded?: boolean;
-  children?: React.ReactNode;
-  iconName?: string;
-  iconFilled?: boolean;
-  disabled?: boolean;
-  type?: 'button' | 'submit' | 'reset';
-  'aria-label'?: string;
-  onClick?: (e: React.SyntheticEvent<HTMLElement>) => void;
-  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
-}
 
 const shouldForwardProp = (prop: string) =>
   ['size', 'variant', 'iconPosition', 'rounded'].indexOf(prop) === -1;
@@ -91,14 +78,6 @@ export const Button = <T extends React.ElementType = 'button'>({
     </StyledButton>
   );
 };
-
-interface StyledButtonProps {
-  size: ButtonSize;
-  variant: ButtonVariant;
-  iconPosition: IconPosition;
-  rounded: boolean;
-  disabled: boolean;
-}
 
 const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
     display: inline-flex;

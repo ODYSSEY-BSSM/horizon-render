@@ -1,15 +1,8 @@
-import type { ButtonSize } from '@/Button/Button';
 import { getIconStyles } from '@/Button/styles';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-
-interface ButtonIconProps {
-  size: ButtonSize;
-  iconName?: string;
-  filled: boolean;
-  'aria-hidden'?: boolean;
-}
+import type { ButtonIconProps, ButtonSize } from './types';
 
 const ButtonIcon = ({ size, iconName = 'check', filled, ...restProps }: ButtonIconProps) => {
   return (

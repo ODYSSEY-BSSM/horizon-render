@@ -1,8 +1,6 @@
-import type { IconPosition } from '@/Button/Button';
 import { css } from '@emotion/react';
 import { tokens } from '@horizon/tokens';
-
-export type ButtonSize = 'small' | 'medium' | 'large';
+import type { ButtonSize, ButtonVariant, IconPosition } from './types';
 
 const makeTextStyle = (
   fontSize: keyof typeof tokens.fontSize,
@@ -135,6 +133,6 @@ const buttonStyles = {
   },
 };
 
-export const getButtonStyle = (variant: 'contained' | 'outlined', disabled: boolean) => {
+export const getButtonStyle = (variant: ButtonVariant, disabled: boolean) => {
   return buttonStyles[variant][disabled ? 'disabled' : 'default'];
 };
