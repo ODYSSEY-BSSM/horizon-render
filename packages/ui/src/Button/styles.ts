@@ -106,7 +106,7 @@ const buttonStyles = {
       }
     `,
     disabled: css`
-      pointer-events: none;
+      cursor: not-allowed;
       background-color: ${tokens.colors.neutral[300]};
     `,
   },
@@ -127,10 +127,10 @@ const buttonStyles = {
       }
     `,
     disabled: css`
+      cursor: not-allowed;
       background-color: transparent;
       color: ${tokens.colors.neutral[300]};
       border: 1px solid ${tokens.colors.neutral[300]};
-      pointer-events: none;
     `,
   },
 };
