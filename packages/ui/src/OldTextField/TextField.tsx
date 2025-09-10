@@ -6,66 +6,51 @@ import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { forwardRef, useCallback, useId, useState } from 'react';
 
-export interface TextFieldProps
+interface OldTextFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
   id?: string;
+  value?: string | number;
+  defaultValue?: string | number;
   label?: string;
-  helperText?: string;
+  icon?: string;
   error?: boolean;
-  leftIcon?: string;
-  rightIcon?: string;
-  width?: string | number;
+  errorMessage?: string;
   containerClassName?: string;
   labelClassName?: string;
-  helperClassName?: string;
+  width?: string | number;
 }
 
 const shouldForwardProp = (prop: string) =>
-  ['hasError', 'filled', 'hasLeft', 'hasRight', 'hasToggle'].indexOf(prop) === -1;
+  ['hasError', 'hasIcon', 'filled', 'hasVisibilityToggle'].indexOf(prop) === -1;
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+export const OldTextField = forwardRef<HTMLInputElement, OldTextFieldProps>(
   (
     {
       id,
       value,
       defaultValue,
       onChange,
-      onFocus,
-      onBlur,
       label,
-      helperText,
+      icon,
       error = false,
-      leftIcon,
-      rightIcon,
-      width,
+      errorMessage,
       containerClassName,
       labelClassName,
-      helperClassName,
+      width,
       ...restProps
     },
     ref,
   ) => {
     const generatedId = useId();
     const resolvedId = id ?? generatedId;
-    const helperId = `${resolvedId}-help`;
+    const errorId = `${resolvedId}-error`;
     const [internalValue, setInternalValue] = useState(String(defaultValue ?? ''));
     const [showPassword, setShowPassword] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
 
+    const isPasswordType = (restProps.type ?? 'text') === 'password';
+    const hasIcon = !!icon || isPasswordType;
     const currentValue = value !== undefined ? value : internalValue;
     const isFilled = !!String(currentValue).trim();
-    const isPassword = (restProps.type ?? 'text') === 'password';
-    const hasToggle = isPassword;
-    const hasLeft = isPassword || !!leftIcon;
-    const hasRight = hasToggle || !!rightIcon;
-
-    const borderColor = isFocused
-      ? tokens.colors.primary[500]
-      : error
-        ? tokens.colors.warning[200]
-        : isFilled
-          ? tokens.colors.primary[500]
-          : tokens.colors.neutral[300];
 
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,21 +66,48 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       setShowPassword((prev) => !prev);
     }, []);
 
-    const handleFocus = useCallback(
-      (e: React.FocusEvent<HTMLInputElement>) => {
-        setIsFocused(true);
-        onFocus?.(e);
-      },
-      [onFocus],
-    );
+    const renderIcon = () => {
+      if (!hasIcon) return null;
 
-    const handleBlur = useCallback(
-      (e: React.FocusEvent<HTMLInputElement>) => {
-        setIsFocused(false);
-        onBlur?.(e);
-      },
-      [onBlur],
-    );
+      return (
+        <StyledIconWrapper aria-hidden>
+          <Icon
+            name={icon ?? 'lock'}
+            variant='SM'
+            color={isFilled ? 'black' : tokens.colors.neutral[400]}
+          />
+        </StyledIconWrapper>
+      );
+    };
+
+    const renderVisibilityToggle = () => {
+      if (!isPasswordType) return null;
+      return (
+        <StyledVisibilityToggle
+          type='button'
+          onClick={togglePasswordVisibility}
+          aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
+        >
+          <Icon
+            name={showPassword ? 'visibility' : 'visibility_off'}
+            variant='SM'
+            color={tokens.colors.neutral[400]}
+          />
+        </StyledVisibilityToggle>
+      );
+    };
+
+    const renderErrorMessage = () => {
+      if (!error || !errorMessage) return null;
+
+      return (
+        <StyledErrorMessage id={errorId} aria-live='polite'>
+          <Text variant='B1' color={tokens.colors.warning[200]} textAlign='center'>
+            {errorMessage}
+          </Text>
+        </StyledErrorMessage>
+      );
+    };
 
     return (
       <StyledContainer className={containerClassName}>
@@ -103,7 +115,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           <Text
             as='label'
             variant='B1'
-            color={borderColor}
+            color={isFilled ? 'black' : tokens.colors.neutral[400]}
             htmlFor={resolvedId}
             className={labelClassName}
           >
@@ -111,69 +123,30 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           </Text>
         )}
         <StyledInputWrapper width={width}>
-          {hasLeft && (
-            <StyledAffixLeft aria-hidden>
-              <Icon
-                name={leftIcon ?? 'lock'}
-                variant='SM'
-                color={isFilled ? 'black' : tokens.colors.neutral[400]}
-              />
-            </StyledAffixLeft>
-          )}
+          {renderIcon()}
           <StyledInput
             {...restProps}
             id={resolvedId}
             ref={ref}
-            type={hasToggle ? (showPassword ? 'text' : 'password') : restProps.type}
+            type={isPasswordType ? (showPassword ? 'text' : 'password') : restProps.type}
             hasError={error}
+            hasIcon={hasIcon}
             filled={isFilled}
-            hasLeft={hasLeft}
-            hasRight={hasRight}
-            hasToggle={hasToggle}
+            hasVisibilityToggle={isPasswordType}
             onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
             aria-invalid={error || undefined}
-            aria-describedby={helperText ? helperId : undefined}
+            aria-describedby={error && errorMessage ? errorId : undefined}
             value={currentValue}
           />
-          {hasToggle ? (
-            <StyledAffixRightButton
-              type='button'
-              onClick={togglePasswordVisibility}
-              aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
-            >
-              <Icon
-                name={showPassword ? 'visibility' : 'visibility_off'}
-                variant='SM'
-                color={isFilled ? 'black' : tokens.colors.neutral[400]}
-              />
-            </StyledAffixRightButton>
-          ) : (
-            rightIcon && (
-              <StyledAffixRight aria-hidden>
-                <Icon
-                  name={rightIcon}
-                  variant='SM'
-                  color={isFilled ? 'black' : tokens.colors.neutral[400]}
-                />
-              </StyledAffixRight>
-            )
-          )}
+          {renderVisibilityToggle()}
         </StyledInputWrapper>
-        {helperText && (
-          <StyledHelper id={helperId} className={helperClassName}>
-            <Text variant='B1' color={borderColor}>
-              {helperText}
-            </Text>
-          </StyledHelper>
-        )}
+        {renderErrorMessage()}
       </StyledContainer>
     );
   },
 );
 
-TextField.displayName = 'TextField';
+OldTextField.displayName = 'OldTextField';
 
 interface StyledInputWrapperProps {
   width?: string | number;
@@ -181,10 +154,9 @@ interface StyledInputWrapperProps {
 
 interface StyledInputProps {
   hasError: boolean;
+  hasIcon: boolean;
   filled: boolean;
-  hasLeft: boolean;
-  hasRight: boolean;
-  hasToggle: boolean;
+  hasVisibilityToggle: boolean;
 }
 
 const StyledContainer = styled.div`
@@ -198,7 +170,7 @@ const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : (width ?? '100%'))};
 `;
 
-const StyledAffixLeft = styled.div`
+const StyledIconWrapper = styled.div`
   position: absolute;
   left: 12px;
   top: 50%;
@@ -209,18 +181,7 @@ const StyledAffixLeft = styled.div`
   pointer-events: none;
 `;
 
-const StyledAffixRight = styled.div`
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-`;
-
-const StyledAffixRightButton = styled.button`
+const StyledVisibilityToggle = styled.button`
   position: absolute;
   right: 12px;
   top: 50%;
@@ -251,12 +212,12 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
   align-items: center;
   border-radius: ${tokens.rounding.object};
   border: ${tokens.stroke.weight} solid transparent;
-  box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};
+  box-shadow: inset 0 0 0 ${tokens.stroke.weight};
   background-color: white;
   padding: 10px 12px;
-  font-size: ${tokens.fontSize[16]};
-  font-weight: ${tokens.fontWeight.regular};
-  line-height: ${tokens.lineHeight[24]};
+  font-size: ${tokens.fontSize[14]};
+  font-weight: ${tokens.fontWeight.light};
+  line-height: ${tokens.lineHeight[22]};
   font-family: ${tokens.fontFamily.suit.join(', ')};
   color: black;
   box-sizing: border-box;
@@ -264,48 +225,61 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
 
   &::placeholder {
     color: ${tokens.colors.neutral[400]};
-    font-size: ${tokens.fontSize[16]};
-    font-weight: ${tokens.fontWeight.regular};
-    line-height: ${tokens.lineHeight[24]};
   }
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
   }
 
   &:disabled {
     cursor: not-allowed;
   }
 
-  ${({ hasLeft }) =>
-    hasLeft && {
-      paddingLeft: 36,
-    }}
+  ${({ hasIcon }) =>
+    hasIcon &&
+    css`
+      padding-left: 36px;
+    `}
 
-  ${({ hasRight }) =>
-    hasRight && {
-      paddingRight: 36,
-    }}
+  ${({ hasVisibilityToggle }) =>
+    hasVisibilityToggle &&
+    css`
+      padding-right: 36px;
+    `}
 
   ${({ hasError }) =>
     hasError &&
     css`
       box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.warning[200]};
+      
+      &:focus {
+        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.warning[200]};
+      }
     `}
-
+  
   ${({ filled, hasError }) =>
     !hasError &&
     filled &&
     css`
       box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.primary[500]};
-
+      
+      &:focus {
+        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
+      }
+    `}
+  
+  ${({ filled, hasError }) =>
+    !hasError &&
+    !filled &&
+    css`
+      box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};
+      
       &:focus {
         box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
       }
     `}
 `;
 
-const StyledHelper = styled.output`
-  text-align: left;
+const StyledErrorMessage = styled.output`
+  text-align: center;
 `;
