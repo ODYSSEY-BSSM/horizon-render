@@ -20,7 +20,8 @@ interface TextFieldProps
   width?: string | number;
 }
 
-const shouldForwardProp = (prop: string) => ['hasError', 'hasIcon', 'filled'].indexOf(prop) === -1;
+const shouldForwardProp = (prop: string) =>
+  ['hasError', 'hasIcon', 'filled', 'hasVisibilityToggle'].indexOf(prop) === -1;
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
@@ -44,8 +45,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const resolvedId = id ?? generatedId;
     const errorId = `${resolvedId}-error`;
     const [internalValue, setInternalValue] = useState(String(defaultValue ?? ''));
+    const [showPassword, setShowPassword] = useState(false);
 
-    const hasIcon = !!icon;
+    const isPasswordType = (restProps.type ?? 'text') === 'password';
+    const hasIcon = !!icon || isPasswordType;
     const currentValue = value !== undefined ? value : internalValue;
     const isFilled = !!String(currentValue).trim();
 
@@ -59,13 +62,38 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       [value, onChange],
     );
 
+    const togglePasswordVisibility = useCallback(() => {
+      setShowPassword((prev) => !prev);
+    }, []);
+
     const renderIcon = () => {
-      if (!hasIcon || !icon) return null;
+      if (!hasIcon) return null;
 
       return (
         <StyledIconWrapper aria-hidden>
-          <Icon name={icon} variant='SM' color={isFilled ? 'black' : tokens.colors.neutral[400]} />
+          <Icon
+            name={icon ?? 'lock'}
+            variant='SM'
+            color={isFilled ? 'black' : tokens.colors.neutral[400]}
+          />
         </StyledIconWrapper>
+      );
+    };
+
+    const renderVisibilityToggle = () => {
+      if (!isPasswordType) return null;
+      return (
+        <StyledVisibilityToggle
+          type='button'
+          onClick={togglePasswordVisibility}
+          aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
+        >
+          <Icon
+            name={showPassword ? 'visibility' : 'visibility_off'}
+            variant='SM'
+            color={tokens.colors.neutral[400]}
+          />
+        </StyledVisibilityToggle>
       );
     };
 
@@ -100,14 +128,17 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             {...restProps}
             id={resolvedId}
             ref={ref}
+            type={isPasswordType ? (showPassword ? 'text' : 'password') : restProps.type}
             hasError={error}
             hasIcon={hasIcon}
             filled={isFilled}
+            hasVisibilityToggle={isPasswordType}
             onChange={handleChange}
             aria-invalid={error || undefined}
             aria-describedby={error && errorMessage ? errorId : undefined}
             value={currentValue}
           />
+          {renderVisibilityToggle()}
         </StyledInputWrapper>
         {renderErrorMessage()}
       </StyledContainer>
@@ -125,6 +156,7 @@ interface StyledInputProps {
   hasError: boolean;
   hasIcon: boolean;
   filled: boolean;
+  hasVisibilityToggle: boolean;
 }
 
 const StyledContainer = styled.div`
@@ -147,6 +179,30 @@ const StyledIconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   pointer-events: none;
+`;
+
+const StyledVisibilityToggle = styled.button`
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: ${tokens.colors.neutral[100]};
+  }
+
+  &:focus {
+    outline: none;
+    background-color: ${tokens.colors.neutral[200]};
+  }
 `;
 
 const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
@@ -177,13 +233,18 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
   }
 
   ${({ hasIcon }) =>
     hasIcon &&
     css`
       padding-left: 36px;
+    `}
+
+  ${({ hasVisibilityToggle }) =>
+    hasVisibilityToggle &&
+    css`
+      padding-right: 36px;
     `}
 
   ${({ hasError }) =>
