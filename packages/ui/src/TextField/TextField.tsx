@@ -4,116 +4,120 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import { forwardRef, useCallback, useId, useState } from 'react';
+import { forwardRef } from 'react';
+import { StyledAffixLeft, StyledAffixRight, StyledAffixRightButton, StyledHelper } from './styles';
+import { useTextFieldState } from './useTextFieldState';
 
-interface TextFieldProps
+export interface TextFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
   id?: string;
-  value?: string | number;
-  defaultValue?: string | number;
   label?: string;
-  icon?: string;
+  helperText?: string;
   error?: boolean;
-  errorMessage?: string;
+  leftIcon?: string;
+  rightIcon?: string;
+  width?: string;
   containerClassName?: string;
   labelClassName?: string;
-  width?: string | number;
+  helperClassName?: string;
 }
 
-const shouldForwardProp = (prop: string) => ['hasError', 'hasIcon', 'filled'].indexOf(prop) === -1;
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
+  const {
+    id,
+    helperId,
+    value,
+    isFilled,
+    showPassword,
+    hasToggle,
+    hasLeft,
+    hasRight,
+    resolvedType,
+    leftIconResolved,
+    borderColor,
+    affixColor,
+    onChange,
+    onFocus,
+    onBlur,
+    togglePassword,
+  } = useTextFieldState(props);
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  (
-    {
-      id,
-      value,
-      defaultValue,
-      onChange,
-      label,
-      icon,
-      error = false,
-      errorMessage,
-      containerClassName,
-      labelClassName,
-      width,
-      ...restProps
-    },
-    ref,
-  ) => {
-    const generatedId = useId();
-    const resolvedId = id ?? generatedId;
-    const errorId = `${resolvedId}-error`;
-    const [internalValue, setInternalValue] = useState(String(defaultValue ?? ''));
+  const {
+    label,
+    helperText,
+    error = false,
+    rightIcon,
+    width,
+    containerClassName,
+    labelClassName,
+    helperClassName,
+    ...restProps
+  } = props;
 
-    const hasIcon = !!icon;
-    const currentValue = value !== undefined ? value : internalValue;
-    const isFilled = !!String(currentValue).trim();
-
-    const handleChange = useCallback(
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (value === undefined) {
-          setInternalValue(e.target.value);
-        }
-        onChange?.(e);
-      },
-      [value, onChange],
-    );
-
-    const renderIcon = () => {
-      if (!hasIcon || !icon) return null;
-
-      return (
-        <StyledIconWrapper aria-hidden>
-          <Icon name={icon} variant='SM' color={isFilled ? 'black' : tokens.colors.neutral[400]} />
-        </StyledIconWrapper>
-      );
-    };
-
-    const renderErrorMessage = () => {
-      if (!error || !errorMessage) return null;
-
-      return (
-        <StyledErrorMessage id={errorId} aria-live='polite'>
-          <Text variant='C' color={tokens.colors.warning[200]} textAlign='center'>
-            {errorMessage}
-          </Text>
-        </StyledErrorMessage>
-      );
-    };
-
-    return (
-      <StyledContainer className={containerClassName}>
-        {label && (
-          <Text
-            as='label'
-            variant='O'
-            color={isFilled ? 'black' : tokens.colors.neutral[400]}
-            htmlFor={resolvedId}
-            className={labelClassName}
-          >
-            {label}
-          </Text>
+  return (
+    <StyledTextField className={containerClassName}>
+      {label && (
+        <Text as='label' variant='B1' color={borderColor} htmlFor={id} className={labelClassName}>
+          {label}
+        </Text>
+      )}
+      <StyledInputWrapper width={width}>
+        {hasLeft && leftIconResolved && (
+          <StyledAffixLeft aria-hidden>
+            <Icon name={leftIconResolved} variant='SM' color={affixColor} />
+          </StyledAffixLeft>
         )}
-        <StyledInputWrapper width={width}>
-          {renderIcon()}
-          <StyledInput
-            {...restProps}
-            id={resolvedId}
-            ref={ref}
-            hasError={error}
-            hasIcon={hasIcon}
-            filled={isFilled}
-            onChange={handleChange}
-            aria-invalid={error || undefined}
-            aria-describedby={error && errorMessage ? errorId : undefined}
-            value={currentValue}
-          />
-        </StyledInputWrapper>
-        {renderErrorMessage()}
-      </StyledContainer>
-    );
-  },
-);
+        <StyledInput
+          {...restProps}
+          id={id}
+          ref={ref}
+          type={resolvedType}
+          hasError={error}
+          filled={isFilled}
+          hasLeft={hasLeft}
+          hasRight={hasRight}
+          hasToggle={hasToggle}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          aria-invalid={error || undefined}
+          aria-describedby={helperText ? helperId : undefined}
+          value={value}
+        />
+        {hasToggle ? (
+          <StyledAffixRightButton
+            type='button'
+            onClick={togglePassword}
+            aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
+          >
+            <Icon
+              name={showPassword ? 'visibility' : 'visibility_off'}
+              variant='SM'
+              color={isFilled ? 'black' : tokens.colors.neutral[400]}
+            />
+          </StyledAffixRightButton>
+        ) : (
+          rightIcon && (
+            <StyledAffixRight aria-hidden>
+              <Icon
+                name={rightIcon}
+                variant='SM'
+                color={isFilled ? 'black' : tokens.colors.neutral[400]}
+              />
+            </StyledAffixRight>
+          )
+        )}
+      </StyledInputWrapper>
+      {helperText && (
+        <StyledHelper id={helperId} className={helperClassName}>
+          <Text variant='B1' color={borderColor}>
+            {helperText}
+          </Text>
+        </StyledHelper>
+      )}
+    </StyledTextField>
+  );
+});
 
 TextField.displayName = 'TextField';
 
@@ -123,11 +127,18 @@ interface StyledInputWrapperProps {
 
 interface StyledInputProps {
   hasError: boolean;
-  hasIcon: boolean;
   filled: boolean;
+  hasLeft: boolean;
+  hasRight: boolean;
+  hasToggle: boolean;
 }
 
-const StyledContainer = styled.div`
+const blockedProps = new Set(['hasError', 'filled', 'hasLeft', 'hasRight', 'hasToggle']);
+const shouldForwardProp = (prop: string): boolean => {
+  return !blockedProps.has(prop);
+};
+
+const StyledTextField = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -138,17 +149,6 @@ const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : (width ?? '100%'))};
 `;
 
-const StyledIconWrapper = styled.div`
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-`;
-
 const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
   display: flex;
   height: 40px;
@@ -156,12 +156,12 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
   align-items: center;
   border-radius: ${tokens.rounding.object};
   border: ${tokens.stroke.weight} solid transparent;
-  box-shadow: inset 0 0 0 ${tokens.stroke.weight};
+  box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};
   background-color: white;
   padding: 10px 12px;
-  font-size: ${tokens.fontSize[14]};
-  font-weight: ${tokens.fontWeight.light};
-  line-height: ${tokens.lineHeight[22]};
+  font-size: ${tokens.fontSize[16]};
+  font-weight: ${tokens.fontWeight.regular};
+  line-height: ${tokens.lineHeight[24]};
   font-family: ${tokens.fontFamily.suit.join(', ')};
   color: black;
   box-sizing: border-box;
@@ -169,56 +169,44 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
 
   &::placeholder {
     color: ${tokens.colors.neutral[400]};
+    font-size: ${tokens.fontSize[16]};
+    font-weight: ${tokens.fontWeight.regular};
+    line-height: ${tokens.lineHeight[24]};
   }
 
   &:focus {
     outline: none;
+    box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
   }
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
   }
 
-  ${({ hasIcon }) =>
-    hasIcon &&
-    css`
-      padding-left: 36px;
-    `}
+  ${({ hasLeft }) =>
+    hasLeft && {
+      paddingLeft: 36,
+    }}
+
+  ${({ hasRight }) =>
+    hasRight && {
+      paddingRight: 36,
+    }}
 
   ${({ hasError }) =>
     hasError &&
     css`
       box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.warning[200]};
-      
-      &:focus {
-        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.warning[200]};
-      }
     `}
-  
+
   ${({ filled, hasError }) =>
     !hasError &&
     filled &&
     css`
       box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.primary[500]};
-      
-      &:focus {
-        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
-      }
-    `}
-  
-  ${({ filled, hasError }) =>
-    !hasError &&
-    !filled &&
-    css`
-      box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};
-      
-      &:focus {
-        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
-      }
-    `}
-`;
 
-const StyledErrorMessage = styled.output`
-  text-align: center;
+      &:focus {
+        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
+      }
+    `}
 `;
