@@ -274,6 +274,38 @@ export const WidthVariations: Story = {
   },
 };
 
+export const Password: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
+      <TextField type='password' label='비밀번호' placeholder='비밀번호 입력' width='400px' />
+      <TextField
+        type='password'
+        label='값 입력됨'
+        placeholder='8자 이상'
+        defaultValue='mypassword123'
+        width='400px'
+      />
+      <TextField
+        type='password'
+        label='에러 상태'
+        defaultValue='123'
+        error
+        errorMessage='비밀번호는 8자 이상이어야 합니다'
+        width='400px'
+      />
+      <TextField type='password' label='비활성화' placeholder='입력 불가' disabled width='400px' />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'TextField에 type="password"를 사용하면 비밀번호 가시성 토글과 잠금 아이콘이 자동으로 적용됩니다.',
+      },
+    },
+  },
+};
+
 export const Playground: Story = {
   args: {
     label: '라벨',
