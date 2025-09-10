@@ -90,3 +90,51 @@ export const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
 
   return `${VERTICAL_PADDING} ${horizontal}`;
 };
+
+const buttonStyles = {
+  contained: {
+    default: css`
+      background-color: ${tokens.colors.primary[500]};
+      color: white;
+        
+      &:hover {
+          background-color: ${tokens.colors.primary[700]};
+      }
+        
+      &:active {
+          background-color: ${tokens.colors.primary[900]};
+      }
+    `,
+    disabled: css`
+      pointer-events: none;
+      background-color: ${tokens.colors.neutral[300]};
+    `,
+  },
+  outlined: {
+    default: css`
+      background-color: transparent;
+      border: 1px solid ${tokens.colors.primary[500]};
+      color: ${tokens.colors.primary[500]};
+        
+      &:hover {
+        background-color: ${tokens.colors.primary[600]};
+        color: white;
+      }
+        
+      &:active {
+        background-color: ${tokens.colors.primary[900]};
+        color: white;
+      }
+    `,
+    disabled: css`
+      background-color: transparent;
+      color: ${tokens.colors.neutral[300]};
+      border: 1px solid ${tokens.colors.neutral[300]};
+      pointer-events: none;
+    `,
+  },
+};
+
+export const getButtonStyle = (variant: 'contained' | 'outlined', disabled: boolean) => {
+  return buttonStyles[variant][disabled ? 'disabled' : 'default'];
+};
