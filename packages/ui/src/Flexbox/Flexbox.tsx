@@ -1,5 +1,5 @@
-import { toPx } from '@/toPx';
 import styled from '@emotion/styled';
+import { toPx } from '@horizon/utils';
 import type React from 'react';
 
 interface FlexboxProps extends React.HTMLAttributes<HTMLDivElement> {

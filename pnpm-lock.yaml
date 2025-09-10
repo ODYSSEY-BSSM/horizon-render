@@ -197,6 +197,9 @@ importers:
       '@horizon/tokens':
         specifier: workspace:*
         version: link:../tokens
+      '@horizon/utils':
+        specifier: workspace:*
+        version: link:../utils
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -215,6 +218,25 @@ importers:
         version: 18.3.7(@types/react@18.3.24)
       tsup:
         specifier: ^8.3.0
+        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.9.2)(yaml@2.8.1)
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.2
+
+  packages/utils:
+    dependencies:
+      '@horizon/tokens':
+        specifier: workspace:*
+        version: link:../tokens
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.14
+        version: 18.3.24
+      tsup:
+        specifier: ^8.3.5
         version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.9.2)(yaml@2.8.1)
       typescript:
         specifier: ^5.6.3

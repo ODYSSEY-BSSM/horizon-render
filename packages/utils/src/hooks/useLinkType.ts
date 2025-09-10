@@ -29,10 +29,8 @@ const detectLinkType = (): LinkType => {
   return cachedLinkType;
 };
 
-const useLinkType = (): LinkType => {
+export const useLinkType = (): LinkType => {
   return useMemo(() => {
     return detectLinkType();
   }, []);
 };
-
-export default useLinkType;
