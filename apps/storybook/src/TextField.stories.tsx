@@ -1,10 +1,10 @@
-import { TextField } from '@horizon/ui';
+import { OldTextField } from '@horizon/ui';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-const meta: Meta<typeof TextField> = {
-  title: 'Components/TextField',
-  component: TextField,
+const meta: Meta<typeof OldTextField> = {
+  title: 'Components/OldTextField',
+  component: OldTextField,
   parameters: {
     layout: 'centered',
     docs: {
@@ -47,7 +47,7 @@ const meta: Meta<typeof TextField> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof TextField>;
+type Story = StoryObj<typeof OldTextField>;
 
 export const Default: Story = {
   args: {
@@ -67,15 +67,15 @@ export const Default: Story = {
 export const WithIcon: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField icon='search' label='검색' placeholder='검색어를 입력하세요' width='400px' />
-      <TextField
+      <OldTextField icon='search' label='검색' placeholder='검색어를 입력하세요' width='400px' />
+      <OldTextField
         icon='mail'
         label='이메일'
         placeholder='example@email.com'
         type='email'
         width='400px'
       />
-      <TextField
+      <OldTextField
         icon='lock'
         label='비밀번호'
         placeholder='비밀번호 입력'
@@ -104,14 +104,14 @@ export const WithIcon: Story = {
 export const ErrorState: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField
+      <OldTextField
         label='이메일'
         defaultValue='잘못된이메일'
         error
         errorMessage='올바른 이메일 형식이 아닙니다'
         width='400px'
       />
-      <TextField
+      <OldTextField
         icon='warning'
         label='필수 입력'
         error
@@ -143,9 +143,9 @@ export const ErrorState: Story = {
 export const FilledState: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField label='빈 상태' placeholder='내용을 입력하세요' width='400px' />
-      <TextField label='입력된 상태' defaultValue='홍길동' width='400px' />
-      <TextField
+      <OldTextField label='빈 상태' placeholder='내용을 입력하세요' width='400px' />
+      <OldTextField label='입력된 상태' defaultValue='홍길동' width='400px' />
+      <OldTextField
         label='제어된 상태'
         value='실시간 값'
         onChange={() => {
@@ -174,8 +174,8 @@ export const FilledState: Story = {
 export const Disabled: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField label='비활성화' placeholder='입력 불가' disabled width='400px' />
-      <TextField label='값 포함 비활성화' defaultValue='읽기 전용' disabled width='400px' />
+      <OldTextField label='비활성화' placeholder='입력 불가' disabled width='400px' />
+      <OldTextField label='값 포함 비활성화' defaultValue='읽기 전용' disabled width='400px' />
     </div>
   ),
   parameters: {
@@ -202,22 +202,22 @@ export const FormExample: Story = {
     >
       <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '16px' }}>회원가입</h3>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-        <TextField icon='person' label='이름' placeholder='홍길동' width='400px' />
-        <TextField
+        <OldTextField icon='person' label='이름' placeholder='홍길동' width='400px' />
+        <OldTextField
           icon='mail'
           label='이메일'
           placeholder='example@email.com'
           type='email'
           width='400px'
         />
-        <TextField
+        <OldTextField
           icon='lock'
           label='비밀번호'
           placeholder='8자 이상'
           type='password'
           width='400px'
         />
-        <TextField
+        <OldTextField
           icon='verified_user'
           label='비밀번호 확인'
           placeholder='비밀번호 재입력'
@@ -225,7 +225,7 @@ export const FormExample: Story = {
           width='400px'
         />
       </div>
-      <TextField
+      <OldTextField
         label='주소'
         placeholder='서울시 강남구...'
         width='100%'
@@ -252,9 +252,9 @@ export const FormExample: Story = {
 export const WidthVariations: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '600px' }}>
-      <TextField label='Compact (250px)' placeholder='좁은 필드' width={250} />
-      <TextField label='Standard (400px)' placeholder='표준 필드' width='400px' />
-      <TextField label='Full Width' placeholder='전체 너비' width='100%' />
+      <OldTextField label='Compact (250px)' placeholder='좁은 필드' width={250} />
+      <OldTextField label='Standard (400px)' placeholder='표준 필드' width='400px' />
+      <OldTextField label='Full Width' placeholder='전체 너비' width='100%' />
     </div>
   ),
   parameters: {
@@ -277,15 +277,15 @@ export const WidthVariations: Story = {
 export const Password: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '400px' }}>
-      <TextField type='password' label='비밀번호' placeholder='비밀번호 입력' width='400px' />
-      <TextField
+      <OldTextField type='password' label='비밀번호' placeholder='비밀번호 입력' width='400px' />
+      <OldTextField
         type='password'
         label='값 입력됨'
         placeholder='8자 이상'
         defaultValue='mypassword123'
         width='400px'
       />
-      <TextField
+      <OldTextField
         type='password'
         label='에러 상태'
         defaultValue='123'
@@ -293,7 +293,13 @@ export const Password: Story = {
         errorMessage='비밀번호는 8자 이상이어야 합니다'
         width='400px'
       />
-      <TextField type='password' label='비활성화' placeholder='입력 불가' disabled width='400px' />
+      <OldTextField
+        type='password'
+        label='비활성화'
+        placeholder='입력 불가'
+        disabled
+        width='400px'
+      />
     </div>
   ),
   parameters: {

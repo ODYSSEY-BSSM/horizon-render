@@ -6,7 +6,7 @@ import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { forwardRef, useCallback, useId, useState } from 'react';
 
-interface TextFieldProps
+interface OldTextFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
   id?: string;
   value?: string | number;
@@ -23,7 +23,7 @@ interface TextFieldProps
 const shouldForwardProp = (prop: string) =>
   ['hasError', 'hasIcon', 'filled', 'hasVisibilityToggle'].indexOf(prop) === -1;
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+export const OldTextField = forwardRef<HTMLInputElement, OldTextFieldProps>(
   (
     {
       id,
@@ -102,7 +102,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 
       return (
         <StyledErrorMessage id={errorId} aria-live='polite'>
-          <Text variant='C' color={tokens.colors.warning[200]} textAlign='center'>
+          <Text variant='B1' color={tokens.colors.warning[200]} textAlign='center'>
             {errorMessage}
           </Text>
         </StyledErrorMessage>
@@ -114,7 +114,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         {label && (
           <Text
             as='label'
-            variant='O'
+            variant='B1'
             color={isFilled ? 'black' : tokens.colors.neutral[400]}
             htmlFor={resolvedId}
             className={labelClassName}
@@ -146,7 +146,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   },
 );
 
-TextField.displayName = 'TextField';
+OldTextField.displayName = 'OldTextField';
 
 interface StyledInputWrapperProps {
   width?: string | number;
