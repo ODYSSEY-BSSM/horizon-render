@@ -233,7 +233,6 @@ export const FormExample: Story = {
 export const WidthVariations: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '16px', maxWidth: '600px' }}>
-      <TextField label='Compact (250px)' placeholder='Narrow field' width={250} />
       <TextField label='Standard (400px)' placeholder='Standard field' width='400px' />
       <TextField label='Full Width' placeholder='Full width' width='100%' />
     </div>

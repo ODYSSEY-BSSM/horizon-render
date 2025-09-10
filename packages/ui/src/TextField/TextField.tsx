@@ -16,7 +16,7 @@ export interface TextFieldProps
   error?: boolean;
   leftIcon?: string;
   rightIcon?: string;
-  width?: string | number;
+  width?: string;
   containerClassName?: string;
   labelClassName?: string;
   helperClassName?: string;
@@ -55,7 +55,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
   } = props;
 
   return (
-    <StyledContainer className={containerClassName}>
+    <StyledTextField className={containerClassName}>
       {label && (
         <Text as='label' variant='B1' color={borderColor} htmlFor={id} className={labelClassName}>
           {label}
@@ -97,10 +97,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
             />
           </StyledAffixRightButton>
         ) : (
-          props.rightIcon && (
+          rightIcon && (
             <StyledAffixRight aria-hidden>
               <Icon
-                name={props.rightIcon}
+                name={rightIcon}
                 variant='SM'
                 color={isFilled ? 'black' : tokens.colors.neutral[400]}
               />
@@ -115,7 +115,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
           </Text>
         </StyledHelper>
       )}
-    </StyledContainer>
+    </StyledTextField>
   );
 });
 
@@ -138,7 +138,7 @@ const shouldForwardProp = (prop: string): boolean => {
   return !blockedProps.has(prop);
 };
 
-const StyledContainer = styled.div`
+const StyledTextField = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
