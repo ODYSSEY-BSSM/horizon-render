@@ -185,12 +185,12 @@ const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
 
   ${({ hasLeft }) =>
     hasLeft && {
-      paddingLeft: `calc(${tokens.icon.size[24]} + ${tokens.spacing[12]})`,
+      paddingLeft: 36,
     }}
 
   ${({ hasRight }) =>
     hasRight && {
-      paddingRight: `calc(${tokens.icon.size[24]} + ${tokens.spacing[12]})`,
+      paddingRight: 36,
     }}
 
   ${({ hasError }) =>
