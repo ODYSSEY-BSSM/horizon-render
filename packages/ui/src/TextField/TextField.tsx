@@ -22,9 +22,6 @@ export interface TextFieldProps
   helperClassName?: string;
 }
 
-const shouldForwardProp = (prop: string) =>
-  ['hasError', 'filled', 'hasLeft', 'hasRight', 'hasToggle'].indexOf(prop) === -1;
-
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const {
     id,
@@ -135,6 +132,11 @@ interface StyledInputProps {
   hasRight: boolean;
   hasToggle: boolean;
 }
+
+const blockedProps = new Set(['hasError', 'filled', 'hasLeft', 'hasRight', 'hasToggle']);
+const shouldForwardProp = (prop: string): boolean => {
+  return !blockedProps.has(prop);
+};
 
 const StyledContainer = styled.div`
   display: flex;
