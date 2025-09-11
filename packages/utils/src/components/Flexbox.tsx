@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { toPx } from '@horizon/utils';
 import type React from 'react';
+import { toPx } from '../methods/toPx';
 
 interface FlexboxProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: React.CSSProperties['flexDirection'];

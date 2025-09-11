@@ -1,4 +1,4 @@
-import { Flexbox } from '@horizon/ui';
+import { Flexbox } from '@horizon/utils';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 

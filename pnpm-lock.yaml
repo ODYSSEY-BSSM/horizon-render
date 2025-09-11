@@ -80,6 +80,9 @@ importers:
       '@horizon/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@horizon/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -162,21 +165,6 @@ importers:
         specifier: ^5.6.3
         version: 5.9.2
 
-  packages/hooks:
-    devDependencies:
-      '@types/react':
-        specifier: ^18.3.14
-        version: 18.3.24
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      tsup:
-        specifier: ^8.0.0
-        version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.9.2)(yaml@2.8.1)
-      typescript:
-        specifier: ^5.0.0
-        version: 5.9.2
-
   packages/tokens:
     devDependencies:
       tsup:
@@ -229,9 +217,15 @@ importers:
         specifier: workspace:*
         version: link:../tokens
       react:
-        specifier: ^18.3.1
+        specifier: ^18.3.0
         version: 18.3.1
     devDependencies:
+      '@emotion/react':
+        specifier: ^11.13.5
+        version: 11.14.0(@types/react@18.3.24)(react@18.3.1)
+      '@emotion/styled':
+        specifier: ^11.13.0
+        version: 11.14.1(@emotion/react@11.14.0(@types/react@18.3.24)(react@18.3.1))(@types/react@18.3.24)(react@18.3.1)
       '@types/react':
         specifier: ^18.3.14
         version: 18.3.24

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@horizon/ui": "workspace:*",
+    "@horizon/utils": "workspace:*",
     "@horizon/tokens": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
