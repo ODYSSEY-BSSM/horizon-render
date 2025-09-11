@@ -56,8 +56,19 @@ export const StyledIcon = styled('span', { shouldForwardProp })<{
 
   ${({ color }) => color && `color: ${color};`}
   
+  ${({ variant, filled }) => {
+    const config = ICON_VARIANTS[variant];
+    return css`
+      ${getIconStyle(variant, filled)}
+      font-variation-settings: 
+        'FILL' ${filled ? tokens.icons.fill[1] : tokens.icons.fill[0]},
+        'wght' ${tokens.fontWeight[config.fontWeight]},
+        'GRAD' ${tokens.icons.grade[0]},
+        'opsz' ${tokens.icons.opticalSize[config.opticalSize]};
+    `;
+  }}
+
+  /* 명시적 size가 있을 경우 최종 override */
   ${({ size }) =>
     size != null ? { fontSize: typeof size === 'number' ? `${size}px` : size } : undefined}
-
-  ${({ variant, filled }) => getIconStyle(variant, filled)}
 `;
