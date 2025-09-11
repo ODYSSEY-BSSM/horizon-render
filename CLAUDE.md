@@ -34,7 +34,7 @@ pnpm clean                 # Clean all dist and node_modules folders
 ### Packages
 - **`@horizon/tokens`**: Design system foundation - colors, typography, layout tokens, icon system
 - **`@horizon/ui`**: React components using emotion/styled pattern
-- **`@horizon/hooks`**: Shared React hooks and utilities
+- **`@horizon/utils`**: Shared React hooks and utilities
 - **`apps/editor`**: React Flow based visual editor (React + Vite)
 - **`apps/web`**: Main web application (NextJS)
 - **`apps/storybook`**: Component development and documentation

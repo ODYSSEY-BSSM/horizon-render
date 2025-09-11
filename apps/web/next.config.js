@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@horizon/ui', '@horizon/hooks', '@horizon/tokens'],
+  transpilePackages: ['@horizon/ui', '@horizon/utils', '@horizon/tokens'],
   experimental: {
     turbo: {
       rules: {
