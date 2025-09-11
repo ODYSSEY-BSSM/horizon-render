@@ -138,8 +138,10 @@ export const getButtonStyle = (variant: ButtonVariant, disabled: boolean) => {
   return buttonStyles[variant][disabled ? 'disabled' : 'default'];
 };
 
-const shouldForwardProp = (prop: string) =>
-  ['size', 'variant', 'iconPosition', 'rounded'].indexOf(prop) === -1;
+const blockedProps = new Set(['size', 'variant', 'iconPosition', 'rounded']);
+const shouldForwardProp = (prop: string): boolean => {
+  return !blockedProps.has(prop);
+};
 
 export const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
     display: inline-flex;

@@ -18,20 +18,22 @@ interface FlexboxProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-const shouldForwardProp = (prop: string) =>
-  [
-    'direction',
-    'justify',
-    'align',
-    'wrap',
-    'gap',
-    'width',
-    'height',
-    'grow',
-    'shrink',
-    'basis',
-    'inline',
-  ].indexOf(prop) === -1;
+const blockedProps = new Set([
+  'direction',
+  'justify',
+  'align',
+  'wrap',
+  'gap',
+  'width',
+  'height',
+  'grow',
+  'shrink',
+  'basis',
+  'inline',
+]);
+const shouldForwardProp = (prop: string): boolean => {
+  return !blockedProps.has(prop);
+};
 
 const Flexbox = ({
   direction = 'row',
