@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type { StyledDividerProps } from './Divider.types';
 
-const blockedProps = new Set(['length']);
+const BLOCKED_PROPS = new Set(['length']);
+
 export const shouldForwardProp = (prop: string): boolean => {
-  return !blockedProps.has(prop);
+  return !BLOCKED_PROPS.has(prop);
 };
 
 export const StyledHorizontalDivider = styled('hr', { shouldForwardProp })<StyledDividerProps>`

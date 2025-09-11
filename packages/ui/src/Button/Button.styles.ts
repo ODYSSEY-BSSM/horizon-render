@@ -3,6 +3,13 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type { ButtonSize, ButtonVariant, IconPosition, StyledButtonProps } from './Button.types';
 
+// Button text configurations
+const BUTTON_TEXT_CONFIGS = {
+  small: { fontSize: 13 as const, fontWeight: 'semibold' as const, lineHeight: 18 as const },
+  medium: { fontSize: 14 as const, fontWeight: 'semibold' as const, lineHeight: 20 as const },
+  large: { fontSize: 16 as const, fontWeight: 'semibold' as const, lineHeight: 24 as const },
+} as const;
+
 const makeTextStyle = (
   fontSize: keyof typeof tokens.fontSize,
   fontWeight: keyof typeof tokens.fontWeight,
@@ -15,14 +22,30 @@ const makeTextStyle = (
 `;
 
 export const getTextStyles = (size: ButtonSize) => {
-  const styles: Record<ButtonSize, ReturnType<typeof css>> = {
-    small: makeTextStyle(13, 'semibold', 18),
-    medium: makeTextStyle(14, 'semibold', 20),
-    large: makeTextStyle(16, 'semibold', 24),
-  };
-
-  return styles[size];
+  const config = BUTTON_TEXT_CONFIGS[size];
+  return makeTextStyle(config.fontSize, config.fontWeight, config.lineHeight);
 };
+
+const BUTTON_ICON_CONFIGS = {
+  small: {
+    fontSize: '16px',
+    fontWeight: 'regular' as const,
+    grade: 0 as const,
+    opticalSize: 20 as const,
+  },
+  medium: {
+    fontSize: '20px',
+    fontWeight: 'regular' as const,
+    grade: 0 as const,
+    opticalSize: 24 as const,
+  },
+  large: {
+    fontSize: '24px',
+    fontWeight: 'medium' as const,
+    grade: 25 as const,
+    opticalSize: 40 as const,
+  },
+} as const;
 
 const makeIconStyle = (
   filled: keyof typeof tokens.icons.fill,
@@ -30,25 +53,24 @@ const makeIconStyle = (
   fontWeight: keyof typeof tokens.fontWeight,
   grade: keyof typeof tokens.icons.grade,
   opticalSize: keyof typeof tokens.icons.opticalSize,
-) =>
-  css({
-    fontSize: fontSizePx,
-    fontVariationSettings: `
-      'FILL' ${tokens.icons.fill[filled]},
-      'wght' ${tokens.fontWeight[fontWeight]}, 
-      'GRAD' ${tokens.icons.grade[grade]}, 
-      'opsz' ${tokens.icons.opticalSize[opticalSize]}
-    `,
-  });
+) => css`
+  font-size: ${fontSizePx};
+  font-variation-settings: 
+    'FILL' ${tokens.icons.fill[filled]},
+    'wght' ${tokens.fontWeight[fontWeight]}, 
+    'GRAD' ${tokens.icons.grade[grade]}, 
+    'opsz' ${tokens.icons.opticalSize[opticalSize]};
+`;
 
 export const getIconStyles = (size: ButtonSize, filled: keyof typeof tokens.icons.fill) => {
-  const styles: Record<ButtonSize, ReturnType<typeof css>> = {
-    small: makeIconStyle(filled, '16px', 'regular', 0, 20),
-    medium: makeIconStyle(filled, '20px', 'regular', 0, 24),
-    large: makeIconStyle(filled, '24px', 'medium', 25, 40),
-  };
-
-  return styles[size];
+  const config = BUTTON_ICON_CONFIGS[size];
+  return makeIconStyle(
+    filled,
+    config.fontSize,
+    config.fontWeight,
+    config.grade,
+    config.opticalSize,
+  );
 };
 
 const GAP_SIZES = {
@@ -97,11 +119,11 @@ const buttonStyles = {
       color: white;
         
       &:hover {
-          background-color: ${tokens.colors.primary[700]};
+        background-color: ${tokens.colors.primary[700]};
       }
         
       &:active {
-          background-color: ${tokens.colors.primary[900]};
+        background-color: ${tokens.colors.primary[900]};
       }
     `,
     disabled: css`
@@ -132,41 +154,50 @@ const buttonStyles = {
       border: 1px solid ${tokens.colors.neutral[300]};
     `,
   },
-};
+} as const;
 
 export const getButtonStyle = (variant: ButtonVariant, disabled: boolean) => {
   return buttonStyles[variant][disabled ? 'disabled' : 'default'];
 };
 
-const blockedProps = new Set(['size', 'variant', 'iconPosition', 'rounded']);
+const BLOCKED_PROPS = new Set(['size', 'variant', 'iconPosition', 'rounded']);
+
 const shouldForwardProp = (prop: string): boolean => {
-  return !blockedProps.has(prop);
+  return !BLOCKED_PROPS.has(prop);
 };
 
-export const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    transition: all 0.2s ease-in-out;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    
-    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-    gap: ${({ size }) => getGapSize(size)};
-    padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
-    border-radius: ${({ rounded }) => (rounded ? '20px' : '8px')};
-    
-    ${({ variant, disabled }) => getButtonStyle(variant, disabled)}
+const baseButtonStyles = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+`;
 
-    &:focus-visible {
-      outline: none;
-      box-shadow: ${({ variant }) =>
-        variant === 'outlined'
-          ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
-          : `0 0 0 2px ${tokens.colors.primary[200]}`};
-    }
+const getFocusStyles = (variant: ButtonVariant) => css`
+  &:focus-visible {
+    outline: none;
+    box-shadow: ${
+      variant === 'outlined'
+        ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
+        : `0 0 0 2px ${tokens.colors.primary[200]}`
+    };
+  }
+`;
+
+export const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
+  ${baseButtonStyles}
+  
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  gap: ${({ size }) => getGapSize(size)};
+  padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
+  border-radius: ${({ rounded }) => (rounded ? '20px' : '8px')};
+  
+  ${({ variant, disabled }) => getButtonStyle(variant, disabled)}
+  ${({ variant }) => getFocusStyles(variant)}
 `;
 
 export const StyledButtonIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
