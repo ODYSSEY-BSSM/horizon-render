@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import type { ButtonSize, ButtonVariant, IconPosition } from './types';
+import type { ButtonSize, ButtonVariant, IconPosition, StyledButtonProps } from './types';
 
 const makeTextStyle = (
   fontSize: keyof typeof tokens.fontSize,
@@ -136,3 +137,42 @@ const buttonStyles = {
 export const getButtonStyle = (variant: ButtonVariant, disabled: boolean) => {
   return buttonStyles[variant][disabled ? 'disabled' : 'default'];
 };
+
+const shouldForwardProp = (prop: string) =>
+  ['size', 'variant', 'iconPosition', 'rounded'].indexOf(prop) === -1;
+
+export const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+    gap: ${({ size }) => getGapSize(size)};
+    padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
+    border-radius: ${({ rounded }) => (rounded ? '20px' : '8px')};
+    
+    ${({ variant, disabled }) => getButtonStyle(variant, disabled)}
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: ${({ variant }) =>
+        variant === 'outlined'
+          ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
+          : `0 0 0 2px ${tokens.colors.primary[200]}`};
+    }
+`;
+
+export const StyledButtonIcon = styled.span<{ size: ButtonSize; filled: boolean }>`
+  font-family: ${tokens.fontFamily.icon.join(', ')};
+  user-select: none;
+  ${({ size, filled }) => getIconStyles(size, filled ? 1 : 0)}
+`;
+
+export const StyledButtonText = styled.span<{ size: ButtonSize }>`
+  ${({ size }) => getTextStyles(size)}
+`;

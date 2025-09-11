@@ -33,7 +33,7 @@ const shouldForwardProp = (prop: string) =>
     'inline',
   ].indexOf(prop) === -1;
 
-export const Flexbox = ({
+const Flexbox = ({
   direction = 'row',
   justify = 'flex-start',
   align = 'stretch',
@@ -83,3 +83,5 @@ const StyledFlexbox = styled('div', { shouldForwardProp })<FlexboxProps>`
   flex-shrink: ${({ shrink }) => shrink};
   flex-basis: ${({ basis }) => basis};
 `;
+
+export default Flexbox;

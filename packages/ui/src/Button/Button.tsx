@@ -1,21 +1,21 @@
-import type {
-  ButtonProps,
-  ButtonSize,
-  ButtonVariant,
-  IconPosition,
-  StyledButtonProps,
-} from '@/Button/types';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import ButtonIcon from './ButtonIcon';
 import ButtonText from './ButtonText';
 import { getButtonStyle, getGapSize, getPadding } from './styles';
+import type {
+  ButtonProps,
+  ButtonSize,
+  ButtonVariant,
+  IconPosition,
+  StyledButtonProps,
+} from './types';
 
 const shouldForwardProp = (prop: string) =>
   ['size', 'variant', 'iconPosition', 'rounded'].indexOf(prop) === -1;
 
-export const Button = <T extends React.ElementType = 'button'>({
+const Button = <T extends React.ElementType = 'button'>({
   as,
   size = 'medium',
   iconPosition = 'none',
@@ -104,3 +104,5 @@ const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
           : `0 0 0 2px ${tokens.colors.primary[200]}`};
     }
 `;
+
+export default Button;

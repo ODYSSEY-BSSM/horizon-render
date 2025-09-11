@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-
-export type TextVariant = 'H1' | 'H2' | 'H3' | 'ST' | 'B1' | 'B2' | 'C' | 'O';
+import type { StyledTextProps, TextVariant } from './Text.types';
 
 const baseTextStyle = css`
   font-family: ${tokens.fontFamily.suit.join(', ')};
@@ -34,3 +34,29 @@ export const getTextStyle = (variant: TextVariant) => {
 
   return styles[variant];
 };
+
+const shouldForwardProp = (prop: string): boolean => {
+  const blockedProps = new Set([
+    'variant',
+    'color',
+    'width',
+    'textAlign',
+    'whiteSpace',
+    'ellipsis',
+  ]);
+  return !blockedProps.has(prop);
+};
+
+export const StyledText = styled('div', { shouldForwardProp })<StyledTextProps>`
+    ${({ color, textAlign, width }) => ({ color, textAlign, width })};
+    ${({ whiteSpace, ellipsis }) =>
+      ellipsis
+        ? {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }
+        : { whiteSpace }};
+
+    ${({ variant }) => getTextStyle(variant)};
+`;

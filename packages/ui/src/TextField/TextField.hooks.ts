@@ -1,7 +1,7 @@
 import { tokens } from '@horizon/tokens';
 import { useCallback, useId, useState } from 'react';
 import type React from 'react';
-import type { TextFieldProps } from './TextField';
+import type { TextFieldProps } from './TextField.types';
 
 export interface UseTextFieldState {
   id: string;

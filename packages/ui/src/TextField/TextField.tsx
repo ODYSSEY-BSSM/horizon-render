@@ -1,28 +1,21 @@
-import { Icon } from '@/Icon';
-import { Text } from '@/Text';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
 import { forwardRef } from 'react';
-import { StyledAffixLeft, StyledAffixRight, StyledAffixRightButton, StyledHelper } from './styles';
-import { useTextFieldState } from './useTextFieldState';
+import Icon from '../Icon/Icon';
+import Text from '../Text/Text';
+import { useTextFieldState } from './TextField.hooks';
+import {
+  StyledAffixLeft,
+  StyledAffixRight,
+  StyledAffixRightButton,
+  StyledHelper,
+  StyledInput,
+  StyledInputWrapper,
+  StyledTextField,
+} from './TextField.styles';
+import type { TextFieldProps } from './TextField.types';
 
-export interface TextFieldProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'width'> {
-  id?: string;
-  label?: string;
-  helperText?: string;
-  error?: boolean;
-  leftIcon?: string;
-  rightIcon?: string;
-  width?: string;
-  containerClassName?: string;
-  labelClassName?: string;
-  helperClassName?: string;
-}
-
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
+const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const {
     id,
     helperId,
@@ -121,92 +114,4 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
 
 TextField.displayName = 'TextField';
 
-interface StyledInputWrapperProps {
-  width?: string | number;
-}
-
-interface StyledInputProps {
-  hasError: boolean;
-  filled: boolean;
-  hasLeft: boolean;
-  hasRight: boolean;
-  hasToggle: boolean;
-}
-
-const blockedProps = new Set(['hasError', 'filled', 'hasLeft', 'hasRight', 'hasToggle']);
-const shouldForwardProp = (prop: string): boolean => {
-  return !blockedProps.has(prop);
-};
-
-const StyledTextField = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-const StyledInputWrapper = styled.div<StyledInputWrapperProps>`
-  position: relative;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : (width ?? '100%'))};
-`;
-
-const StyledInput = styled('input', { shouldForwardProp })<StyledInputProps>`
-  display: flex;
-  height: 40px;
-  width: 100%;
-  align-items: center;
-  border-radius: ${tokens.rounding.object};
-  border: ${tokens.stroke.weight} solid transparent;
-  box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};
-  background-color: white;
-  padding: 10px 12px;
-  font-size: ${tokens.fontSize[16]};
-  font-weight: ${tokens.fontWeight.regular};
-  line-height: ${tokens.lineHeight[24]};
-  font-family: ${tokens.fontFamily.suit.join(', ')};
-  color: black;
-  box-sizing: border-box;
-  transition: all 0.2s ease-in-out;
-
-  &::placeholder {
-    color: ${tokens.colors.neutral[400]};
-    font-size: ${tokens.fontSize[16]};
-    font-weight: ${tokens.fontWeight.regular};
-    line-height: ${tokens.lineHeight[24]};
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  ${({ hasLeft }) =>
-    hasLeft && {
-      paddingLeft: 36,
-    }}
-
-  ${({ hasRight }) =>
-    hasRight && {
-      paddingRight: 36,
-    }}
-
-  ${({ hasError }) =>
-    hasError &&
-    css`
-      box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.warning[200]};
-    `}
-
-  ${({ filled, hasError }) =>
-    !hasError &&
-    filled &&
-    css`
-      box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.primary[500]};
-
-      &:focus {
-        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
-      }
-    `}
-`;
+export default TextField;
