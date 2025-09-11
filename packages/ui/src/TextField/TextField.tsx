@@ -86,7 +86,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
             <Icon
               name={showPassword ? 'visibility' : 'visibility_off'}
               variant='SM'
-              color={isFilled ? 'black' : tokens.colors.neutral[400]}
+              color={isFilled ? tokens.colors.black : tokens.colors.neutral[400]}
             />
           </StyledAffixRightButton>
         ) : (
@@ -95,7 +95,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
               <Icon
                 name={rightIcon}
                 variant='SM'
-                color={isFilled ? 'black' : tokens.colors.neutral[400]}
+                color={isFilled ? tokens.colors.black : tokens.colors.neutral[400]}
               />
             </StyledAffixRight>
           )

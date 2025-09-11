@@ -116,7 +116,7 @@ const buttonStyles = {
   contained: {
     default: css`
       background-color: ${tokens.colors.primary[500]};
-      color: white;
+      color: ${tokens.colors.white};
         
       &:hover {
         background-color: ${tokens.colors.primary[700]};
@@ -139,12 +139,12 @@ const buttonStyles = {
         
       &:hover {
         background-color: ${tokens.colors.primary[600]};
-        color: white;
+        color: ${tokens.colors.white};
       }
         
       &:active {
         background-color: ${tokens.colors.primary[900]};
-        color: white;
+        color: ${tokens.colors.white};
       }
     `,
     disabled: css`

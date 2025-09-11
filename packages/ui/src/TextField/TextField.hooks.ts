@@ -56,12 +56,12 @@ export const useTextFieldState = ({
   const borderColor = isFocused
     ? tokens.colors.primary[500]
     : error
-      ? tokens.colors.warning[200]
+      ? tokens.colors.error[200]
       : isFilled
         ? tokens.colors.primary[500]
         : tokens.colors.neutral[300];
 
-  const affixColor = isFilled ? 'black' : tokens.colors.neutral[400];
+  const affixColor = isFilled ? tokens.colors.black : tokens.colors.neutral[400];
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -71,13 +71,13 @@ const baseInputStyles = `
   align-items: center;
   border-radius: ${tokens.rounding.object};
   border: ${tokens.stroke.weight} solid transparent;
-  background-color: white;
+  background-color: ${tokens.colors.white};
   padding: 10px 12px;
   font-size: ${tokens.fontSize[16]};
   font-weight: ${tokens.fontWeight.regular};
   line-height: ${tokens.lineHeight[24]};
   font-family: ${tokens.fontFamily.suit.join(', ')};
-  color: black;
+  color: ${tokens.colors.black};
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
 `;
@@ -91,7 +91,7 @@ const getInputPadding = (hasLeft: boolean, hasRight: boolean) => {
 
 const getInputBoxShadow = (hasError: boolean, filled: boolean) => {
   if (hasError) {
-    return `box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.warning[200]};`;
+    return `box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.error[200]};`;
   }
   if (filled) {
     return `box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.primary[500]};`;
