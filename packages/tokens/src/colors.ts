@@ -34,28 +34,28 @@ export const colors = {
   },
   roadmap: {
     red: {
-      100: 'FEE2E2',
-      200: 'DC2626',
+      100: '#FEE2E2',
+      200: '#DC2626',
     },
     orange: {
-      100: 'FFEDD5',
-      200: 'EA580C',
+      100: '#FFEDD5',
+      200: '#EA580C',
     },
     yellow: {
-      100: 'F9FFA6',
-      200: 'E6C200',
+      100: '#F9FFA6',
+      200: '#E6C200',
     },
     green: {
-      100: 'DCFCE7',
-      200: '16A34A',
+      100: '#DCFCE7',
+      200: '#16A34A',
     },
     blue: {
-      100: 'DBEAFE',
-      200: '2666DC',
+      100: '#DBEAFE',
+      200: '#2666DC',
     },
     purple: {
-      100: 'F3E8FF',
-      200: 'A826DC',
+      100: '#F3E8FF',
+      200: '#A826DC',
     },
   },
 } as const;
