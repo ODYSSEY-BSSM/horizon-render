@@ -1,30 +1,18 @@
 import { colors } from './colors';
 
+// 그라데이션 팩토리 함수
+const makeGradient = (colorScale: { 100: string; 200: string }) => ({
+  horizontal: `linear-gradient(to right, ${colorScale[200]} 0%, ${colorScale[100]} 100%)`,
+  vertical: `linear-gradient(to top, ${colorScale[200]} 0%, ${colorScale[100]} 100%)`,
+});
+
 export const gradients = {
   roadmap: {
-    linearRed: {
-      horizontal: `linear-gradient(90deg, ${colors.roadmap.red[200]} 0%, ${colors.roadmap.red[100]} 100%)`,
-      vertical: `linear-gradient(0deg, ${colors.roadmap.red[200]} 0%, ${colors.roadmap.red[100]} 100%)`,
-    },
-    linearOrange: {
-      horizontal: `linear-gradient(90deg, ${colors.roadmap.orange[200]} 0%, ${colors.roadmap.orange[100]} 100%)`,
-      vertical: `linear-gradient(0deg, ${colors.roadmap.orange[200]} 0%, ${colors.roadmap.orange[100]} 100%)`,
-    },
-    linearYellow: {
-      horizontal: `linear-gradient(90deg, ${colors.roadmap.yellow[200]} 0%, ${colors.roadmap.yellow[100]} 100%)`,
-      vertical: `linear-gradient(0deg, ${colors.roadmap.yellow[200]} 0%, ${colors.roadmap.yellow[100]} 100%)`,
-    },
-    linearGreen: {
-      horizontal: `linear-gradient(90deg, ${colors.roadmap.green[200]} 0%, ${colors.roadmap.green[100]} 100%)`,
-      vertical: `linear-gradient(0deg, ${colors.roadmap.green[200]} 0%, ${colors.roadmap.green[100]} 100%)`,
-    },
-    linearBlue: {
-      horizontal: `linear-gradient(90deg, ${colors.roadmap.blue[200]} 0%, ${colors.roadmap.blue[100]} 100%)`,
-      vertical: `linear-gradient(0deg, ${colors.roadmap.blue[200]} 0%, ${colors.roadmap.blue[100]} 100%)`,
-    },
-    linearPurple: {
-      horizontal: `linear-gradient(90deg, ${colors.roadmap.purple[200]} 0%, ${colors.roadmap.purple[100]} 100%)`,
-      vertical: `linear-gradient(0deg, ${colors.roadmap.purple[200]} 0%, ${colors.roadmap.purple[100]} 100%)`,
-    },
+    red: makeGradient(colors.roadmap.red),
+    orange: makeGradient(colors.roadmap.orange),
+    yellow: makeGradient(colors.roadmap.yellow),
+    green: makeGradient(colors.roadmap.green),
+    blue: makeGradient(colors.roadmap.blue),
+    purple: makeGradient(colors.roadmap.purple),
   },
 } as const;

@@ -64,7 +64,7 @@ const makeTextStyle = (
   lineHeight: keyof typeof tokens.lineHeight,
   letterSpacing: keyof typeof tokens.letterSpacing,
 ) => css`
-  ${baseTextStyle}
+  ${baseTextStyle};
   font-size: ${tokens.fontSize[fontSize]};
   font-weight: ${tokens.fontWeight[fontWeight]};
   line-height: ${tokens.lineHeight[lineHeight]};
