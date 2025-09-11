@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import type { ButtonSize, ButtonVariant, IconPosition, StyledButtonProps } from './types';
+import type { ButtonSize, ButtonVariant, IconPosition, StyledButtonProps } from './Button.types';
 
 const makeTextStyle = (
   fontSize: keyof typeof tokens.fontSize,

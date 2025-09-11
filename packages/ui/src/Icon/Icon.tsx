@@ -1,6 +1,6 @@
 import type React from 'react';
+import { StyledIcon } from './Icon.styles';
 import type { IconProps } from './Icon.types';
-import { StyledIcon } from './styles';
 
 const Icon = ({
   name,
