@@ -1,24 +1,8 @@
-import styled from '@emotion/styled';
-import { tokens } from '@horizon/tokens';
 import type React from 'react';
+import { StyledHorizontalDivider, StyledVerticalDivider } from './Divider.styles';
+import type { DividerProps } from './Divider.types';
 
-interface HorizontalProps extends React.HTMLAttributes<HTMLHRElement> {
-  orientation?: 'horizontal';
-  length?: string;
-}
-
-interface VerticalProps extends React.HTMLAttributes<HTMLDivElement> {
-  orientation: 'vertical';
-  length?: string;
-}
-
-type DividerProps = HorizontalProps | VerticalProps;
-
-export const Divider = ({
-  orientation = 'horizontal',
-  length = '100%',
-  ...props
-}: DividerProps) => {
+const Divider = ({ orientation = 'horizontal', length = '100%', ...props }: DividerProps) => {
   return orientation === 'vertical' ? (
     <StyledVerticalDivider
       {...props}
@@ -33,22 +17,4 @@ export const Divider = ({
 
 Divider.displayName = 'Divider';
 
-interface StyledDividerProps {
-  length: string;
-}
-
-const blockedProps = new Set(['length']);
-const shouldForwardProp = (prop: string): boolean => {
-  return !blockedProps.has(prop);
-};
-
-const StyledHorizontalDivider = styled('hr', { shouldForwardProp })<StyledDividerProps>`
-  width: ${({ length }) => length};
-  border-top: ${tokens.stroke.weight} solid ${tokens.stroke.color};
-`;
-
-const StyledVerticalDivider = styled('div', { shouldForwardProp })<StyledDividerProps>`
-  height: ${({ length }) => length};
-  display: inline-block;
-  border-left: ${tokens.stroke.weight} solid ${tokens.stroke.color};
-`;
+export default Divider;

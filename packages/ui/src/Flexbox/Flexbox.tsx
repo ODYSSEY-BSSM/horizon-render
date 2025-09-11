@@ -1,5 +1,5 @@
-import { toPx } from '@/toPx';
 import styled from '@emotion/styled';
+import { toPx } from '@horizon/utils';
 import type React from 'react';
 
 interface FlexboxProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -18,22 +18,24 @@ interface FlexboxProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-const shouldForwardProp = (prop: string) =>
-  [
-    'direction',
-    'justify',
-    'align',
-    'wrap',
-    'gap',
-    'width',
-    'height',
-    'grow',
-    'shrink',
-    'basis',
-    'inline',
-  ].indexOf(prop) === -1;
+const blockedProps = new Set([
+  'direction',
+  'justify',
+  'align',
+  'wrap',
+  'gap',
+  'width',
+  'height',
+  'grow',
+  'shrink',
+  'basis',
+  'inline',
+]);
+const shouldForwardProp = (prop: string): boolean => {
+  return !blockedProps.has(prop);
+};
 
-export const Flexbox = ({
+const Flexbox = ({
   direction = 'row',
   justify = 'flex-start',
   align = 'stretch',
@@ -83,3 +85,5 @@ const StyledFlexbox = styled('div', { shouldForwardProp })<FlexboxProps>`
   flex-shrink: ${({ shrink }) => shrink};
   flex-basis: ${({ basis }) => basis};
 `;
+
+export default Flexbox;

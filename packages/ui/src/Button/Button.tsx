@@ -1,21 +1,8 @@
-import type {
-  ButtonProps,
-  ButtonSize,
-  ButtonVariant,
-  IconPosition,
-  StyledButtonProps,
-} from '@/Button/types';
-import styled from '@emotion/styled';
-import { tokens } from '@horizon/tokens';
 import type React from 'react';
-import ButtonIcon from './ButtonIcon';
-import ButtonText from './ButtonText';
-import { getButtonStyle, getGapSize, getPadding } from './styles';
+import { StyledButton, StyledButtonIcon, StyledButtonText } from './Button.styles';
+import type { ButtonProps } from './Button.types';
 
-const shouldForwardProp = (prop: string) =>
-  ['size', 'variant', 'iconPosition', 'rounded'].indexOf(prop) === -1;
-
-export const Button = <T extends React.ElementType = 'button'>({
+const Button = <T extends React.ElementType = 'button'>({
   as,
   size = 'medium',
   iconPosition = 'none',
@@ -37,17 +24,25 @@ export const Button = <T extends React.ElementType = 'button'>({
 
   const content = (() => {
     if (iconPosition === 'only') {
-      return <ButtonIcon size={size} iconName={iconName} filled={iconFilled} />;
+      return (
+        <StyledButtonIcon size={size} filled={iconFilled}>
+          {iconName}
+        </StyledButtonIcon>
+      );
     }
 
     return (
       <>
         {iconPosition === 'left' && (
-          <ButtonIcon size={size} iconName={iconName} filled={iconFilled} aria-hidden={true} />
+          <StyledButtonIcon size={size} filled={iconFilled} aria-hidden={true}>
+            {iconName}
+          </StyledButtonIcon>
         )}
-        {children && <ButtonText size={size}>{children}</ButtonText>}
+        {children && <StyledButtonText size={size}>{children}</StyledButtonText>}
         {iconPosition === 'right' && (
-          <ButtonIcon size={size} iconName={iconName} filled={iconFilled} aria-hidden={true} />
+          <StyledButtonIcon size={size} filled={iconFilled} aria-hidden={true}>
+            {iconName}
+          </StyledButtonIcon>
         )}
       </>
     );
@@ -79,28 +74,4 @@ export const Button = <T extends React.ElementType = 'button'>({
   );
 };
 
-const StyledButton = styled('button', { shouldForwardProp })<StyledButtonProps>`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    user-select: none;
-    transition: all 0.2s ease-in-out;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    
-    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-    gap: ${({ size }) => getGapSize(size)};
-    padding: ${({ size, iconPosition }) => getPadding(size, iconPosition)};
-    border-radius: ${({ rounded }) => (rounded ? '20px' : '8px')};
-    
-    ${({ variant, disabled }) => getButtonStyle(variant, disabled)}
-
-    &:focus-visible {
-      outline: none;
-      box-shadow: ${({ variant }) =>
-        variant === 'outlined'
-          ? `inset 0 0 0 2px ${tokens.colors.primary[500]}, 0 0 0 2px ${tokens.colors.primary[200]}`
-          : `0 0 0 2px ${tokens.colors.primary[200]}`};
-    }
-`;
+export default Button;

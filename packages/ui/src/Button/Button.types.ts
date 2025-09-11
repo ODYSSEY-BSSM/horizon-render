@@ -27,15 +27,3 @@ export interface StyledButtonProps {
   rounded: boolean;
   disabled: boolean;
 }
-
-export interface ButtonIconProps {
-  size: ButtonSize;
-  iconName?: string;
-  filled: boolean;
-  'aria-hidden'?: boolean;
-}
-
-export interface ButtonTextProps {
-  size: ButtonSize;
-  children: React.ReactNode;
-}
