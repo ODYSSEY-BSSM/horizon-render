@@ -14,7 +14,7 @@ export const teamApplyApi = {
   accept: (applyId: number): Promise<AcceptApplicationResponse> =>
     api.put(`apply/${applyId}/approve`).json<AcceptApplicationResponse>(),
 
-  // 신청 거절 (PUT /apply/{applyId}/reject) - 추정
+  // 신청 거절 (PUT /apply/{applyId}/reject)
   reject: (applyId: number): Promise<RejectApplicationResponse> =>
     api.put(`apply/${applyId}/reject`).json<RejectApplicationResponse>(),
 };
