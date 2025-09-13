@@ -1,4 +1,4 @@
-import { fetchApi } from '../../../shared/utils/fetchApi';
+import { api } from '../../../shared/utils/api';
 import type {
   CreateNodeRequest,
   CreateNodeResponse,
@@ -12,15 +12,15 @@ import type {
 export const nodeApi = {
   // 노드 생성 (POST /roadmap/{roadmapId}/nodes)
   create: (roadmapId: number, data: CreateNodeRequest): Promise<CreateNodeResponse> =>
-    fetchApi(`/roadmap/${roadmapId}/nodes`, { method: 'POST', data }),
+    api.post(`roadmap/${roadmapId}/nodes`, { json: data }).json<CreateNodeResponse>(),
 
   // 단일 노드 조회 (GET /roadmap/{roadmapId}/nodes/{nodeId})
   getById: (roadmapId: number, nodeId: number): Promise<GetNodeResponse> =>
-    fetchApi(`/roadmap/${roadmapId}/nodes/${nodeId}`, { method: 'GET' }),
+    api.get(`roadmap/${roadmapId}/nodes/${nodeId}`).json<GetNodeResponse>(),
 
   // 로드맵의 모든 노드 조회 (GET /roadmap/{roadmapId}/nodes)
   getByRoadmapId: (roadmapId: number): Promise<GetNodesResponse> =>
-    fetchApi(`/roadmap/${roadmapId}/nodes`, { method: 'GET' }),
+    api.get(`roadmap/${roadmapId}/nodes`).json<GetNodesResponse>(),
 
   // 노드 수정 (PUT /roadmap/{roadmapId}/nodes/{nodeId})
   update: (
@@ -28,9 +28,9 @@ export const nodeApi = {
     nodeId: number,
     data: UpdateNodeRequest,
   ): Promise<UpdateNodeResponse> =>
-    fetchApi(`/roadmap/${roadmapId}/nodes/${nodeId}`, { method: 'PUT', data }),
+    api.put(`roadmap/${roadmapId}/nodes/${nodeId}`, { json: data }).json<UpdateNodeResponse>(),
 
   // 노드 삭제 (DELETE /roadmap/{roadmapId}/nodes/{nodeId})
   delete: (roadmapId: number, nodeId: number): Promise<DeleteNodeResponse> =>
-    fetchApi(`/roadmap/${roadmapId}/nodes/${nodeId}`, { method: 'DELETE' }),
+    api.delete(`roadmap/${roadmapId}/nodes/${nodeId}`).json<DeleteNodeResponse>(),
 };
