@@ -10,11 +10,11 @@ export const teamApplyApi = {
   apply: (teamId: number): Promise<ApplyToTeamResponse> =>
     api.post(`apply/${teamId}`).json<ApplyToTeamResponse>(),
 
-  // 신청 수락 (PUT /apply/{applyId})
+  // 신청 수락 (PUT /apply/{applyId}/approve)
   accept: (applyId: number): Promise<AcceptApplicationResponse> =>
-    api.put(`apply/${applyId}`).json<AcceptApplicationResponse>(),
+    api.put(`apply/${applyId}/approve`).json<AcceptApplicationResponse>(),
 
-  // 신청 거절 (PATCH /apply/{applyId})
+  // 신청 거절 (PUT /apply/{applyId}/reject)
   reject: (applyId: number): Promise<RejectApplicationResponse> =>
-    api.patch(`apply/${applyId}`).json<RejectApplicationResponse>(),
+    api.put(`apply/${applyId}/reject`).json<RejectApplicationResponse>(),
 };

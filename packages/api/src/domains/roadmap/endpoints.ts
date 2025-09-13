@@ -13,7 +13,7 @@ import type {
 } from './types';
 
 export const roadmapApi = {
-  // 로드맵 생성 (POST /roadmap/create) - multipart
+  // 로드맵 생성 (POST /roadmap) - multipart
   create: (data: CreateRoadmapRequest): Promise<CreateRoadmapResponse> => {
     const formData = new FormData();
 
@@ -25,27 +25,31 @@ export const roadmapApi = {
       formData.append('thumbnail', data.thumbnail);
     }
 
-    return api.post('roadmap/create', { body: formData }).json<CreateRoadmapResponse>();
+    return api.post('roadmap', { body: formData }).json<CreateRoadmapResponse>();
   },
 
-  // 전체 로드맵 조회 (GET /roadmap/all)
-  getAll: (): Promise<GetRoadmapsResponse> => api.get('roadmap/all').json<GetRoadmapsResponse>(),
+  // 전체 로드맵 조회 (GET /roadmap)
+  getAll: (): Promise<GetRoadmapsResponse> => api.get('roadmap').json<GetRoadmapsResponse>(),
+
+  // 팀별 로드맵 조회 (GET /roadmap/team?teamId={teamId})
+  getByTeam: (teamId: number): Promise<GetRoadmapsResponse> =>
+    api.get(`roadmap/team?teamId=${teamId}`).json<GetRoadmapsResponse>(),
 
   // 단일 로드맵 조회 (GET /roadmap/{id}) - 추정
   getById: (id: number): Promise<GetRoadmapResponse> =>
     api.get(`roadmap/${id}`).json<GetRoadmapResponse>(),
 
-  // 로드맵 수정 (PUT /roadmap/update/{id})
+  // 로드맵 수정 (PUT /roadmap/{id})
   update: (id: number, data: UpdateRoadmapRequest): Promise<UpdateRoadmapResponse> =>
-    api.put(`roadmap/update/${id}`, { json: data }).json<UpdateRoadmapResponse>(),
+    api.put(`roadmap/${id}`, { json: data }).json<UpdateRoadmapResponse>(),
 
-  // 로드맵 삭제 (DELETE /roadmap/delete/{id})
+  // 로드맵 삭제 (DELETE /roadmap/{id})
   delete: (id: number): Promise<DeleteRoadmapResponse> =>
-    api.delete(`roadmap/delete/${id}`).json<DeleteRoadmapResponse>(),
+    api.delete(`roadmap/${id}`).json<DeleteRoadmapResponse>(),
 
-  // 즐겨찾기 토글 (POST /roadmap/favorite/{id})
+  // 즐겨찾기 토글 (POST /roadmap/{id}/favorite)
   toggleFavorite: (id: number): Promise<FavoriteRoadmapResponse> =>
-    api.post(`roadmap/favorite/${id}`).json<FavoriteRoadmapResponse>(),
+    api.post(`roadmap/${id}/favorite`).json<FavoriteRoadmapResponse>(),
 
   // 마지막 접속 로드맵 조회 (GET /roadmap/last-accessed)
   getLastAccessed: (): Promise<LastAccessedRoadmapResponse> =>
