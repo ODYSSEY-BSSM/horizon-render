@@ -1,4 +1,4 @@
-import { fetchApi } from '../../shared/utils/fetchApi';
+import { api } from '../../shared/utils/fetchApi';
 import type {
   LoginRequest,
   LoginResponse,
@@ -11,30 +11,33 @@ import type {
 export const userApi = {
   // 회원가입 (POST /users)
   register: (data: RegisterRequest): Promise<RegisterResponse> =>
-    fetchApi('/users', { method: 'POST', data }),
+    api.post('users', { json: data }).json<RegisterResponse>(),
 
   // 로그인 (POST /users/login)
   login: (data: LoginRequest): Promise<LoginResponse> =>
-    fetchApi('/users/login', { method: 'POST', data }),
+    api.post('users/login', { json: data }).json<LoginResponse>(),
 
   // 토큰 갱신 (GET /users/refresh)
   refresh: (refreshToken: string): Promise<RefreshTokenResponse> =>
-    fetchApi('/users/refresh', {
-      method: 'GET',
-      headers: { 'Refresh-Token': refreshToken },
-    }),
+    api
+      .get('users/refresh', {
+        headers: { 'Refresh-Token': refreshToken },
+      })
+      .json<RefreshTokenResponse>(),
 
   // 사용자 정보 조회 (GET /users/info)
   getProfile: (accessToken: string): Promise<UserInfoResponse> =>
-    fetchApi('/users/info', {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${accessToken}` },
-    }),
+    api
+      .get('users/info', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .json<UserInfoResponse>(),
 
   // 로그아웃 (GET /users/logout)
   logout: (accessToken: string): Promise<void> =>
-    fetchApi('/users/logout', {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${accessToken}` },
-    }),
+    api
+      .get('users/logout', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .json<void>(),
 };

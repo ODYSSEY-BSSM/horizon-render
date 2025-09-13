@@ -1,4 +1,4 @@
-import { fetchApi } from '../../shared/utils/fetchApi';
+import { api } from '../../shared/utils/fetchApi';
 import type {
   CreateDirectoryRequest,
   CreateDirectoryResponse,
@@ -11,17 +11,17 @@ import type {
 export const directoryApi = {
   // 디렉토리 생성 (POST /directories/create)
   create: (data: CreateDirectoryRequest): Promise<CreateDirectoryResponse> =>
-    fetchApi('/directories/create', { method: 'POST', data }),
+    api.post('directories/create', { json: data }).json<CreateDirectoryResponse>(),
 
   // 디렉토리 수정 (PUT /directories/{id})
   update: (id: number, data: UpdateDirectoryRequest): Promise<UpdateDirectoryResponse> =>
-    fetchApi(`/directories/${id}`, { method: 'PUT', data }),
+    api.put(`directories/${id}`, { json: data }).json<UpdateDirectoryResponse>(),
 
   // 디렉토리 삭제 (DELETE /directories/{id})
   delete: (id: number): Promise<DeleteDirectoryResponse> =>
-    fetchApi(`/directories/${id}`, { method: 'DELETE' }),
+    api.delete(`directories/${id}`).json<DeleteDirectoryResponse>(),
 
   // 루트 컨텐츠 조회 (GET /directories/root-contents)
   getRootContents: (): Promise<GetRootContentsResponse> =>
-    fetchApi('/directories/root-contents', { method: 'GET' }),
+    api.get('directories/root-contents').json<GetRootContentsResponse>(),
 };

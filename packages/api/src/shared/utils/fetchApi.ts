@@ -1,42 +1,51 @@
-const BASE_URL = '/api';
+import ky, { type KyInstance, type Options } from 'ky';
 
-export async function fetchApi<T>(
-  url: string,
-  options: {
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-    data?: unknown;
-    headers?: Record<string, string>;
-    params?: Record<string, string | number>;
-  } = {},
-): Promise<T> {
+const api: KyInstance = ky.create({
+  prefixUrl: '/api',
+  timeout: 10000,
+  retry: {
+    limit: 2,
+    methods: ['get'],
+  },
+  hooks: {
+    beforeError: [
+      (error) => {
+        const { response } = error;
+        if (response?.body) {
+          error.name = 'APIError';
+          error.message = `${response.status} ${response.statusText}`;
+        }
+        return error;
+      },
+    ],
+  },
+});
+
+export interface FetchOptions {
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  data?: unknown;
+  headers?: Record<string, string>;
+  params?: Record<string, string | number>;
+}
+
+export async function fetchApi<T>(url: string, options: FetchOptions = {}): Promise<T> {
   const { method = 'GET', data, headers = {}, params } = options;
 
-  const fullUrl = new URL(url, BASE_URL);
-  if (params) {
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== undefined && value !== null) {
-        fullUrl.searchParams.append(key, String(value));
-      }
-    }
-  }
-
-  const config: RequestInit = {
-    method,
-    headers: {
-      ...(!(data instanceof FormData) && { 'Content-Type': 'application/json' }),
-      ...headers,
-    },
+  const kyOptions: Options = {
+    method: method.toLowerCase() as Options['method'],
+    headers,
+    searchParams: params,
   };
 
   if (data) {
-    config.body = data instanceof FormData ? data : JSON.stringify(data);
+    if (data instanceof FormData) {
+      kyOptions.body = data;
+    } else {
+      kyOptions.json = data;
+    }
   }
 
-  const response = await fetch(fullUrl.toString(), config);
-
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-  }
-
-  return response.json();
+  return api(url, kyOptions).json<T>();
 }
+
+export { api };

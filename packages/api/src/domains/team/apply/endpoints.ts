@@ -1,4 +1,4 @@
-import { fetchApi } from '../../../shared/utils/fetchApi';
+import { api } from '../../../shared/utils/fetchApi';
 import type {
   AcceptApplicationResponse,
   ApplyToTeamResponse,
@@ -8,13 +8,13 @@ import type {
 export const teamApplyApi = {
   // 팀 신청 (POST /apply/{teamId})
   apply: (teamId: number): Promise<ApplyToTeamResponse> =>
-    fetchApi(`/apply/${teamId}`, { method: 'POST' }),
+    api.post(`apply/${teamId}`).json<ApplyToTeamResponse>(),
 
   // 신청 수락 (PUT /apply/{applyId})
   accept: (applyId: number): Promise<AcceptApplicationResponse> =>
-    fetchApi(`/apply/${applyId}`, { method: 'PUT' }),
+    api.put(`apply/${applyId}`).json<AcceptApplicationResponse>(),
 
   // 신청 거절 (PATCH /apply/{applyId})
   reject: (applyId: number): Promise<RejectApplicationResponse> =>
-    fetchApi(`/apply/${applyId}`, { method: 'PATCH' }),
+    api.patch(`apply/${applyId}`).json<RejectApplicationResponse>(),
 };

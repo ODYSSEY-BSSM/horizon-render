@@ -1,4 +1,4 @@
-import { fetchApi } from '../../shared/utils/fetchApi';
+import { api } from '../../shared/utils/fetchApi';
 import type {
   CreateRoadmapRequest,
   CreateRoadmapResponse,
@@ -25,32 +25,33 @@ export const roadmapApi = {
       formData.append('thumbnail', data.thumbnail);
     }
 
-    return fetchApi('/roadmap/create', { method: 'POST', data: formData });
+    return api.post('roadmap/create', { body: formData }).json<CreateRoadmapResponse>();
   },
 
   // 전체 로드맵 조회 (GET /roadmap/all)
-  getAll: (): Promise<GetRoadmapsResponse> => fetchApi('/roadmap/all', { method: 'GET' }),
+  getAll: (): Promise<GetRoadmapsResponse> => api.get('roadmap/all').json<GetRoadmapsResponse>(),
 
   // 단일 로드맵 조회 (GET /roadmap/{id}) - 추정
   getById: (id: number): Promise<GetRoadmapResponse> =>
-    fetchApi(`/roadmap/${id}`, { method: 'GET' }),
+    api.get(`roadmap/${id}`).json<GetRoadmapResponse>(),
 
   // 로드맵 수정 (PUT /roadmap/update/{id})
   update: (id: number, data: UpdateRoadmapRequest): Promise<UpdateRoadmapResponse> =>
-    fetchApi(`/roadmap/update/${id}`, { method: 'PUT', data }),
+    api.put(`roadmap/update/${id}`, { json: data }).json<UpdateRoadmapResponse>(),
 
   // 로드맵 삭제 (DELETE /roadmap/delete/{id})
   delete: (id: number): Promise<DeleteRoadmapResponse> =>
-    fetchApi(`/roadmap/delete/${id}`, { method: 'DELETE' }),
+    api.delete(`roadmap/delete/${id}`).json<DeleteRoadmapResponse>(),
 
   // 즐겨찾기 토글 (POST /roadmap/favorite/{id})
   toggleFavorite: (id: number): Promise<FavoriteRoadmapResponse> =>
-    fetchApi(`/roadmap/favorite/${id}`, { method: 'POST' }),
+    api.post(`roadmap/favorite/${id}`).json<FavoriteRoadmapResponse>(),
 
   // 마지막 접속 로드맵 조회 (GET /roadmap/last-accessed)
   getLastAccessed: (): Promise<LastAccessedRoadmapResponse> =>
-    fetchApi('/roadmap/last-accessed', { method: 'GET' }),
+    api.get('roadmap/last-accessed').json<LastAccessedRoadmapResponse>(),
 
   // 로드맵 개수 조회 (GET /roadmap/count)
-  getCount: (): Promise<RoadmapCountResponse> => fetchApi('/roadmap/count', { method: 'GET' }),
+  getCount: (): Promise<RoadmapCountResponse> =>
+    api.get('roadmap/count').json<RoadmapCountResponse>(),
 };

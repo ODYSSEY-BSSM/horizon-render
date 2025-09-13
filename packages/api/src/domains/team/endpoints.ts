@@ -1,4 +1,4 @@
-import { fetchApi } from '../../shared/utils/fetchApi';
+import { api } from '../../shared/utils/fetchApi';
 import type {
   CreateTeamRequest,
   CreateTeamResponse,
@@ -9,12 +9,12 @@ import type {
 export const teamApi = {
   // 팀 생성 (POST /teams)
   create: (data: CreateTeamRequest): Promise<CreateTeamResponse> =>
-    fetchApi('/teams', { method: 'POST', data }),
+    api.post('teams', { json: data }).json<CreateTeamResponse>(),
 
   // 팀 정보 조회 (GET /teams/{id})
-  getById: (id: number): Promise<GetTeamResponse> => fetchApi(`/teams/${id}`, { method: 'GET' }),
+  getById: (id: number): Promise<GetTeamResponse> => api.get(`teams/${id}`).json<GetTeamResponse>(),
 
   // 팀 삭제 (DELETE /teams/{id})
   delete: (id: number): Promise<DeleteTeamResponse> =>
-    fetchApi(`/teams/${id}`, { method: 'DELETE' }),
+    api.delete(`teams/${id}`).json<DeleteTeamResponse>(),
 };
