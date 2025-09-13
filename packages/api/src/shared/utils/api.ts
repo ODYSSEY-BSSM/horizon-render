@@ -9,11 +9,20 @@ export const api: KyInstance = ky.create({
   },
   hooks: {
     beforeError: [
-      (error) => {
+      async (error) => {
         const { response } = error;
         if (response?.body) {
           error.name = 'APIError';
-          error.message = `${response.status} ${response.statusText}`;
+          try {
+            const data = await response.clone().json();
+            if (data && typeof data.message === 'string' && data.message.trim() !== '') {
+              error.message = data.message;
+            } else {
+              error.message = `${response.status} ${response.statusText}`;
+            }
+          } catch {
+            error.message = `${response.status} ${response.statusText}`;
+          }
         }
         return error;
       },
