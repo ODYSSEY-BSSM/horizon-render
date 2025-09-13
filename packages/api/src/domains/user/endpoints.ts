@@ -1,4 +1,4 @@
-import { api } from '../../shared/utils/fetchApi';
+import { api } from '../../shared/utils/api';
 import type {
   LoginRequest,
   LoginResponse,
@@ -39,5 +39,6 @@ export const userApi = {
       .get('users/logout', {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-      .json<void>(),
+      .text()
+      .then(() => undefined),
 };

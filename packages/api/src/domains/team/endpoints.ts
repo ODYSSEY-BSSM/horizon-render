@@ -1,4 +1,4 @@
-import { api } from '../../shared/utils/fetchApi';
+import { api } from '../../shared/utils/api';
 import type {
   CreateTeamRequest,
   CreateTeamResponse,
