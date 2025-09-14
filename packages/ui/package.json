@@ -20,21 +20,27 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "sideEffects": false,
+  "files": ["dist"],
   "packageManager": "pnpm@10.12.4",
   "type": "module",
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.0",
     "@horizon/tokens": "workspace:*",
-    "@horizon/utils": "workspace:*",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@horizon/utils": "workspace:*"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.13.0",
     "@types/react": "^18.3.14",
     "@types/react-dom": "^18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tsup": "^8.3.0",
     "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   }
 }
