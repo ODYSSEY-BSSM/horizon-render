@@ -1,6 +1,7 @@
 import { tokens } from '@horizon/tokens';
-import { Icon, Text } from '@horizon/ui';
 import { forwardRef } from 'react';
+import Icon from '../Icon/Icon';
+import Text from '../Text/Text';
 import { useTextFieldState } from './TextField.hooks';
 import {
   StyledAffixLeft,
