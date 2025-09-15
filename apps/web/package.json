@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.14.1",
     "@horizon/tokens": "workspace:*",
     "@horizon/ui": "workspace:*",
+    "@horizon/utils": "workspace:*",
     "next": "^15.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

@@ -66,13 +66,13 @@ export const StyledAffixRightButton = styled.button`
 
 const baseInputStyles = `
   display: flex;
-  height: 40px;
+  height: 48px;
   width: 100%;
   align-items: center;
   border-radius: ${tokens.rounding.object};
   border: ${tokens.stroke.weight} solid transparent;
   background-color: ${tokens.colors.white};
-  padding: 10px 12px;
+  padding: 12px;
   font-size: ${tokens.fontSize[16]};
   font-weight: ${tokens.fontWeight.regular};
   line-height: ${tokens.lineHeight[24]};
@@ -83,7 +83,7 @@ const baseInputStyles = `
 `;
 
 const getInputPadding = (hasLeft: boolean, hasRight: boolean) => {
-  if (hasLeft && hasRight) return 'padding: 10px 36px;';
+  if (hasLeft && hasRight) return 'padding-left: 36px; padding-right: 36px;';
   if (hasLeft) return 'padding-left: 36px;';
   if (hasRight) return 'padding-right: 36px;';
   return '';
