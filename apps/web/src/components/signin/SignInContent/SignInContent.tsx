@@ -28,7 +28,6 @@ const SignInContent = () => {
 
   return (
     <StyledContainer>
-      {/* Header */}
       <Flexbox direction='column' gap='8px' align='start' width='400px'>
         <Text variant='H2' color={tokens.colors.primary[500]}>
           HORIZON
@@ -38,7 +37,6 @@ const SignInContent = () => {
         </Text>
       </Flexbox>
 
-      {/* Form Fields */}
       <Flexbox direction='column' gap='16px' width='400px'>
         <TextField
           label='이메일'
@@ -60,17 +58,14 @@ const SignInContent = () => {
         />
       </Flexbox>
 
-      {/* Buttons */}
       <Flexbox direction='column' gap='40px' width='400px'>
         <Flexbox direction='column' gap='16px'>
-          {/* Login Button */}
           <StyledLoginButton disabled={!isFormValid} onClick={handleLogin}>
             <Text variant='ST' color={tokens.colors.white}>
               로그인
             </Text>
           </StyledLoginButton>
 
-          {/* Divider with Text */}
           <StyledDividerWrapper>
             <StyledDividerLine />
             <StyledDividerText>
@@ -80,11 +75,9 @@ const SignInContent = () => {
             </StyledDividerText>
           </StyledDividerWrapper>
 
-          {/* Google Button */}
           <ContinueWithGoogle onClick={handleGoogleLogin} />
         </Flexbox>
 
-        {/* Signup Link */}
         <SecondaryAction onSignUpClick={handleSignUp} />
       </Flexbox>
     </StyledContainer>
