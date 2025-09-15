@@ -3,8 +3,8 @@ import { tokens } from '@horizon/tokens';
 import { Text, TextField } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import { useState } from 'react';
-import ContinueWithGoogle from './ContinueWithGoogle';
-import SecondaryAction from './SecondaryAction';
+import ContinueWithGoogle from '../ContinueWithGoogle/ContinueWithGoogle';
+import SecondaryAction from '../SecondaryAction/SecondaryAction';
 
 const SignInContent = () => {
   const [email, setEmail] = useState('');

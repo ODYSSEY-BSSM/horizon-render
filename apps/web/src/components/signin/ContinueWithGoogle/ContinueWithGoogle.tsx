@@ -18,6 +18,8 @@ const ContinueWithGoogle = ({ onClick, className }: ContinueWithGoogleProps) => 
   );
 };
 
+export default ContinueWithGoogle;
+
 const StyledButton = styled.button`
   width: 100%;
   height: 48px;
@@ -70,5 +72,3 @@ const GoogleIcon = () => (
     />
   </svg>
 );
-
-export default ContinueWithGoogle;

@@ -1,6 +1,6 @@
 'use client';
 
-import SignInContent from '@/components/signin/SignInContent';
+import SignInContent from '@/components/signin/SignInContent/SignInContent';
 import type React from 'react';
 
 const SignIn = () => {
