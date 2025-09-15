@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text, TextField } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ContinueWithGoogle from '../ContinueWithGoogle/ContinueWithGoogle';
 import SecondaryAction from '../SecondaryAction/SecondaryAction';
@@ -9,21 +10,22 @@ import SecondaryAction from '../SecondaryAction/SecondaryAction';
 const SignInContent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
   const handleLogin = () => {
     if (isFormValid) {
-      // TODO: Implement login logic
+      router.push('/');
     }
   };
 
   const handleGoogleLogin = () => {
-    // TODO: Implement Google login logic
+    router.push('/');
   };
 
   const handleSignUp = () => {
-    // TODO: Navigate to signup page
+    router.push('/auth/signup');
   };
 
   return (
