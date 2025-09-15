@@ -123,6 +123,9 @@ importers:
       '@horizon/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@horizon/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       next:
         specifier: ^15.1.0
         version: 15.5.0(@babel/core@7.28.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -191,12 +194,6 @@ importers:
       '@horizon/utils':
         specifier: workspace:*
         version: link:../utils
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@emotion/babel-plugin':
         specifier: ^11.13.0
@@ -207,6 +204,12 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.1
         version: 18.3.7(@types/react@18.3.24)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
       tsup:
         specifier: ^8.3.0
         version: 8.5.0(jiti@1.21.7)(postcss@8.5.6)(typescript@5.9.2)(yaml@2.8.1)
