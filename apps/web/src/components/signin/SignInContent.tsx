@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import { Button, Divider, Text, TextField } from '@horizon/ui';
+import { Text, TextField } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import { useState } from 'react';
 import ContinueWithGoogle from './ContinueWithGoogle';
@@ -10,8 +10,12 @@ const SignInContent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const isFormValid = email.trim() !== '' && password.trim() !== '';
+
   const handleLogin = () => {
-    // TODO: Implement login logic
+    if (isFormValid) {
+      // TODO: Implement login logic
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -59,8 +63,8 @@ const SignInContent = () => {
       {/* Buttons */}
       <Flexbox direction='column' gap='40px' width='400px'>
         <Flexbox direction='column' gap='16px'>
-          {/* Login Button - Disabled */}
-          <StyledLoginButton disabled onClick={handleLogin}>
+          {/* Login Button */}
+          <StyledLoginButton disabled={!isFormValid} onClick={handleLogin}>
             <Text variant='ST' color={tokens.colors.white}>
               로그인
             </Text>
@@ -96,16 +100,21 @@ const StyledContainer = styled.div`
   width: 100%;
 `;
 
-const StyledLoginButton = styled.button`
+const StyledLoginButton = styled.button<{ disabled: boolean }>`
   width: 100%;
   height: 48px;
-  background-color: ${tokens.colors.neutral[300]};
+  background-color: ${({ disabled }) => (disabled ? tokens.colors.neutral[300] : tokens.colors.primary[500])};
   border: none;
   border-radius: ${tokens.rounding.object};
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: not-allowed;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: ${({ disabled }) => (disabled ? tokens.colors.neutral[300] : tokens.colors.primary[600])};
+  }
   
   &:disabled {
     opacity: 1;
