@@ -14,6 +14,8 @@ const SecondaryAction = ({ onSignUpClick }: SecondaryActionProps) => {
           아직 계정이 없으신가요?
         </Text>
         <Text
+          as='button'
+          type='button'
           variant='B2'
           color={tokens.colors.primary[500]}
           onClick={onSignUpClick}

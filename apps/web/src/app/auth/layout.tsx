@@ -8,7 +8,7 @@ import type React from 'react';
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <StyledContainer>
-      <AppLayout>
+      <AppLayout centered>
         <StyledAuthLayout>{children}</StyledAuthLayout>
       </AppLayout>
     </StyledContainer>
