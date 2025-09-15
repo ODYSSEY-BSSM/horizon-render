@@ -3,24 +3,13 @@
 import AppLayout from '@/layouts/AppLayout';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import { Flexbox } from '@horizon/utils';
 import type React from 'react';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <StyledContainer>
       <AppLayout>
-        <Flexbox
-          justify='center'
-          align='center'
-          direction='column'
-          shrink={0}
-          gap='60px'
-          width='720px'
-          height='100vh'
-        >
-          <StyledAuthLayout>{children}</StyledAuthLayout>
-        </Flexbox>
+        <StyledAuthLayout>{children}</StyledAuthLayout>
       </AppLayout>
     </StyledContainer>
   );
@@ -34,9 +23,12 @@ const StyledContainer = styled.div`
 `;
 
 const StyledAuthLayout = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 720px;
+  height: 100vh;
   background-color: ${tokens.colors.white};
   padding: 0 160px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
