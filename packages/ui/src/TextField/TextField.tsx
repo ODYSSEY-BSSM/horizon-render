@@ -38,6 +38,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
     label,
     helperText,
     error = false,
+    leftIcon,
     rightIcon,
     width,
     containerClassName,
