@@ -68,6 +68,15 @@ const StyledSubmitButton = styled.button<{ disabled: boolean }>`
   &:disabled {
     opacity: 1;
   }
+
+  &:focus-visible {
+    outline: 2px solid ${({ disabled }) => (disabled ? tokens.colors.neutral[400] : tokens.colors.primary[600])};
+    outline-offset: 2px;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
 `;
 
 const StyledDividerWrapper = styled.div`

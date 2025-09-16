@@ -234,6 +234,16 @@ const StyledBackButton = styled.button`
   &:hover {
     opacity: 0.7;
   }
+
+  &:focus-visible {
+    outline: 2px solid ${tokens.colors.primary[500]};
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
 `;
 
 const StyledTitle = styled(Text)`

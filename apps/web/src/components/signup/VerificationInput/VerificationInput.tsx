@@ -28,7 +28,6 @@ const VerificationInput = ({ value, onChange, error }: VerificationInputProps) =
             borderRadius: '8px',
             textAlign: 'center',
             backgroundColor: tokens.colors.white,
-            outline: 'none',
             transition: 'border-color 0.2s ease',
             letterSpacing: '-0.8px',
             lineHeight: '44px',
@@ -59,6 +58,16 @@ const VerificationInput = ({ value, onChange, error }: VerificationInputProps) =
 const StyledOtpWrapper = styled.div`
   display: flex;
   width: 400px;
+
+  input:focus-visible {
+    border-color: ${tokens.colors.primary[500]} !important;
+    outline: 2px solid ${tokens.colors.primary[500]};
+    outline-offset: 1px;
+  }
+
+  input:focus:not(:focus-visible) {
+    outline: none;
+  }
 `;
 
 export default VerificationInput;
