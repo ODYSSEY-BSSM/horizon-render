@@ -35,7 +35,7 @@ const SignInContent = () => {
           HORIZON
         </Text>
         <Text variant='B1' color={tokens.colors.neutral[500]}>
-          환영합니다, 로그인을 진행해주세요
+          환영합니다, 로그인을 진행해주세요.
         </Text>
       </Flexbox>
 
