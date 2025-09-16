@@ -4,100 +4,91 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Horizon Render** is a React TypeScript design system monorepo built with pnpm. It's the "vol.2 restart" of Horizon FE project focused on creating a comprehensive component library with design tokens, visual editor application, and modern development tooling.
+**Horizon Render** is a TypeScript monorepo managed with pnpm workspaces. It contains a Next.js web app, a UI component library built with Emotion, a tokens package, and utilities. Storybook is used for component development.
+
+## Key Technologies
+
+- **Framework**: Next.js
+- **UI**: React, Emotion, Storybook
+- **Language**: TypeScript
+- **Package Manager**: pnpm
+- **Lint/Format**: Biome
+- **Testing**: Vitest
 
 ## Essential Commands
 
 ```bash
 # Development
-pnpm dev                    # Start all packages in parallel watch mode
-pnpm editor                # Run editor app (React Flow editor)
-pnpm web                   # Run web app (NextJS)
-pnpm storybook             # Run Storybook for component development
+pnpm dev                      # Start all packages in parallel watch mode
+pnpm --filter web dev         # Run web app (Next.js)
+pnpm --filter @horizon/storybook dev  # Run Storybook
+pnpm editor                   # Run editor app (React + Vite)
 
-# Code Quality (Always run before commits)
-pnpm lint                  # Biome linting check
-pnpm lint:fix              # Auto-fix linting and formatting
-pnpm typecheck             # TypeScript type checking
-pnpm verify                # Full pipeline: lint + typecheck + test + build
+# Code Quality (run before commits)
+pnpm lint                     # Biome linting
+pnpm lint:fix                 # Autofix linting/formatting
+pnpm typecheck                # TS type checking across workspace
+pnpm verify                   # lint + typecheck + test + build
 
-# Building & Testing  
-pnpm build                 # Build all packages and apps
-pnpm test                  # Run tests (Vitest + @testing-library/react)
-pnpm build-editor          # Build editor app (React + Vite)
-pnpm build-storybook       # Build Storybook with dependencies
-pnpm clean                 # Clean all dist and node_modules folders
+# Build & Test
+pnpm build                    # Build all packages and apps
+pnpm test                     # Run tests (Vitest)
+pnpm build-editor             # Build editor app
+pnpm build-storybook          # Build Storybook (+ deps)
+pnpm clean                    # Remove all dist and node_modules
 ```
 
-## Architecture & Monorepo Structure
+## Monorepo Structure
 
-### Packages
-- **`@horizon/tokens`**: Design system foundation - colors, typography, layout tokens, icon system
-- **`@horizon/ui`**: React components using emotion/styled pattern
-- **`@horizon/utils`**: Shared React hooks and utilities
-- **`apps/editor`**: React Flow based visual editor (React + Vite)
-- **`apps/web`**: Main web application (NextJS)
-- **`apps/storybook`**: Component development and documentation
+### Packages / Apps
+- **`@horizon/tokens`**: Design tokens (colors, typography, layout, icons)
+- **`@horizon/ui`**: React components using Emotion
+- **`@horizon/utils`**: Shared utilities and hooks
+- **`apps/web`**: Next.js application
+- **`apps/editor`**: Visual editor (React + Vite)
+- **`apps/storybook`**: Storybook workspace
 
-### Key Architectural Patterns
-
-**Design Token System**: All design decisions centralized in `@horizon/tokens`, auto-integrated into Tailwind CSS via custom plugins. Components consume tokens, never hard-coded values.
-
-**Component Architecture**: Follow the Text component pattern - variant-based with @emotion/styled, TypeScript-first, accessibility built-in. Components export both React component and Tailwind utilities.
-
-**Workspace Dependencies**: Packages reference each other via `workspace:*` in package.json. Shared configs live in `/configs` directory.
-
-### Tailwind Integration
-Design tokens automatically become Tailwind utilities. Custom icon utilities generated from token config. Each package exports a Tailwind preset for consuming applications.
+### Workspace Conventions
+- Inter-package references use `workspace:*` in package.json
+- Shared TypeScript/Vite/Vitest configs under `configs/`
 
 ## Development Patterns
 
-### Component Development
-1. Start in `@horizon/ui` with component + variants using `@emotion/styled`
-2. Export component and any related utilities
-3. Update package index.ts exports
+### Component Development (UI package)
+1. Implement component + variants with `@emotion/styled`
+2. Export from `src/index.ts`
+3. Build via `pnpm --filter @horizon/ui build` if needed
 
 ### App Development
-- **Editor App**: React Flow editor for visual workflows (React + Vite), uses `@horizon/ui` components and design tokens
-- **Web App**: NextJS application with SSR/API Routes, consuming the design system
+- **Web App**: Next.js App Router; prefer Server Components; mark Client components with `'use client'` when using hooks/contexts or Emotion runtime requirements
+- **Editor App**: Vite + React; consumes tokens and UI components
 
-### React Flow Editor Patterns
-- **Node Components**: Custom nodes extending base design system components
-- **Business Logic**: Focus testing on data transforms and state management, not canvas interactions
-- **State Management**: Editor state separate from React Flow internal state
-- **API Integration**: Shared API client for data persistence (TBD)
+### Forms & Validation
+- **Zod** for schemas and inference
+- **React Hook Form** with `@hookform/resolvers/zod`
 
-### Form & Validation Patterns
-- **Zod**: Schema validation for API responses and form data with TypeScript inference
-- **React Hook Form**: Form state management with `@hookform/resolvers/zod` integration
-- **Pattern**: Define schema once, use for both API validation and form validation
+### Design Tokens
+- Always source values from `@horizon/tokens` (see `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts`)
 
-### Design Token Usage
-Always reference tokens from `@horizon/tokens` - check `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts` for available tokens before creating components.
+### Code Quality
+- Biome: 2-space indent, ~100 char line width, single quotes, semicolons
+- Commits: Korean descriptions + conventional types (feat/fix/refactor/docs/build/ci/perf/test/chore/hotfix)
+- TypeScript: strict mode; path aliases configured
 
-### Code Quality Standards
-- **Biome Configuration**: 2-space indent, 100 char line width, single quotes, semicolons
-- **Commit Format**: Korean descriptions with conventional commit types - feat/fix/refactor/docs/build/ci/perf/test/chore/hotfix (see README)
-- **Pre-commit hooks**: lint-staged runs Biome on changed files
-- **TypeScript**: Strict mode enabled, path aliases configured
+## Build System
+- **tsup** for libraries (ESM + CJS)
+- **Vite** for editor
+- **Next.js** for web (SSR/SSG/Streaming)
+- Parallel development via pnpm workspaces
 
-### Build System
-- **tsup** for library bundling (ESM + CommonJS)  
-- **Vite** for editor app development and build
-- **NextJS** for web app with SSR/SSG capabilities
-- **Parallel development** via pnpm workspaces
+## Testing
+- **Vitest** for unit tests
+- **@testing-library/react** for component behavior in UI package
 
-## Testing Approach
-**Vitest + @testing-library/react** for all testing:
-- **Component Tests**: UI package components with jsdom
-- **NextJS Tests**: API routes and pages with Vitest 
-- **Editor Tests**: React Flow editor business logic (avoid canvas testing)
-- **Visual Testing**: Component testing via test files
-
-## Important Files to Check
-- `packages/tokens/src/*` - Design system tokens
-- `packages/ui/src/Text/*` - Reference component implementation  
-- `biome.json` - Code formatting rules
-- Root `package.json` - Workspace scripts and dependencies
-- `configs/` - Shared TypeScript/Vite/Vitest configurations
-- `pnpm-workspace.yaml` - Workspace package definitions
+## Important Files
+- `packages/tokens/src/*` — Design tokens
+- `packages/ui/src/Text/*` — Reference component
+- `biome.json` — Formatting rules
+- Root `package.json` — Workspace scripts and deps
+- `configs/` — Shared TS/Vite/Vitest configs
+- `pnpm-workspace.yaml` — Workspace definitions
