@@ -122,7 +122,6 @@ const SignUpContent = () => {
     <StyledContainer>
       <StyledMainWrapper>
         <StyledContentWrapper>
-          {/* Header Section */}
           <Flexbox direction='column' gap={currentStep === 'email' ? '40px' : '60px'}>
             <Flexbox direction='column' gap='16px'>
               <StyledBackButton onClick={handleBack}>
@@ -134,7 +133,6 @@ const SignUpContent = () => {
               </Flexbox>
             </Flexbox>
 
-            {/* Content Section */}
             {renderStepContent()}
           </Flexbox>
         </StyledContentWrapper>

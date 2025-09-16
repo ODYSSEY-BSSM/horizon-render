@@ -36,9 +36,7 @@ const VerificationStep = ({
         <SecondaryAction
           primaryText='인증번호를 받지 못하셨나요?'
           actionText='다시 보내기'
-          onActionClick={() => {
-            // Resend verification code
-          }}
+          onActionClick={() => undefined}
           showTimer={true}
           timerDuration={30}
         />

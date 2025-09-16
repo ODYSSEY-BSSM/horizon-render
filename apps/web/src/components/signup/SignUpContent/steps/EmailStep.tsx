@@ -25,9 +25,6 @@ const EmailStep = ({
         value={email}
         onChange={(e) => {
           setEmail(e.target.value);
-          if (errors.email) {
-            // Clear error when user starts typing
-          }
         }}
         error={!!errors.email}
         helperText={errors.email}
