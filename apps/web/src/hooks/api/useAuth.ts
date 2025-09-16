@@ -1,20 +1,31 @@
-import { safeStorage } from '@/utils/storage';
+'use client';
+
+import { tokenResponseSchema } from '@/schemas/auth';
+import { authStorage } from '@/utils/authStorage';
 import { userApi } from '@horizon/api';
 import type {
   LoginRequest,
   LoginResponse,
   RefreshTokenResponse,
   RegisterRequest,
+  UserInfoResponse,
 } from '@horizon/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useLogin = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (data: LoginRequest) => userApi.login(data),
     onSuccess: (response: LoginResponse) => {
-      // 토큰을 localStorage에 저장
-      safeStorage.set('accessToken', response.data.accessToken);
-      safeStorage.set('refreshToken', response.data.refreshToken);
+      // Zod로 토큰 응답 검증
+      const tokens = tokenResponseSchema.parse(response.data);
+
+      // 토큰 저장
+      authStorage.setTokens(tokens.accessToken, tokens.refreshToken);
+
+      // 프로필 캐시 무효화
+      queryClient.invalidateQueries({ queryKey: ['user', 'profile'] });
     },
   });
 };
@@ -30,7 +41,7 @@ export const useLogout = () => {
 
   return useMutation({
     mutationFn: async () => {
-      const accessToken = safeStorage.get('accessToken');
+      const accessToken = authStorage.getAccessToken();
       if (!accessToken) return; // 멱등적 처리
 
       try {
@@ -41,8 +52,7 @@ export const useLogout = () => {
     },
     onSettled: () => {
       // 토큰 제거
-      safeStorage.remove('accessToken');
-      safeStorage.remove('refreshToken');
+      authStorage.clearTokens();
       // 사용자 관련 쿼리만 정리
       queryClient.removeQueries({ queryKey: ['user'] });
     },
@@ -50,29 +60,31 @@ export const useLogout = () => {
 };
 
 export const useUserProfile = () => {
-  return useQuery({
+  return useQuery<UserInfoResponse>({
     queryKey: ['user', 'profile'],
-    queryFn: () => {
-      const accessToken = safeStorage.get('accessToken');
-      if (!accessToken) throw new Error('No access token');
-      return userApi.getProfile(accessToken);
-    },
-    enabled: !!safeStorage.get('accessToken'),
+    queryFn: () => userApi.getProfile(authStorage.getAccessToken()!),
+    enabled: authStorage.hasAccessToken(),
   });
 };
 
 export const useRefreshToken = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: () => {
-      const refreshToken = safeStorage.get('refreshToken');
+      const refreshToken = authStorage.getRefreshToken();
       if (!refreshToken) throw new Error('No refresh token');
       return userApi.refresh(refreshToken);
     },
     onSuccess: (response: RefreshTokenResponse) => {
-      safeStorage.set('accessToken', response.data.accessToken);
-      if (response.data.refreshToken) {
-        safeStorage.set('refreshToken', response.data.refreshToken);
-      }
+      // Zod로 토큰 응답 검증
+      const tokens = tokenResponseSchema.parse(response.data);
+
+      // 토큰 저장
+      authStorage.setTokens(tokens.accessToken, tokens.refreshToken);
+
+      // 실패했던 민감 쿼리 재시도
+      queryClient.invalidateQueries({ queryKey: ['user', 'profile'] });
     },
   });
 };
