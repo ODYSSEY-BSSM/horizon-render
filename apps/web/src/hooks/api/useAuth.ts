@@ -1,14 +1,19 @@
 import { userApi } from '@horizon/api';
-import type { LoginRequest, RegisterRequest } from '@horizon/api';
+import type {
+  LoginRequest,
+  LoginResponse,
+  RefreshTokenResponse,
+  RegisterRequest,
+} from '@horizon/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useLogin = () => {
   return useMutation({
     mutationFn: (data: LoginRequest) => userApi.login(data),
-    onSuccess: (response) => {
+    onSuccess: (response: LoginResponse) => {
       // 토큰을 localStorage에 저장
-      localStorage.setItem('accessToken', response.accessToken);
-      localStorage.setItem('refreshToken', response.refreshToken);
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('refreshToken', response.data.refreshToken);
     },
   });
 };
@@ -57,10 +62,10 @@ export const useRefreshToken = () => {
       if (!refreshToken) throw new Error('No refresh token');
       return userApi.refresh(refreshToken);
     },
-    onSuccess: (response) => {
-      localStorage.setItem('accessToken', response.accessToken);
-      if (response.refreshToken) {
-        localStorage.setItem('refreshToken', response.refreshToken);
+    onSuccess: (response: RefreshTokenResponse) => {
+      localStorage.setItem('accessToken', response.data.accessToken);
+      if (response.data.refreshToken) {
+        localStorage.setItem('refreshToken', response.data.refreshToken);
       }
     },
   });

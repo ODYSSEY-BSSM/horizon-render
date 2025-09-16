@@ -104,21 +104,27 @@ export const useSignUpHandlers = () => {
     setErrors({});
     try {
       // 실제 회원가입 API 호출
+      if (!signUpData.email || !signUpData.password) {
+        throw new Error('이메일 또는 비밀번호가 없습니다');
+      }
+
       await registerMutation.mutateAsync({
-        email: signUpData.email!,
-        password: signUpData.password!,
+        email: signUpData.email,
+        password: signUpData.password,
         username,
       });
 
       // 회원가입 성공 시 로그인 페이지로 이동
       router.push('/auth/signin');
-    } catch (error: any) {
+    } catch (error) {
       console.error('회원가입 실패:', error);
 
       // API 에러 메시지 처리
-      if (error?.message?.includes('이메일')) {
+      const errorMessage =
+        error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다';
+      if (errorMessage.includes('이메일')) {
         setErrors({ username: '이미 가입된 이메일입니다' });
-      } else if (error?.message?.includes('사용자명')) {
+      } else if (errorMessage.includes('사용자명')) {
         setErrors({ username: '이미 사용중인 이름입니다' });
       } else {
         setErrors({ username: '회원가입에 실패했습니다' });
