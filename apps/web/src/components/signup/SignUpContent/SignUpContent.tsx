@@ -56,7 +56,7 @@ const SignUpContent = () => {
       case 'password':
         return '비밀번호를 지정해주세요.';
       case 'username':
-        return '이름을 입력해주세요 (변경 가능).';
+        return '이름을 입력해주세요. (변경 가능)';
     }
   };
 
