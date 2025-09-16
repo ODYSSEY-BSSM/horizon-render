@@ -1,5 +1,10 @@
+'use client';
+
+import SignUpContent from '@/components/signup/SignUpContent/SignUpContent';
+import type React from 'react';
+
 const SignUp = () => {
-  return <div>Sign Up Page</div>;
+  return <SignUpContent />;
 };
 
 export default SignUp;
