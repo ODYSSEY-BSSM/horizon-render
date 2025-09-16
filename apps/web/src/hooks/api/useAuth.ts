@@ -1,3 +1,4 @@
+import { safeStorage } from '@/utils/storage';
 import { userApi } from '@horizon/api';
 import type {
   LoginRequest,
@@ -12,8 +13,8 @@ export const useLogin = () => {
     mutationFn: (data: LoginRequest) => userApi.login(data),
     onSuccess: (response: LoginResponse) => {
       // 토큰을 localStorage에 저장
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('refreshToken', response.data.refreshToken);
+      safeStorage.set('accessToken', response.data.accessToken);
+      safeStorage.set('refreshToken', response.data.refreshToken);
     },
   });
 };
@@ -29,14 +30,14 @@ export const useLogout = () => {
 
   return useMutation({
     mutationFn: () => {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = safeStorage.get('accessToken');
       if (!accessToken) throw new Error('No access token');
       return userApi.logout(accessToken);
     },
     onSuccess: () => {
       // 토큰 제거
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
+      safeStorage.remove('accessToken');
+      safeStorage.remove('refreshToken');
       // 모든 쿼리 초기화
       queryClient.clear();
     },
@@ -47,25 +48,25 @@ export const useUserProfile = () => {
   return useQuery({
     queryKey: ['user', 'profile'],
     queryFn: () => {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = safeStorage.get('accessToken');
       if (!accessToken) throw new Error('No access token');
       return userApi.getProfile(accessToken);
     },
-    enabled: !!localStorage.getItem('accessToken'),
+    enabled: !!safeStorage.get('accessToken'),
   });
 };
 
 export const useRefreshToken = () => {
   return useMutation({
     mutationFn: () => {
-      const refreshToken = localStorage.getItem('refreshToken');
+      const refreshToken = safeStorage.get('refreshToken');
       if (!refreshToken) throw new Error('No refresh token');
       return userApi.refresh(refreshToken);
     },
     onSuccess: (response: RefreshTokenResponse) => {
-      localStorage.setItem('accessToken', response.data.accessToken);
+      safeStorage.set('accessToken', response.data.accessToken);
       if (response.data.refreshToken) {
-        localStorage.setItem('refreshToken', response.data.refreshToken);
+        safeStorage.set('refreshToken', response.data.refreshToken);
       }
     },
   });

@@ -123,7 +123,7 @@ export const useSignUpHandlers = () => {
       const errorMessage =
         error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다';
       if (errorMessage.includes('이메일')) {
-        setErrors({ username: '이미 가입된 이메일입니다' });
+        setErrors({ email: '이미 가입된 이메일입니다' });
       } else if (errorMessage.includes('사용자명')) {
         setErrors({ username: '이미 사용중인 이름입니다' });
       } else {
