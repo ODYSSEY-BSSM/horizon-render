@@ -93,12 +93,6 @@ const SignUpContent = () => {
             </Flexbox>
             <EmailStep
               email={email}
-              setEmail={(value) => {
-                setEmail(value);
-                if (errors.email) {
-                  setErrors((prev) => ({ ...prev, email: '' }));
-                }
-              }}
               onSubmit={handleEmailSubmit}
               isLoading={isLoading}
               errors={errors}
@@ -112,7 +106,12 @@ const SignUpContent = () => {
         return (
           <VerificationStep
             verificationCode={verificationCode}
-            setVerificationCode={setVerificationCode}
+            setVerificationCode={(value) => {
+              setVerificationCode(value);
+              if (errors.code) {
+                setErrors((prev) => ({ ...prev, code: '' }));
+              }
+            }}
             onSubmit={handleVerificationSubmit}
             isLoading={isLoading}
             errors={errors}
@@ -124,9 +123,19 @@ const SignUpContent = () => {
         return (
           <PasswordStep
             password={password}
-            setPassword={setPassword}
+            setPassword={(value) => {
+              setPassword(value);
+              if (errors.password) {
+                setErrors((prev) => ({ ...prev, password: '' }));
+              }
+            }}
             confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
+            setConfirmPassword={(value) => {
+              setConfirmPassword(value);
+              if (errors.confirmPassword) {
+                setErrors((prev) => ({ ...prev, confirmPassword: '' }));
+              }
+            }}
             onSubmit={handlePasswordSubmit}
             isLoading={isLoading}
             errors={errors}
@@ -137,7 +146,12 @@ const SignUpContent = () => {
         return (
           <UsernameStep
             username={username}
-            setUsername={setUsername}
+            setUsername={(value) => {
+              setUsername(value);
+              if (errors.username) {
+                setErrors((prev) => ({ ...prev, username: '' }));
+              }
+            }}
             onSubmit={handleUsernameSubmit}
             isLoading={isLoading}
             errors={errors}

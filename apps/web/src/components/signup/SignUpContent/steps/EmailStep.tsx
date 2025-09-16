@@ -7,15 +7,23 @@ import SecondaryAction from '../../SecondaryAction/SecondaryAction';
 import type { EmailStepProps } from '../types';
 
 const EmailStep = ({
+  email,
   onSubmit,
   isLoading,
+  errors,
   onGoogleSignUp,
   onSignIn,
-}: Omit<EmailStepProps, 'email' | 'setEmail' | 'errors'>) => {
+}: Pick<
+  EmailStepProps,
+  'email' | 'onSubmit' | 'isLoading' | 'errors' | 'onGoogleSignUp' | 'onSignIn'
+>) => {
   return (
     <Flexbox direction='column' gap='40px'>
       <Flexbox direction='column' gap='12px'>
-        <StyledSubmitButton onClick={onSubmit} disabled={isLoading}>
+        <StyledSubmitButton
+          onClick={onSubmit}
+          disabled={!email.trim() || !!errors.email || isLoading}
+        >
           <Text variant='ST' color={tokens.colors.white}>
             {isLoading ? '전송 중...' : '인증번호 보내기'}
           </Text>
