@@ -18,13 +18,8 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: (data: LoginRequest) => userApi.login(data),
     onSuccess: (response: LoginResponse) => {
-      // Zod로 토큰 응답 검증
       const tokens = tokenResponseSchema.parse(response.data);
-
-      // 토큰 저장
       authStorage.setTokens(tokens.accessToken, tokens.refreshToken);
-
-      // 프로필 캐시 무효화
       queryClient.invalidateQueries({ queryKey: ['user', 'profile'] });
     },
   });
@@ -42,18 +37,11 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: async () => {
       const accessToken = authStorage.getAccessToken();
-      if (!accessToken) return; // 멱등적 처리
-
-      try {
-        await userApi.logout(accessToken);
-      } finally {
-        // 네트워크 실패여도 로컬 정리는 보장
-      }
+      if (!accessToken) return;
+      await userApi.logout(accessToken);
     },
     onSettled: () => {
-      // 토큰 제거
       authStorage.clearTokens();
-      // 사용자 관련 쿼리만 정리
       queryClient.removeQueries({ queryKey: ['user'] });
     },
   });
@@ -62,7 +50,11 @@ export const useLogout = () => {
 export const useUserProfile = () => {
   return useQuery<UserInfoResponse>({
     queryKey: ['user', 'profile'],
-    queryFn: () => userApi.getProfile(authStorage.getAccessToken()!),
+    queryFn: () => {
+      const token = authStorage.getAccessToken();
+      if (!token) throw new Error('No access token');
+      return userApi.getProfile(token);
+    },
     enabled: authStorage.hasAccessToken(),
   });
 };
@@ -77,13 +69,8 @@ export const useRefreshToken = () => {
       return userApi.refresh(refreshToken);
     },
     onSuccess: (response: RefreshTokenResponse) => {
-      // Zod로 토큰 응답 검증
       const tokens = tokenResponseSchema.parse(response.data);
-
-      // 토큰 저장
       authStorage.setTokens(tokens.accessToken, tokens.refreshToken);
-
-      // 실패했던 민감 쿼리 재시도
       queryClient.invalidateQueries({ queryKey: ['user', 'profile'] });
     },
   });
