@@ -1,7 +1,7 @@
 name: '기능 제안 및 추가'
 description: '새로운 기능에 대한 이슈를 작성하세요!'
 title: 'feat: '
-labels: ['feat']
+labels: ['feature']
 body:
   - type: input
     attributes:
