@@ -1,67 +1,43 @@
 import ContinueWithGoogle from '@/components/signin/ContinueWithGoogle/ContinueWithGoogle';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import { Text, TextField } from '@horizon/ui';
+import { Text } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import SecondaryAction from '../../SecondaryAction/SecondaryAction';
 import type { EmailStepProps } from '../types';
 
 const EmailStep = ({
-  email,
-  setEmail,
   onSubmit,
   isLoading,
-  errors,
   onGoogleSignUp,
   onSignIn,
-}: EmailStepProps) => {
+}: Omit<EmailStepProps, 'email' | 'setEmail' | 'errors'>) => {
   return (
-    <>
-      <TextField
-        label='이메일'
-        placeholder='이메일 입력'
-        type='email'
-        width='100%'
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-        error={!!errors.email}
-        helperText={errors.email}
-      />
+    <Flexbox direction='column' gap='40px'>
+      <Flexbox direction='column' gap='12px'>
+        <StyledSubmitButton onClick={onSubmit} disabled={isLoading}>
+          <Text variant='ST' color={tokens.colors.white}>
+            {isLoading ? '전송 중...' : '인증번호 보내기'}
+          </Text>
+        </StyledSubmitButton>
 
-      <StyledButtonSection direction='column' gap='40px'>
-        <Flexbox direction='column' gap='12px'>
-          <StyledSubmitButton
-            onClick={onSubmit}
-            disabled={!email.trim() || !!errors.email || isLoading}
-          >
-            <Text variant='ST' color={tokens.colors.white}>
-              {isLoading ? '전송 중...' : '인증번호 보내기'}
+        <StyledDividerWrapper>
+          <StyledDividerLine />
+          <StyledDividerText>
+            <Text variant='O' color={tokens.colors.neutral[400]}>
+              또는
             </Text>
-          </StyledSubmitButton>
+          </StyledDividerText>
+        </StyledDividerWrapper>
 
-          <StyledDividerWrapper>
-            <StyledDividerLine />
-            <StyledDividerText>
-              <Text variant='O' color={tokens.colors.neutral[400]}>
-                또는
-              </Text>
-            </StyledDividerText>
-          </StyledDividerWrapper>
-
-          <ContinueWithGoogle onClick={onGoogleSignUp} />
-        </Flexbox>
-      </StyledButtonSection>
-
-      <StyledBottomSection>
-        <SecondaryAction
-          primaryText='이미 계정이 있으신가요?'
-          actionText='로그인하기'
-          onActionClick={onSignIn}
-        />
-      </StyledBottomSection>
-    </>
+        <ContinueWithGoogle onClick={onGoogleSignUp} />
+      </Flexbox>
+      <SecondaryAction
+        primaryText='이미 계정이 있으신가요?'
+        actionText='로그인하기'
+        onActionClick={onSignIn}
+      />
+    </Flexbox>
   );
 };
 
@@ -112,14 +88,6 @@ const StyledDividerText = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
-`;
-
-const StyledButtonSection = styled(Flexbox)`
-  margin-top: 82px;
-`;
-
-const StyledBottomSection = styled.div`
-  margin-top: 40px;
 `;
 
 export default EmailStep;

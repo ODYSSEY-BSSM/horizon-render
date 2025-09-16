@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import { Icon, Text } from '@horizon/ui';
+import { Icon, Text, TextField } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import { useSignUpHandlers } from './hooks/useSignUpHandlers';
 import EmailStep from './steps/EmailStep';
@@ -64,20 +64,48 @@ const SignUpContent = () => {
     switch (currentStep) {
       case 'email':
         return (
-          <EmailStep
-            email={email}
-            setEmail={(value) => {
-              setEmail(value);
-              if (errors.email) {
-                setErrors((prev) => ({ ...prev, email: '' }));
-              }
-            }}
-            onSubmit={handleEmailSubmit}
-            isLoading={isLoading}
-            errors={errors}
-            onGoogleSignUp={handleGoogleSignUp}
-            onSignIn={handleSignIn}
-          />
+          <>
+            <Flexbox direction='column' gap='40px'>
+              <Flexbox direction='column' gap='16px'>
+                <StyledBackButton onClick={handleBack}>
+                  <Icon name='arrow_left_alt' color={tokens.colors.neutral[400]} size='24px' />
+                </StyledBackButton>
+                <Flexbox direction='column' gap='8px' align='start'>
+                  <StyledTitle>{getStepTitle()}</StyledTitle>
+                  <StyledDescription>{getStepDescription()}</StyledDescription>
+                </Flexbox>
+              </Flexbox>
+              <TextField
+                label='이메일'
+                placeholder='이메일 입력'
+                type='email'
+                width='100%'
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) {
+                    setErrors((prev) => ({ ...prev, email: '' }));
+                  }
+                }}
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+            </Flexbox>
+            <EmailStep
+              email={email}
+              setEmail={(value) => {
+                setEmail(value);
+                if (errors.email) {
+                  setErrors((prev) => ({ ...prev, email: '' }));
+                }
+              }}
+              onSubmit={handleEmailSubmit}
+              isLoading={isLoading}
+              errors={errors}
+              onGoogleSignUp={handleGoogleSignUp}
+              onSignIn={handleSignIn}
+            />
+          </>
         );
 
       case 'verification':
@@ -122,18 +150,28 @@ const SignUpContent = () => {
     <StyledContainer>
       <StyledMainWrapper>
         <StyledContentWrapper>
-          <Flexbox direction='column' gap={currentStep === 'email' ? '40px' : '60px'}>
-            <Flexbox direction='column' gap='16px'>
-              <StyledBackButton onClick={handleBack}>
-                <Icon name='arrow_left_alt' color={tokens.colors.neutral[400]} size='24px' />
-              </StyledBackButton>
-              <Flexbox direction='column' gap='8px' align='start'>
-                <StyledTitle>{getStepTitle()}</StyledTitle>
-                <StyledDescription>{getStepDescription()}</StyledDescription>
-              </Flexbox>
-            </Flexbox>
-
-            {renderStepContent()}
+          <Flexbox
+            direction='column'
+            gap={
+              currentStep === 'email' ? '82px' : currentStep === 'verification' ? '60px' : '30px'
+            }
+          >
+            {currentStep === 'email' ? (
+              renderStepContent()
+            ) : (
+              <>
+                <Flexbox direction='column' gap='16px'>
+                  <StyledBackButton onClick={handleBack}>
+                    <Icon name='arrow_left_alt' color={tokens.colors.neutral[400]} size='24px' />
+                  </StyledBackButton>
+                  <Flexbox direction='column' gap='8px' align='start'>
+                    <StyledTitle>{getStepTitle()}</StyledTitle>
+                    <StyledDescription>{getStepDescription()}</StyledDescription>
+                  </Flexbox>
+                </Flexbox>
+                {renderStepContent()}
+              </>
+            )}
           </Flexbox>
         </StyledContentWrapper>
       </StyledMainWrapper>

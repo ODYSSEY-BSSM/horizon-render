@@ -46,7 +46,7 @@ const StyledSubmitButton = styled.button<{ disabled: boolean }>`
   justify-content: center;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: background-color 0.2s ease;
-  margin-top: 60px;
+  margin-top: 62px;
   
   &:hover {
     background-color: ${({ disabled }) => (disabled ? tokens.colors.neutral[300] : tokens.colors.primary[600])};
