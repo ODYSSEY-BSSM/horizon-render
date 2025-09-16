@@ -1,188 +1,38 @@
-import ContinueWithGoogle from '@/components/signin/ContinueWithGoogle/ContinueWithGoogle';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
-import { Icon, Text, TextField } from '@horizon/ui';
+import { Icon, Text } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
-import { useRouter } from 'next/navigation';
-import type React from 'react';
-import { useState } from 'react';
-import SecondaryAction from '../SecondaryAction/SecondaryAction';
-import VerificationInput from '../VerificationInput/VerificationInput';
-
-type SignUpStep = 'email' | 'verification' | 'password' | 'username';
-
-interface SignUpData {
-  email: string;
-  verificationCode: string;
-  password: string;
-  confirmPassword: string;
-  username: string;
-}
+import { useSignUpHandlers } from './hooks/useSignUpHandlers';
+import EmailStep from './steps/EmailStep';
+import PasswordStep from './steps/PasswordStep';
+import UsernameStep from './steps/UsernameStep';
+import VerificationStep from './steps/VerificationStep';
 
 const SignUpContent = () => {
-  const [currentStep, setCurrentStep] = useState<SignUpStep>('email');
-  const [signUpData, setSignUpData] = useState<Partial<SignUpData>>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const router = useRouter();
-
-  // Form values
-  const [email, setEmail] = useState('');
-  const [verificationCode, setVerificationCode] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [username, setUsername] = useState('');
-
-  // Validation functions
-  const validateEmail = (email: string) => {
-    if (!email.trim()) return '이메일을 입력해주세요';
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return '올바른 이메일 형식이 아닙니다';
-    return '';
-  };
-
-  const validateVerificationCode = (code: string) => {
-    if (!code.trim()) return '인증번호를 입력해주세요';
-    if (code.length !== 6) return '인증번호 6자리를 입력해주세요';
-    if (!/^\d{6}$/.test(code)) return '숫자 6자리를 입력해주세요';
-    return '';
-  };
-
-  const validatePassword = (password: string) => {
-    if (!password.trim()) return '비밀번호를 입력해주세요';
-    if (password.length < 8) return '비밀번호는 8자 이상이어야 합니다';
-    if (!/^(?=.*[a-zA-Z])(?=.*\d)/.test(password)) return '영문과 숫자를 포함해야 합니다';
-    return '';
-  };
-
-  const validateConfirmPassword = (confirmPassword: string, password: string) => {
-    if (!confirmPassword.trim()) return '비밀번호 확인을 입력해주세요';
-    if (confirmPassword !== password) return '비밀번호가 일치하지 않습니다';
-    return '';
-  };
-
-  const validateUsername = (username: string) => {
-    if (!username.trim()) return '이름을 입력해주세요';
-    if (username.length < 2) return '이름은 2자 이상이어야 합니다';
-    if (username.length > 20) return '이름은 20자 이하여야 합니다';
-    if (!/^[가-힣a-zA-Z\s]+$/.test(username)) return '한글, 영문만 사용 가능합니다';
-    return '';
-  };
-
-  // Submit handlers
-  const handleEmailSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const emailError = validateEmail(email);
-    if (emailError) {
-      setErrors({ email: emailError });
-      return;
-    }
-
-    setIsLoading(true);
-    setErrors({});
-    try {
-      // API call to send verification code
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Mock API call
-      setSignUpData((prev) => ({ ...prev, email }));
-      setCurrentStep('verification');
-    } catch (_error) {
-      setErrors({ email: '이미 가입된 이메일입니다' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleVerificationSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const codeError = validateVerificationCode(verificationCode);
-    if (codeError) {
-      setErrors({ code: codeError });
-      return;
-    }
-
-    setIsLoading(true);
-    setErrors({});
-    try {
-      // API call to verify code
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Mock API call
-      setSignUpData((prev) => ({ ...prev, verificationCode }));
-      setCurrentStep('password');
-    } catch (_error) {
-      setErrors({ code: '인증번호가 올바르지 않습니다' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handlePasswordSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const passwordError = validatePassword(password);
-    const confirmPasswordError = validateConfirmPassword(confirmPassword, password);
-
-    if (passwordError || confirmPasswordError) {
-      setErrors({
-        password: passwordError,
-        confirmPassword: confirmPasswordError,
-      });
-      return;
-    }
-
-    setIsLoading(true);
-    setErrors({});
-    try {
-      setSignUpData((prev) => ({ ...prev, password, confirmPassword }));
-      setCurrentStep('username');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleUsernameSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const usernameError = validateUsername(username);
-    if (usernameError) {
-      setErrors({ username: usernameError });
-      return;
-    }
-
-    setIsLoading(true);
-    setErrors({});
-    try {
-      // API call to complete signup
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Mock API call
-      // const _finalData = { ...signUpData, username };
-      // Signup completed
-      router.push('/');
-    } catch (_error) {
-      setErrors({ username: '이미 사용중인 이름입니다' });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleSignUp = () => {
-    router.push('/');
-  };
-
-  const handleSignIn = () => {
-    router.push('/auth/signin');
-  };
-
-  const handleBack = () => {
-    switch (currentStep) {
-      case 'verification':
-        setCurrentStep('email');
-        break;
-      case 'password':
-        setCurrentStep('verification');
-        break;
-      case 'username':
-        setCurrentStep('password');
-        break;
-      default:
-        router.back();
-    }
-  };
+  const {
+    currentStep,
+    signUpData,
+    isLoading,
+    errors,
+    setErrors,
+    email,
+    setEmail,
+    verificationCode,
+    setVerificationCode,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    username,
+    setUsername,
+    handleEmailSubmit,
+    handleVerificationSubmit,
+    handlePasswordSubmit,
+    handleUsernameSubmit,
+    handleGoogleSignUp,
+    handleSignIn,
+    handleBack,
+  } = useSignUpHandlers();
 
   const getStepTitle = () => {
     switch (currentStep) {
@@ -214,150 +64,56 @@ const SignUpContent = () => {
     switch (currentStep) {
       case 'email':
         return (
-          <>
-            <TextField
-              label='이메일'
-              placeholder='이메일 입력'
-              type='email'
-              width='100%'
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                if (errors.email) {
-                  setErrors((prev) => ({ ...prev, email: '' }));
-                }
-              }}
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-
-            <Flexbox direction='column' gap='40px' style={{ marginTop: '82px' }}>
-              <Flexbox direction='column' gap='12px'>
-                <StyledSubmitButton
-                  onClick={handleEmailSubmit}
-                  disabled={!email.trim() || !!errors.email || isLoading}
-                >
-                  <Text variant='ST' color={tokens.colors.white}>
-                    {isLoading ? '전송 중...' : '인증번호 보내기'}
-                  </Text>
-                </StyledSubmitButton>
-
-                <StyledDividerWrapper>
-                  <StyledDividerLine />
-                  <StyledDividerText>
-                    <Text variant='O' color={tokens.colors.neutral[400]}>
-                      또는
-                    </Text>
-                  </StyledDividerText>
-                </StyledDividerWrapper>
-
-                <ContinueWithGoogle onClick={handleGoogleSignUp} />
-              </Flexbox>
-            </Flexbox>
-          </>
+          <EmailStep
+            email={email}
+            setEmail={(value) => {
+              setEmail(value);
+              if (errors.email) {
+                setErrors((prev) => ({ ...prev, email: '' }));
+              }
+            }}
+            onSubmit={handleEmailSubmit}
+            isLoading={isLoading}
+            errors={errors}
+            onGoogleSignUp={handleGoogleSignUp}
+            onSignIn={handleSignIn}
+          />
         );
 
       case 'verification':
         return (
-          <>
-            <VerificationInput
-              value={verificationCode}
-              onChange={setVerificationCode}
-              error={errors.code}
-              email={signUpData.email}
-            />
-
-            <Flexbox direction='column' gap='40px' style={{ marginTop: '60px' }}>
-              <StyledSubmitButton
-                onClick={handleVerificationSubmit}
-                disabled={verificationCode.length !== 6 || !!errors.code || isLoading}
-              >
-                <Text variant='ST' color={tokens.colors.white}>
-                  {isLoading ? '인증 중...' : '확인'}
-                </Text>
-              </StyledSubmitButton>
-
-              <SecondaryAction
-                primaryText='인증번호를 받지 못하셨나요?'
-                actionText='다시 보내기'
-                onActionClick={() => {
-                  // Resend verification code
-                }}
-                showTimer={true}
-                timerDuration={30}
-              />
-            </Flexbox>
-          </>
+          <VerificationStep
+            verificationCode={verificationCode}
+            setVerificationCode={setVerificationCode}
+            onSubmit={handleVerificationSubmit}
+            isLoading={isLoading}
+            errors={errors}
+            email={signUpData.email}
+          />
         );
 
       case 'password':
         return (
-          <>
-            <Flexbox direction='column' gap='16px'>
-              <TextField
-                label='비밀번호'
-                placeholder='비밀번호 입력'
-                type='password'
-                width='100%'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={!!errors.password}
-                helperText={errors.password}
-              />
-              <TextField
-                label='비밀번호 확인'
-                placeholder='비밀번호 재입력'
-                type='password'
-                width='100%'
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword}
-              />
-            </Flexbox>
-
-            <StyledSubmitButton
-              onClick={handlePasswordSubmit}
-              disabled={
-                !password.trim() ||
-                !confirmPassword.trim() ||
-                !!errors.password ||
-                !!errors.confirmPassword ||
-                isLoading
-              }
-              style={{ marginTop: '60px' }}
-            >
-              <Text variant='ST' color={tokens.colors.white}>
-                {isLoading ? '설정 중...' : '완료'}
-              </Text>
-            </StyledSubmitButton>
-          </>
+          <PasswordStep
+            password={password}
+            setPassword={setPassword}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            onSubmit={handlePasswordSubmit}
+            isLoading={isLoading}
+            errors={errors}
+          />
         );
 
       case 'username':
         return (
-          <>
-            <TextField
-              label='이름'
-              placeholder='이름 입력'
-              type='text'
-              width='100%'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              error={!!errors.username}
-              helperText={errors.username}
-            />
-
-            <StyledSubmitButton
-              onClick={handleUsernameSubmit}
-              disabled={!username.trim() || !!errors.username || isLoading}
-              style={{ marginTop: '60px' }}
-            >
-              <Text variant='ST' color={tokens.colors.white}>
-                {isLoading ? '완료 중...' : '완료'}
-              </Text>
-            </StyledSubmitButton>
-          </>
+          <UsernameStep
+            username={username}
+            setUsername={setUsername}
+            onSubmit={handleUsernameSubmit}
+            isLoading={isLoading}
+            errors={errors}
+          />
         );
     }
   };
@@ -398,17 +154,6 @@ const SignUpContent = () => {
             {/* Content Section */}
             {renderStepContent()}
           </Flexbox>
-
-          {/* Bottom Section */}
-          {currentStep === 'email' && (
-            <div style={{ marginTop: '40px' }}>
-              <SecondaryAction
-                primaryText='이미 계정이 있으신가요?'
-                actionText='로그인하기'
-                onActionClick={handleSignIn}
-              />
-            </div>
-          )}
         </StyledContentWrapper>
       </StyledMainWrapper>
     </StyledContainer>
@@ -456,55 +201,6 @@ const StyledBackButton = styled.button`
   &:hover {
     opacity: 0.7;
   }
-`;
-
-const StyledSubmitButton = styled.button<{ disabled: boolean }>`
-  width: 100%;
-  height: 48px;
-  background-color: ${({ disabled }) => (disabled ? tokens.colors.neutral[300] : tokens.colors.primary[500])};
-  border: none;
-  border-radius: ${tokens.rounding.object};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  transition: background-color 0.2s ease;
-  
-  &:hover {
-    background-color: ${({ disabled }) => (disabled ? tokens.colors.neutral[300] : tokens.colors.primary[600])};
-  }
-  
-  &:disabled {
-    opacity: 1;
-  }
-`;
-
-const StyledDividerWrapper = styled.div`
-  position: relative;
-  height: 40px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledDividerLine = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: ${tokens.colors.neutral[400]};
-`;
-
-const StyledDividerText = styled.div`
-  background-color: ${tokens.colors.white};
-  padding: 0 16px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
 `;
 
 export default SignUpContent;
