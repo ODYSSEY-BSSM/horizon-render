@@ -47,7 +47,6 @@ const PasswordStep = ({
           !!errors.confirmPassword ||
           isLoading
         }
-        style={{ marginTop: '60px' }}
       >
         <Text variant='ST' color={tokens.colors.white}>
           {isLoading ? '설정 중...' : '완료'}
@@ -68,6 +67,7 @@ const StyledSubmitButton = styled.button<{ disabled: boolean }>`
   justify-content: center;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: background-color 0.2s ease;
+  margin-top: 60px;
   
   &:hover {
     background-color: ${({ disabled }) => (disabled ? tokens.colors.neutral[300] : tokens.colors.primary[600])};

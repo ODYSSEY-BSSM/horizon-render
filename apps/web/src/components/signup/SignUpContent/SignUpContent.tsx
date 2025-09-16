@@ -129,25 +129,8 @@ const SignUpContent = () => {
                 <Icon name='arrow_left_alt' color={tokens.colors.neutral[400]} size='24px' />
               </StyledBackButton>
               <Flexbox direction='column' gap='8px' align='start'>
-                <Text
-                  variant='H1'
-                  color={tokens.colors.primary[500]}
-                  style={{
-                    fontSize: '24px',
-                    fontWeight: '800',
-                    lineHeight: '34px',
-                    letterSpacing: '-0.36px',
-                  }}
-                >
-                  {getStepTitle()}
-                </Text>
-                <Text
-                  variant='B1'
-                  color={tokens.colors.neutral[900]}
-                  style={{ fontSize: '16px', lineHeight: '24px' }}
-                >
-                  {getStepDescription()}
-                </Text>
+                <StyledTitle>{getStepTitle()}</StyledTitle>
+                <StyledDescription>{getStepDescription()}</StyledDescription>
               </Flexbox>
             </Flexbox>
 
@@ -201,6 +184,20 @@ const StyledBackButton = styled.button`
   &:hover {
     opacity: 0.7;
   }
+`;
+
+const StyledTitle = styled(Text)`
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 34px;
+  letter-spacing: -0.36px;
+  color: ${tokens.colors.primary[500]};
+`;
+
+const StyledDescription = styled(Text)`
+  font-size: 16px;
+  line-height: 24px;
+  color: ${tokens.colors.neutral[900]};
 `;
 
 export default SignUpContent;

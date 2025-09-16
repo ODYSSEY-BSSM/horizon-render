@@ -23,7 +23,7 @@ const VerificationStep = ({
         email={email}
       />
 
-      <Flexbox direction='column' gap='40px' style={{ marginTop: '60px' }}>
+      <StyledButtonSection direction='column' gap='40px'>
         <StyledSubmitButton
           onClick={onSubmit}
           disabled={verificationCode.length !== 6 || !!errors.code || isLoading}
@@ -42,7 +42,7 @@ const VerificationStep = ({
           showTimer={true}
           timerDuration={30}
         />
-      </Flexbox>
+      </StyledButtonSection>
     </>
   );
 };
@@ -66,6 +66,10 @@ const StyledSubmitButton = styled.button<{ disabled: boolean }>`
   &:disabled {
     opacity: 1;
   }
+`;
+
+const StyledButtonSection = styled(Flexbox)`
+  margin-top: 60px;
 `;
 
 export default VerificationStep;

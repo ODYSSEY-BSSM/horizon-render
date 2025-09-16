@@ -33,7 +33,7 @@ const EmailStep = ({
         helperText={errors.email}
       />
 
-      <Flexbox direction='column' gap='40px' style={{ marginTop: '82px' }}>
+      <StyledButtonSection direction='column' gap='40px'>
         <Flexbox direction='column' gap='12px'>
           <StyledSubmitButton
             onClick={onSubmit}
@@ -55,15 +55,15 @@ const EmailStep = ({
 
           <ContinueWithGoogle onClick={onGoogleSignUp} />
         </Flexbox>
-      </Flexbox>
+      </StyledButtonSection>
 
-      <div style={{ marginTop: '40px' }}>
+      <StyledBottomSection>
         <SecondaryAction
           primaryText='이미 계정이 있으신가요?'
           actionText='로그인하기'
           onActionClick={onSignIn}
         />
-      </div>
+      </StyledBottomSection>
     </>
   );
 };
@@ -115,6 +115,14 @@ const StyledDividerText = styled.div`
   align-items: center;
   justify-content: center;
   position: absolute;
+`;
+
+const StyledButtonSection = styled(Flexbox)`
+  margin-top: 82px;
+`;
+
+const StyledBottomSection = styled.div`
+  margin-top: 40px;
 `;
 
 export default EmailStep;
