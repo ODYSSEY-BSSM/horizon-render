@@ -1,7 +1,7 @@
 import ky, { type KyInstance } from 'ky';
 
 export const api: KyInstance = ky.create({
-  prefixUrl: '/api',
+  prefixUrl: 'https://develop-horizon.nananu.net',
   timeout: 10000,
   retry: {
     limit: 2,

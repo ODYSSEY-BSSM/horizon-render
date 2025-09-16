@@ -1,3 +1,4 @@
+import { useLogin } from '@/hooks/api/useAuth';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text, TextField } from '@horizon/ui';
@@ -11,12 +12,22 @@ const SignInContent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const loginMutation = useLogin();
 
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
-  const handleLogin = () => {
-    if (isFormValid) {
+  const handleLogin = async () => {
+    if (!isFormValid) return;
+
+    try {
+      await loginMutation.mutateAsync({
+        email,
+        password,
+      });
       router.push('/');
+    } catch (error) {
+      console.error('로그인 실패:', error);
+      // TODO: 에러 토스트 또는 에러 메시지 표시
     }
   };
 
@@ -62,9 +73,12 @@ const SignInContent = () => {
 
       <Flexbox direction='column' gap='40px' width='400px'>
         <Flexbox direction='column' gap='16px'>
-          <StyledLoginButton disabled={!isFormValid} onClick={handleLogin}>
+          <StyledLoginButton
+            disabled={!isFormValid || loginMutation.isPending}
+            onClick={handleLogin}
+          >
             <Text variant='ST' color={tokens.colors.white}>
-              로그인
+              {loginMutation.isPending ? '로그인 중...' : '로그인'}
             </Text>
           </StyledLoginButton>
 

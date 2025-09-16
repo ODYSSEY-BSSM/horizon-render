@@ -1,3 +1,4 @@
+import { useRegister } from '@/hooks/api/useAuth';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useState } from 'react';
@@ -10,6 +11,7 @@ export const useSignUpHandlers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const router = useRouter();
+  const registerMutation = useRegister();
 
   const [email, setEmail] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
@@ -101,10 +103,26 @@ export const useSignUpHandlers = () => {
     setIsLoading(true);
     setErrors({});
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      router.push('/');
-    } catch (_error) {
-      setErrors({ username: '이미 사용중인 이름입니다' });
+      // 실제 회원가입 API 호출
+      await registerMutation.mutateAsync({
+        email: signUpData.email!,
+        password: signUpData.password!,
+        username,
+      });
+
+      // 회원가입 성공 시 로그인 페이지로 이동
+      router.push('/auth/signin');
+    } catch (error: any) {
+      console.error('회원가입 실패:', error);
+
+      // API 에러 메시지 처리
+      if (error?.message?.includes('이메일')) {
+        setErrors({ username: '이미 가입된 이메일입니다' });
+      } else if (error?.message?.includes('사용자명')) {
+        setErrors({ username: '이미 사용중인 이름입니다' });
+      } else {
+        setErrors({ username: '회원가입에 실패했습니다' });
+      }
     } finally {
       setIsLoading(false);
     }
