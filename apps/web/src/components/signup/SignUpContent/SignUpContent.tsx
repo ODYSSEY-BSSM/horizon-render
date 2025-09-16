@@ -50,13 +50,13 @@ const SignUpContent = () => {
   const getStepDescription = () => {
     switch (currentStep) {
       case 'email':
-        return '이메일 주소를 입력하고 인증을 완료하세요';
+        return '이메일 주소를 입력하고 인증을 완료하세요.';
       case 'verification':
-        return `${signUpData.email}으로 인증번호를 전송했습니다`;
+        return `${signUpData.email}으로 인증번호를 전송했습니다.`;
       case 'password':
         return '비밀번호를 지정해주세요.';
       case 'username':
-        return '이름을 입력해주세요 (변경 가능)';
+        return '이름을 입력해주세요 (변경 가능).';
     }
   };
 
