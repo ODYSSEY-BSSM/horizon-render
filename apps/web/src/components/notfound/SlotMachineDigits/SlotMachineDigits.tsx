@@ -29,9 +29,21 @@ const SlotMachineDigits = ({
       tabIndex={0}
       aria-label='슬롯머신 전체 회전 시작'
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === 'Enter') {
           e.preventDefault();
-          onContainerClick();
+          e.stopPropagation();
+          e.currentTarget.click();
+        }
+        if (e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
+      onKeyUp={(e) => {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          e.stopPropagation();
+          e.currentTarget.click();
         }
       }}
       onClick={onContainerClick}
@@ -62,6 +74,11 @@ const StyledNotFoundTextContainer = styled.div`
   border: none;
   padding: 0;
   margin: 0;
+
+  &:focus-visible {
+    outline: 2px solid ${tokens.colors.primary[500]};
+    border-radius: ${tokens.rounding.object};
+  }
 `;
 
 const StyledDigit = styled('button', {
