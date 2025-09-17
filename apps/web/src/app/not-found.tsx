@@ -6,7 +6,7 @@ import { Button } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import Link from 'next/link';
 
-export default function NotFound() {
+const NotFound = () => {
   return (
     <StyledContainer>
       <StyledWhiteCircle>
@@ -26,7 +26,9 @@ export default function NotFound() {
       </StyledWhiteCircle>
     </StyledContainer>
   );
-}
+};
+
+export default NotFound;
 
 const StyledContainer = styled.div`
   background-color: ${tokens.colors.primary[200]};
@@ -61,6 +63,7 @@ const StyledNotFoundText = styled.h1`
   color: ${tokens.colors.neutral[800]};
   margin: 0;
   text-align: center;
+  user-select: none;
 `;
 
 const StyledMainMessage = styled.p`
@@ -70,6 +73,7 @@ const StyledMainMessage = styled.p`
   color: ${tokens.colors.black};
   margin: 0;
   line-height: normal;
+  text-align: center;
 `;
 
 const StyledSubMessage = styled.div`
@@ -78,6 +82,7 @@ const StyledSubMessage = styled.div`
   font-weight: normal;
   color: ${tokens.colors.neutral[500]};
   line-height: normal;
+  text-align: center;
 
   p {
     margin: 0;
