@@ -5,16 +5,12 @@ import { tokens } from '@horizon/tokens';
 import { Button } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import Link from 'next/link';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type React from 'react';
 
 const NotFound = () => {
   const [digits, setDigits] = useState(['4', '0', '4']);
   const [spinningStates, setSpinningStates] = useState([false, false, false]);
-
-  const generateRandomDigit = useCallback(() => {
-    return Math.floor(Math.random() * 10).toString();
-  }, []);
 
   const handleDigitClick = (e: React.MouseEvent, index: number) => {
     if (spinningStates[index]) {
@@ -37,7 +33,15 @@ const NotFound = () => {
         return setInterval(() => {
           setDigits((prev) => {
             const newDigits = [...prev];
-            newDigits[index] = generateRandomDigit();
+            const currentDigit = Number.parseInt(newDigits[index], 10);
+            let nextDigit: number;
+
+            if (index === 0 || index === 2) {
+              nextDigit = currentDigit >= 9 ? 1 : currentDigit + 1;
+            } else {
+              nextDigit = currentDigit <= 1 ? 9 : currentDigit - 1;
+            }
+            newDigits[index] = nextDigit.toString();
             return newDigits;
           });
         }, 50);
@@ -52,7 +56,7 @@ const NotFound = () => {
         }
       }
     };
-  }, [spinningStates, generateRandomDigit]);
+  }, [spinningStates]);
 
   return (
     <StyledContainer>
@@ -61,6 +65,7 @@ const NotFound = () => {
           <StyledNotFoundTextContainer onClick={handleContainerClick}>
             {digits.map((digit, index) => (
               <StyledDigit
+                // biome-ignore lint/suspicious/noArrayIndexKey: Fixed array with 3 elements, order won't change
                 key={`digit-${index}`}
                 onClick={(e) => handleDigitClick(e, index)}
                 isSpinning={spinningStates[index]}
