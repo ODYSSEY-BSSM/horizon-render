@@ -2,9 +2,10 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],
+  format: ['cjs', 'esm'],
   dts: true,
-  clean: true,
   sourcemap: true,
-  external: ['react', '@emotion/react', '@emotion/styled'],
+  clean: true,
+  target: 'es2022',
+  treeshake: true,
 });

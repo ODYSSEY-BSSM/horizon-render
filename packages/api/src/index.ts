@@ -1,10 +1,8 @@
-// API endpoints
 export { userApi } from './domains/user/endpoints';
 export { roadmapApi } from './domains/roadmap/endpoints';
 export { teamApi } from './domains/team/endpoints';
 export { directoryApi } from './domains/directory/endpoints';
 
-// User types
 export type {
   LoginRequest,
   LoginResponse,
@@ -14,7 +12,6 @@ export type {
   UserInfoResponse,
 } from './domains/user/types';
 
-// Roadmap types
 export type {
   CreateRoadmapRequest,
   CreateRoadmapResponse,
@@ -28,5 +25,4 @@ export type {
   RoadmapCountResponse,
 } from './domains/roadmap/types';
 
-// Shared utilities
 export { api } from './shared/utils/api';

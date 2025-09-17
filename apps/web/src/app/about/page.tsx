@@ -3,7 +3,7 @@
 import { Button, Icon, Text } from '@horizon/ui';
 import Link from 'next/link';
 
-export default function AboutPage() {
+const AboutPage = () => {
   return (
     <div className='min-h-screen bg-white flex items-center justify-center'>
       <div className='max-w-2xl mx-auto text-center space-y-8 p-8'>
@@ -60,4 +60,6 @@ export default function AboutPage() {
       </div>
     </div>
   );
-}
+};
+
+export default AboutPage;

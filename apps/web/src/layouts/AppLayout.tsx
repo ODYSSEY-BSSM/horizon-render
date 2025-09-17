@@ -9,9 +9,11 @@ interface AppLayoutProps {
   centered?: boolean;
 }
 
-export default function AppLayout({ children, centered = false }: AppLayoutProps) {
+const AppLayout = ({ children, centered = false }: AppLayoutProps) => {
   return <StyledAppLayout centered={centered}>{children}</StyledAppLayout>;
-}
+};
+
+export default AppLayout;
 
 const BLOCKED_PROPS = new Set(['centered']);
 
