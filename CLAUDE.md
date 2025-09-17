@@ -44,6 +44,7 @@ pnpm clean                    # Remove all dist and node_modules
 - **`@horizon/tokens`**: Design tokens (colors, typography, layout, icons)
 - **`@horizon/ui`**: React components using Emotion
 - **`@horizon/utils`**: Shared utilities and hooks
+- **`@horizon/api`**: Shared API client using Ky and Zod for HTTP requests
 - **`apps/web`**: Next.js application
 - **`apps/editor`**: Visual editor (React + Vite)
 - **`apps/storybook`**: Storybook workspace
@@ -67,13 +68,18 @@ pnpm clean                    # Remove all dist and node_modules
 - **Zod** for schemas and inference
 - **React Hook Form** with `@hookform/resolvers/zod`
 
+### HTTP Client
+- **Ky** for HTTP requests in `@horizon/api` package
+- **Zod** schemas for API response validation
+
 ### Design Tokens
 - Always source values from `@horizon/tokens` (see `src/colors.ts`, `src/typography.ts`, `src/layout.ts`, `src/icons.ts`)
 
 ### Code Quality
-- Biome: 2-space indent, ~100 char line width, single quotes, semicolons
-- Commits: Korean descriptions + conventional types (feat/fix/refactor/docs/build/ci/perf/test/chore/hotfix)
-- TypeScript: strict mode; path aliases configured
+- **Biome**: 2-space indent, 100 char line width, single quotes, semicolons, trailing commas
+- **Commits**: Korean descriptions + conventional types (feat/fix/refactor/docs/build/ci/perf/test/chore/hotfix)
+- **TypeScript**: strict mode; path aliases configured
+- **Git Hooks**: Husky + lint-staged for pre-commit linting
 
 ## Build System
 - **tsup** for libraries (ESM + CJS)
