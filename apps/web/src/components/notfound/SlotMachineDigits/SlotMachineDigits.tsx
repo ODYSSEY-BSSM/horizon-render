@@ -23,46 +23,33 @@ const SlotMachineDigits = ({
   };
 
   return (
-    <StyledNotFoundTextContainer
-      // biome-ignore lint/a11y/useSemanticElements: 내부에 button 요소들이 있어서 button 요소 사용 불가
-      role='button'
-      tabIndex={0}
-      aria-label='슬롯머신 전체 회전 시작'
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          e.stopPropagation();
-          e.currentTarget.click();
-        }
-        if (e.key === ' ' || e.key === 'Spacebar') {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }}
-      onKeyUp={(e) => {
-        if (e.key === ' ' || e.key === 'Spacebar') {
-          e.preventDefault();
-          e.stopPropagation();
-          e.currentTarget.click();
-        }
-      }}
-      onClick={onContainerClick}
-    >
-      {digits.map((digit, index) => (
-        <StyledDigit
-          // biome-ignore lint/suspicious/noArrayIndexKey: 3개의 요소로 고정된 배열이며, 순서는 변하지 않습니다.
-          key={`digit-${index}`}
-          aria-label={`슬롯 ${
-            index + 1
-          }번째 숫자 ${digit}${spinningStates[index] ? ', 멈추려면 Enter' : ''}`}
-          disabled={!spinningStates[index]}
-          onClick={(e) => handleDigitClick(e, index)}
-          isSpinning={spinningStates[index]}
-        >
-          {digit}
-        </StyledDigit>
-      ))}
-    </StyledNotFoundTextContainer>
+    <>
+      {/* SR 전용 전체 회전 버튼: 키보드/스크린리더 접근 지점 제공 */}
+      <StyledSpinAllButton type='button' onClick={onContainerClick}>
+        슬롯머신 전체 회전 시작
+      </StyledSpinAllButton>
+      <StyledNotFoundTextContainer
+        // biome-ignore lint/a11y/useSemanticElements: 내부에 button 요소들이 있어서 button 요소 사용 불가
+        role='group'
+        aria-label='슬롯머신 숫자 그룹'
+        onClick={onContainerClick}
+      >
+        {digits.map((digit, index) => (
+          <StyledDigit
+            // biome-ignore lint/suspicious/noArrayIndexKey: 3개의 요소로 고정된 배열이며, 순서는 변하지 않습니다.
+            key={`digit-${index}`}
+            aria-label={`슬롯 ${
+              index + 1
+            }번째 숫자 ${digit}${spinningStates[index] ? ', 멈추려면 Enter' : ''}`}
+            disabled={!spinningStates[index]}
+            onClick={(e) => handleDigitClick(e, index)}
+            isSpinning={spinningStates[index]}
+          >
+            {digit}
+          </StyledDigit>
+        ))}
+      </StyledNotFoundTextContainer>
+    </>
   );
 };
 
@@ -74,11 +61,19 @@ const StyledNotFoundTextContainer = styled.div`
   border: none;
   padding: 0;
   margin: 0;
+`;
 
-  &:focus-visible {
-    outline: 2px solid ${tokens.colors.primary[500]};
-    border-radius: ${tokens.rounding.object};
-  }
+const StyledSpinAllButton = styled.button`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
 `;
 
 const StyledDigit = styled('button', {
