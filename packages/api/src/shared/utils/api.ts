@@ -4,6 +4,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://develop-horizon
 
 export const api: KyInstance = ky.create({
   prefixUrl: API_BASE_URL,
+  credentials: 'include',
   timeout: 10000,
   retry: {
     limit: 2,
