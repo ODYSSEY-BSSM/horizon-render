@@ -1,6 +1,6 @@
 'use client';
 
-import { NotFoundContent, SlotMachineDigits } from '@/components/notfound';
+import { NotFoundContent, SlotMachineDigits, WinMessage } from '@/components/notfound';
 import { useSlotMachine } from '@/hooks/notfound/useSlotMachine';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
@@ -16,23 +16,21 @@ const NotFound = () => {
     <StyledContainer>
       <StyledWhiteCircle>
         <StyledAnimatedContainer direction='column' align='center' gap={40}>
-          {isJackpot && (
-            <StyledCongratulationMessage>
-              축하합니다, 가서 공부나 하세요!
-            </StyledCongratulationMessage>
-          )}
+          {isJackpot && <WinMessage />}
           <SlotMachineDigits
             digits={digits}
             spinningStates={spinningStates}
             onDigitClick={handleDigitClick}
             onContainerClick={handleContainerClick}
           />
-          <StyledAnimatedContent direction='column' gap={20} align='center'>
-            <NotFoundContent />
-          </StyledAnimatedContent>
-          <StyledAnimatedButton as={Link} href='/' size='large'>
+          {!isJackpot && (
+            <Flexbox direction='column' gap={20} align='center'>
+              <NotFoundContent />
+            </Flexbox>
+          )}
+          <Button as={Link} href='/' size='large'>
             메인으로 돌아가기
-          </StyledAnimatedButton>
+          </Button>
         </StyledAnimatedContainer>
       </StyledWhiteCircle>
     </StyledContainer>
@@ -69,32 +67,5 @@ const StyledWhiteCircle = styled.div`
 const StyledAnimatedContainer = styled(Flexbox)`
   & > * {
     transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-`;
-
-const StyledAnimatedContent = styled(Flexbox)``;
-
-const StyledAnimatedButton = styled(Button)``;
-
-const StyledCongratulationMessage = styled.p`
-  font-family: 'SUIT Variable', sans-serif;
-  font-size: 32px;
-  font-weight: normal;
-  color: ${tokens.colors.black};
-  margin: 0;
-  margin-bottom: 40px;
-  line-height: normal;
-  text-align: center;
-  animation: slideInFromTop 0.8s ease-out;
-
-  @keyframes slideInFromTop {
-    0% {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 `;

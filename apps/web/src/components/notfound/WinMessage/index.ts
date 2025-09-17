@@ -1,1 +1,1 @@
-export { default } from './WinMessage';
+export { default as WinMessage } from './WinMessage';

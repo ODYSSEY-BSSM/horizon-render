@@ -1,15 +1,13 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 
+import { NotFoundContent } from '../NotFoundContent';
+
 const WinMessage = () => {
   return (
     <>
       <StyledMainMessage>축하합니다, 가서 공부나 하세요!</StyledMainMessage>
-      <StyledSubMessage>
-        <p>흠... 요청하신 페이지를 찾을 수 없습니다.</p>
-        <p>존재하지 않는 주소를 입력하셨거나,</p>
-        <p>요청하신 페이지의 주소가 수정/삭제되어 페이지를 찾을 수 없습니다.</p>
-      </StyledSubMessage>
+      <NotFoundContent />
     </>
   );
 };
@@ -20,21 +18,20 @@ const StyledMainMessage = styled.p`
   font-weight: normal;
   color: ${tokens.colors.black};
   margin: 0;
+  margin-bottom: 40px;
   line-height: normal;
   text-align: center;
-`;
+  animation: slideInFromTop 0.8s ease-out;
 
-const StyledSubMessage = styled.div`
-  font-family: 'SUIT Variable', sans-serif;
-  font-size: 20px;
-  font-weight: normal;
-  color: ${tokens.colors.neutral[500]};
-  line-height: normal;
-  text-align: center;
-
-  p {
-    margin: 0;
-    text-align: center;
+  @keyframes slideInFromTop {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `;
 
