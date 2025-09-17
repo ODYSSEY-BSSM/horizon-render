@@ -17,28 +17,21 @@ export const userApi = {
   login: (data: LoginRequest): Promise<LoginResponse> =>
     api.post('auth/login', { json: data }).json<LoginResponse>(),
 
-  // 토큰 갱신 (PUT /auth/token)
-  refresh: (refreshToken: string): Promise<RefreshTokenResponse> =>
-    api
-      .put('auth/token', {
-        headers: { 'Refresh-Token': refreshToken },
-      })
-      .json<RefreshTokenResponse>(),
+  // 토큰 갱신 (PUT /auth/token) - 삭제
+  // refresh: (refreshToken: string): Promise<RefreshTokenResponse> =>
+  //   api
+  //     .put('auth/token', {
+  //       headers: { 'Refresh-Token': refreshToken },
+  //     })
+  //     .json<RefreshTokenResponse>(),
 
   // 사용자 정보 조회 (GET /auth/info)
-  getProfile: (accessToken: string): Promise<UserInfoResponse> =>
-    api
-      .get('auth/info', {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .json<UserInfoResponse>(),
+  getProfile: (): Promise<UserInfoResponse> => api.get('auth/info').json<UserInfoResponse>(),
 
   // 로그아웃 (DELETE /auth/logout)
-  logout: (accessToken: string): Promise<void> =>
+  logout: (): Promise<void> =>
     api
-      .delete('auth/logout', {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
+      .delete('auth/logout')
       .text()
       .then(() => undefined),
 };
