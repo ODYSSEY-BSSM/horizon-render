@@ -17,14 +17,6 @@ export const userApi = {
   login: (data: LoginRequest): Promise<LoginResponse> =>
     api.post('auth/login', { json: data }).json<LoginResponse>(),
 
-  // 토큰 갱신 (PUT /auth/token) - 삭제
-  // refresh: (refreshToken: string): Promise<RefreshTokenResponse> =>
-  //   api
-  //     .put('auth/token', {
-  //       headers: { 'Refresh-Token': refreshToken },
-  //     })
-  //     .json<RefreshTokenResponse>(),
-
   // 사용자 정보 조회 (GET /auth/info)
   getProfile: (): Promise<UserInfoResponse> => api.get('auth/info').json<UserInfoResponse>(),
 
