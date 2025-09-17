@@ -23,11 +23,25 @@ const SlotMachineDigits = ({
   };
 
   return (
-    <StyledNotFoundTextContainer onClick={onContainerClick}>
+    <StyledNotFoundTextContainer
+      as='button'
+      aria-label='슬롯머신 전체 회전 시작'
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onContainerClick();
+        }
+      }}
+      onClick={onContainerClick}
+    >
       {digits.map((digit, index) => (
         <StyledDigit
           // biome-ignore lint/suspicious/noArrayIndexKey: Fixed array with 3 elements, order won't change
           key={`digit-${index}`}
+          aria-label={`슬롯 ${
+            index + 1
+          }번째 숫자 ${digit}${spinningStates[index] ? ', 멈추려면 Enter' : ''}`}
+          disabled={!spinningStates[index]}
           onClick={(e) => handleDigitClick(e, index)}
           isSpinning={spinningStates[index]}
         >
@@ -42,9 +56,15 @@ const StyledNotFoundTextContainer = styled.div`
   display: flex;
   gap: 0;
   cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 `;
 
-const StyledDigit = styled.span<{ isSpinning: boolean }>`
+const StyledDigit = styled('button', {
+  shouldForwardProp: (prop) => prop !== 'isSpinning',
+})<{ isSpinning: boolean }>`
   font-family: 'SUIT Variable', sans-serif;
   font-weight: bold;
   font-size: 240px;
@@ -53,8 +73,16 @@ const StyledDigit = styled.span<{ isSpinning: boolean }>`
   margin: 0;
   text-align: center;
   user-select: none;
-  cursor: pointer;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: ${({ isSpinning }) => (isSpinning ? 'pointer' : 'default')};
   min-width: 150px;
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
 `;
 
 export default SlotMachineDigits;
