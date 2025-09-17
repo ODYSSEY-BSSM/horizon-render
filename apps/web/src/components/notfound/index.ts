@@ -1,3 +1,3 @@
-export * from './NotFoundContent';
-export * from './SlotMachineDigits';
-export * from './WinMessage';
+export { default as NotFoundContent } from './NotFoundContent/NotFoundContent';
+export { default as SlotMachineDigits } from './SlotMachineDigits/SlotMachineDigits';
+export { default as WinMessage } from './WinMessage/WinMessage';

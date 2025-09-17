@@ -5,5 +5,5 @@
     "lib": ["dom", "dom.iterable", "es2021"]
   },
   "include": ["src"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

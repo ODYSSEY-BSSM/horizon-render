@@ -2,6 +2,8 @@
 
 import { Text } from '@horizon/ui';
 
-export default function HomePage() {
+const HomePage = () => {
   return <Text variant='B1'>하이!</Text>;
-}
+};
+
+export default HomePage;
