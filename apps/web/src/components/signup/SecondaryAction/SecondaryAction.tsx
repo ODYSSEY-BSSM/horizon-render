@@ -113,6 +113,8 @@ const SecondaryAction = ({
   );
 };
 
+export default SecondaryAction;
+
 const StyledTimerWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -130,5 +132,3 @@ const StyledActionButton = styled.button<{ isActive: boolean; disabled?: boolean
     opacity: ${({ disabled }) => (disabled ? 0.6 : 0.8)};
   }
 `;
-
-export default SecondaryAction;

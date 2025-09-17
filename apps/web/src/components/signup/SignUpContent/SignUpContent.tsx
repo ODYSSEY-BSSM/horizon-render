@@ -193,6 +193,8 @@ const SignUpContent = () => {
   );
 };
 
+export default SignUpContent;
+
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -259,5 +261,3 @@ const StyledDescription = styled(Text)`
   line-height: 24px;
   color: ${tokens.colors.neutral[900]};
 `;
-
-export default SignUpContent;

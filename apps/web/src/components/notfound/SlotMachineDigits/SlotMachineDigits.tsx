@@ -52,6 +52,8 @@ const SlotMachineDigits = ({
   );
 };
 
+export default SlotMachineDigits;
+
 const StyledNotFoundTextContainer = styled.div`
   display: flex;
   gap: 0;
@@ -84,5 +86,3 @@ const StyledDigit = styled('button', {
     cursor: default;
   }
 `;
-
-export default SlotMachineDigits;

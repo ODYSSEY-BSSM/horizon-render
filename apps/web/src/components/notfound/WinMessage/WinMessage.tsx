@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 
-import { NotFoundContent } from '../NotFoundContent';
+import NotFoundContent from '../NotFoundContent/NotFoundContent';
 
 const WinMessage = () => {
   return (
@@ -12,6 +12,8 @@ const WinMessage = () => {
     </>
   );
 };
+
+export default WinMessage;
 
 const slideInFromTop = keyframes`
   0% {
@@ -39,5 +41,3 @@ const StyledMainMessage = styled.p`
     animation: none;
   }
 `;
-
-export default WinMessage;

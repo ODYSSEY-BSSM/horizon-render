@@ -13,6 +13,8 @@ const NotFoundContent = () => {
   );
 };
 
+export default NotFoundContent;
+
 const StyledMainMessage = styled.p`
   font-family: 'SUIT Variable', sans-serif;
   font-size: 32px;
@@ -36,5 +38,3 @@ const StyledSubMessage = styled.div`
     text-align: center;
   }
 `;
-
-export default NotFoundContent;

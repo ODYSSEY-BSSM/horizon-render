@@ -55,6 +55,8 @@ const VerificationInput = ({ value, onChange, error }: VerificationInputProps) =
   );
 };
 
+export default VerificationInput;
+
 const StyledOtpWrapper = styled.div`
   display: flex;
   width: 400px;
@@ -69,5 +71,3 @@ const StyledOtpWrapper = styled.div`
     outline: none;
   }
 `;
-
-export default VerificationInput;

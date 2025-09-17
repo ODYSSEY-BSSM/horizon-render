@@ -45,6 +45,8 @@ const VerificationStep = ({
   );
 };
 
+export default VerificationStep;
+
 const StyledSubmitButton = styled.button<{ disabled: boolean }>`
   width: 100%;
   height: 48px;
@@ -78,5 +80,3 @@ const StyledSubmitButton = styled.button<{ disabled: boolean }>`
 const StyledButtonSection = styled(Flexbox)`
   margin-top: 60px;
 `;
-
-export default VerificationStep;

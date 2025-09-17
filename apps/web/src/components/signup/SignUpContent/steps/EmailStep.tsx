@@ -49,6 +49,8 @@ const EmailStep = ({
   );
 };
 
+export default EmailStep;
+
 const StyledSubmitButton = styled.button<{ disabled: boolean }>`
   width: 100%;
   height: 48px;
@@ -106,5 +108,3 @@ const StyledDividerText = styled.div`
   justify-content: center;
   position: absolute;
 `;
-
-export default EmailStep;

@@ -56,6 +56,8 @@ const PasswordStep = ({
   );
 };
 
+export default PasswordStep;
+
 const StyledSubmitButton = styled.button<{ disabled: boolean }>`
   width: 100%;
   height: 48px;
@@ -86,5 +88,3 @@ const StyledSubmitButton = styled.button<{ disabled: boolean }>`
     outline: none;
   }
 `;
-
-export default PasswordStep;

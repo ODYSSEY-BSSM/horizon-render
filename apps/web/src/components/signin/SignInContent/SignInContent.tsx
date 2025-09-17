@@ -100,6 +100,8 @@ const SignInContent = () => {
   );
 };
 
+export default SignInContent;
+
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -157,5 +159,3 @@ const StyledDividerText = styled.div`
   justify-content: center;
   position: absolute;
 `;
-
-export default SignInContent;
