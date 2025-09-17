@@ -5,13 +5,70 @@ import { tokens } from '@horizon/tokens';
 import { Button } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import Link from 'next/link';
+import { useCallback, useEffect, useState } from 'react';
+import type React from 'react';
 
 const NotFound = () => {
+  const [digits, setDigits] = useState(['4', '0', '4']);
+  const [spinningStates, setSpinningStates] = useState([false, false, false]);
+
+  const generateRandomDigit = useCallback(() => {
+    return Math.floor(Math.random() * 10).toString();
+  }, []);
+
+  const handleDigitClick = (e: React.MouseEvent, index: number) => {
+    if (spinningStates[index]) {
+      e.stopPropagation();
+      setSpinningStates((prev) => {
+        const newStates = [...prev];
+        newStates[index] = false;
+        return newStates;
+      });
+    }
+  };
+
+  const handleContainerClick = () => {
+    setSpinningStates([true, true, true]);
+  };
+
+  useEffect(() => {
+    const intervals: (NodeJS.Timeout | null)[] = spinningStates.map((isSpinning, index) => {
+      if (isSpinning) {
+        return setInterval(() => {
+          setDigits((prev) => {
+            const newDigits = [...prev];
+            newDigits[index] = generateRandomDigit();
+            return newDigits;
+          });
+        }, 50);
+      }
+      return null;
+    });
+
+    return () => {
+      for (const interval of intervals) {
+        if (interval) {
+          clearInterval(interval);
+        }
+      }
+    };
+  }, [spinningStates, generateRandomDigit]);
+
   return (
     <StyledContainer>
       <StyledWhiteCircle>
         <Flexbox direction='column' align='center' gap={40}>
-          <StyledNotFoundText>404</StyledNotFoundText>
+          <StyledNotFoundTextContainer onClick={handleContainerClick}>
+            {digits.map((digit, index) => (
+              <StyledDigit
+                key={`digit-${index}`}
+                onClick={(e) => handleDigitClick(e, index)}
+                isSpinning={spinningStates[index]}
+              >
+                {digit}
+              </StyledDigit>
+            ))}
+          </StyledNotFoundTextContainer>
           <Flexbox direction='column' gap={20} align='center'>
             <StyledMainMessage>흠... 요청하신 페이지를 찾을 수 없습니다.</StyledMainMessage>
             <StyledSubMessage>
@@ -55,7 +112,13 @@ const StyledWhiteCircle = styled.div`
   overflow: hidden;
 `;
 
-const StyledNotFoundText = styled.h1`
+const StyledNotFoundTextContainer = styled.div`
+  display: flex;
+  gap: 0;
+  cursor: pointer;
+`;
+
+const StyledDigit = styled.span<{ isSpinning: boolean }>`
   font-family: 'SUIT Variable', sans-serif;
   font-weight: bold;
   font-size: 240px;
@@ -64,6 +127,8 @@ const StyledNotFoundText = styled.h1`
   margin: 0;
   text-align: center;
   user-select: none;
+  cursor: pointer;
+  min-width: 150px;
 `;
 
 const StyledMainMessage = styled.p`
@@ -86,5 +151,6 @@ const StyledSubMessage = styled.div`
 
   p {
     margin: 0;
+    text-align: center;
   }
 `;
