@@ -50,7 +50,7 @@ const SlotMachineDigits = ({
     >
       {digits.map((digit, index) => (
         <StyledDigit
-          // biome-ignore lint/suspicious/noArrayIndexKey: Fixed array with 3 elements, order won't change
+          // biome-ignore lint/suspicious/noArrayIndexKey: 3개의 요소로 고정된 배열이며, 순서는 변하지 않습니다.
           key={`digit-${index}`}
           aria-label={`슬롯 ${
             index + 1
