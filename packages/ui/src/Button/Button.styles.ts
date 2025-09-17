@@ -160,7 +160,7 @@ export const getButtonStyle = (variant: ButtonVariant, disabled: boolean) => {
   return buttonStyles[variant][disabled ? 'disabled' : 'default'];
 };
 
-const BLOCKED_PROPS = new Set(['size', 'variant', 'iconPosition', 'rounded']);
+const BLOCKED_PROPS = new Set(['size', 'variant', 'iconPosition', 'rounded', 'disabled', 'as']);
 
 const shouldForwardProp = (prop: string): boolean => {
   return !BLOCKED_PROPS.has(prop);

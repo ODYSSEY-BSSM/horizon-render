@@ -57,6 +57,7 @@ const Button = <T extends React.ElementType = 'button'>({
     'aria-disabled': disabled,
     'aria-label': iconPosition === 'only' ? ariaLabel || iconName : undefined,
     ...(isNativeButton ? { type } : { role: 'button', tabIndex: disabled ? -1 : 0 }),
+    ...restProps,
   };
 
   if (disabled && isLink) {
