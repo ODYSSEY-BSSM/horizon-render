@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export const useSlotMachine = () => {
   const [digits, setDigits] = useState(['4', '0', '4']);
   const [spinningStates, setSpinningStates] = useState([false, false, false]);
+  const [isJackpot, setIsJackpot] = useState(false);
 
   const handleDigitClick = (index: number) => {
     if (spinningStates[index]) {
@@ -35,7 +36,7 @@ export const useSlotMachine = () => {
             newDigits[index] = nextDigit.toString();
             return newDigits;
           });
-        }, 50);
+        }, 300);
       }
       return null;
     });
@@ -49,9 +50,18 @@ export const useSlotMachine = () => {
     };
   }, [spinningStates]);
 
+  useEffect(() => {
+    if (!spinningStates.some((state) => state) && digits.every((digit) => digit === '7')) {
+      setIsJackpot(true);
+    } else {
+      setIsJackpot(false);
+    }
+  }, [digits, spinningStates]);
+
   return {
     digits,
     spinningStates,
+    isJackpot,
     handleDigitClick,
     handleContainerClick,
   };
