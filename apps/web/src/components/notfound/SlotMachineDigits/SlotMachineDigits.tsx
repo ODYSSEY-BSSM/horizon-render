@@ -24,7 +24,9 @@ const SlotMachineDigits = ({
 
   return (
     <StyledNotFoundTextContainer
-      as='button'
+      // biome-ignore lint/a11y/useSemanticElements: 내부에 button 요소들이 있어서 button 요소 사용 불가
+      role='button'
+      tabIndex={0}
       aria-label='슬롯머신 전체 회전 시작'
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
