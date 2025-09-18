@@ -36,7 +36,7 @@ export const useSlotMachine = () => {
             newDigits[index] = nextDigit.toString();
             return newDigits;
           });
-        }, 300);
+        }, 100);
       }
       return null;
     });
