@@ -9,8 +9,7 @@ import { Flexbox } from '@horizon/utils';
 import Link from 'next/link';
 
 const NotFound = () => {
-  const { digits, spinningStates, isJackpot, handleDigitClick, handleContainerClick } =
-    useSlotMachine();
+  const { digits, spinningStates, isJackpot, handleDigitClick } = useSlotMachine();
 
   return (
     <StyledContainer>
@@ -21,7 +20,6 @@ const NotFound = () => {
             digits={digits}
             spinningStates={spinningStates}
             onDigitClick={handleDigitClick}
-            onContainerClick={handleContainerClick}
           />
           {!isJackpot && (
             <Flexbox direction='column' gap={20} align='center'>
