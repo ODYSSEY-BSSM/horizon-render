@@ -2,15 +2,8 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 
-import NotFoundContent from '../NotFoundContent/NotFoundContent';
-
 const WinMessage = () => {
-  return (
-    <>
-      <StyledMainMessage>축하합니다, 가서 공부나 하세요!</StyledMainMessage>
-      <NotFoundContent />
-    </>
-  );
+  return <StyledMainMessage>축하합니다, 가서 공부나 하세요!</StyledMainMessage>;
 };
 
 export default WinMessage;
