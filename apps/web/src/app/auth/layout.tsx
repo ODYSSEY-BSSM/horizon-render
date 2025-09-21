@@ -1,6 +1,6 @@
 'use client';
 
-import AppLayout from '@/layouts/AppLayout';
+import AppLayout from '@/layouts/AppLayout/AppLayout';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';
@@ -26,7 +26,6 @@ const StyledAuthLayout = styled.div`
   width: 720px;
   height: 100vh;
   background-color: ${tokens.colors.white};
-  padding: 0 160px;
   overflow: hidden;
   display: flex;
   align-items: center;

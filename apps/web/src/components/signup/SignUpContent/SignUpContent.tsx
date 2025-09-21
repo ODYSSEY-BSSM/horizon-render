@@ -64,42 +64,14 @@ const SignUpContent = () => {
     switch (currentStep) {
       case 'email':
         return (
-          <>
-            <Flexbox direction='column' gap='40px'>
-              <Flexbox direction='column' gap='16px'>
-                <StyledBackButton onClick={handleBack}>
-                  <Icon name='arrow_left_alt' color={tokens.colors.neutral[400]} size='24px' />
-                </StyledBackButton>
-                <Flexbox direction='column' gap='8px' align='start'>
-                  <StyledTitle>{getStepTitle()}</StyledTitle>
-                  <StyledDescription>{getStepDescription()}</StyledDescription>
-                </Flexbox>
-              </Flexbox>
-              <TextField
-                label='이메일'
-                placeholder='이메일 입력'
-                type='email'
-                width='100%'
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (errors.email) {
-                    setErrors((prev) => ({ ...prev, email: '' }));
-                  }
-                }}
-                error={!!errors.email}
-                helperText={errors.email}
-              />
-            </Flexbox>
-            <EmailStep
-              email={email}
-              onSubmit={handleEmailSubmit}
-              isLoading={isLoading}
-              errors={errors}
-              onGoogleSignUp={handleGoogleSignUp}
-              onSignIn={handleSignIn}
-            />
-          </>
+          <EmailStep
+            email={email}
+            onSubmit={handleEmailSubmit}
+            isLoading={isLoading}
+            errors={errors}
+            onGoogleSignUp={handleGoogleSignUp}
+            onSignIn={handleSignIn}
+          />
         );
 
       case 'verification':
@@ -160,33 +132,50 @@ const SignUpContent = () => {
     }
   };
 
+  const StepHeader = () => (
+    <Flexbox direction='column' gap='16px'>
+      <StyledBackButton onClick={handleBack}>
+        <Icon name='arrow_left_alt' color={tokens.colors.neutral[400]} size='24px' />
+      </StyledBackButton>
+      <Flexbox direction='column' gap='8px' align='start'>
+        <StyledTitle>{getStepTitle()}</StyledTitle>
+        <StyledDescription>{getStepDescription()}</StyledDescription>
+      </Flexbox>
+    </Flexbox>
+  );
+
   return (
     <StyledContainer>
       <StyledMainWrapper>
         <StyledContentWrapper>
-          <Flexbox
-            direction='column'
-            gap={
-              currentStep === 'email' ? '82px' : currentStep === 'verification' ? '60px' : '30px'
-            }
-          >
-            {currentStep === 'email' ? (
-              renderStepContent()
-            ) : (
-              <>
-                <Flexbox direction='column' gap='16px'>
-                  <StyledBackButton onClick={handleBack}>
-                    <Icon name='arrow_left_alt' color={tokens.colors.neutral[400]} size='24px' />
-                  </StyledBackButton>
-                  <Flexbox direction='column' gap='8px' align='start'>
-                    <StyledTitle>{getStepTitle()}</StyledTitle>
-                    <StyledDescription>{getStepDescription()}</StyledDescription>
-                  </Flexbox>
-                </Flexbox>
-                {renderStepContent()}
-              </>
-            )}
-          </Flexbox>
+          {currentStep === 'email' ? (
+            <StyledEmailStepWrapper>
+              <Flexbox direction='column' gap='40px'>
+                <StepHeader />
+                <TextField
+                  label='이메일'
+                  placeholder='이메일 입력'
+                  type='email'
+                  width='100%'
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) {
+                      setErrors((prev) => ({ ...prev, email: '' }));
+                    }
+                  }}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                />
+              </Flexbox>
+              {renderStepContent()}
+            </StyledEmailStepWrapper>
+          ) : (
+            <StyledOtherStepWrapper gap={currentStep === 'verification' ? '60px' : '30px'}>
+              <StepHeader />
+              {renderStepContent()}
+            </StyledOtherStepWrapper>
+          )}
         </StyledContentWrapper>
       </StyledMainWrapper>
     </StyledContainer>
@@ -194,6 +183,16 @@ const SignUpContent = () => {
 };
 
 export default SignUpContent;
+
+const StyledEmailStepWrapper = styled(Flexbox)`
+  flex-direction: column;
+  gap: 82px;
+`;
+
+const StyledOtherStepWrapper = styled(Flexbox)<{ gap: string }>`
+  flex-direction: column;
+  gap: ${(props) => props.gap};
+`;
 
 const StyledContainer = styled.div`
   display: flex;
