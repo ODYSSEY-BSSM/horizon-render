@@ -6,6 +6,7 @@ export const useSlotMachine = () => {
   const [isJackpot, setIsJackpot] = useState(false);
 
   const handleDigitClick = (index: number) => {
+    // 스핀 중이면 해당 숫자만 멈춤
     if (spinningStates[index]) {
       setSpinningStates((prev) => {
         const newStates = [...prev];
@@ -13,6 +14,7 @@ export const useSlotMachine = () => {
         return newStates;
       });
     } else {
+      // 스핀 중이 아니면 전체 슬롯머신 시작
       setSpinningStates([true, true, true]);
     }
   };
@@ -34,7 +36,7 @@ export const useSlotMachine = () => {
             newDigits[index] = nextDigit.toString();
             return newDigits;
           });
-        }, 200);
+        }, 100);
       }
       return null;
     });
