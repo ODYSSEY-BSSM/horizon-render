@@ -3,17 +3,23 @@
 import styled from '@emotion/styled';
 import { Text } from '@horizon/ui';
 import { useState } from 'react';
-import { Sidebar } from '../layouts';
+import { Header, Sidebar } from '../layouts';
 
 const Container = styled.div`
   display: flex;
   height: 100vh;
 `;
 
-const Content = styled.div`
+const StyledMainContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fcfdff;
+`;
+
+const StyledContent = styled.div`
   flex: 1;
   padding: 20px;
-  background-color: #fcfdff;
 `;
 
 const menuContent = {
@@ -42,15 +48,32 @@ const HomePage = () => {
     setActiveMenu(itemId);
   };
 
+  const handleSearch = (_query: string) => {
+    // TODO: Implement search functionality
+  };
+
+  const handleProfileClick = () => {
+    // TODO: Implement profile menu functionality
+  };
+
   const currentContent = menuContent[activeMenu as keyof typeof menuContent];
+
+  const breadcrumbItems = [{ label: 'Home', path: '/' }, { label: currentContent.title }];
 
   return (
     <Container>
       <Sidebar activeItemId={activeMenu} onMenuItemClick={handleMenuClick} />
-      <Content>
-        <Text variant='H1'>{currentContent.title}</Text>
-        <Text variant='B1'>{currentContent.description}</Text>
-      </Content>
+      <StyledMainContent>
+        <Header
+          breadcrumbItems={breadcrumbItems}
+          onSearch={handleSearch}
+          onProfileClick={handleProfileClick}
+        />
+        <StyledContent>
+          <Text variant='H1'>{currentContent.title}</Text>
+          <Text variant='B1'>{currentContent.description}</Text>
+        </StyledContent>
+      </StyledMainContent>
     </Container>
   );
 };
