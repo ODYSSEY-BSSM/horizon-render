@@ -42,11 +42,9 @@ const StyledHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 20px 60px;
   background-color: ${tokens.colors.white};
   width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
   box-sizing: border-box;
 `;
 
