@@ -48,17 +48,16 @@ const StyledContentWrapper = styled.div`
   flex: 1;
 `;
 
-const StyledCheckIcon = styled.div`
-  color: ${tokens.colors.success[200]};
-  font-size: 20px;
-  font-family: 'Material Symbols Rounded', sans-serif;
-  font-variation-settings: 'FILL' 0, 'GRAD' 0, 'opsz' 24;
+const StyledCheckIcon = styled.span`
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
+  color: ${tokens.colors.success[200]};
 `;
 
 const ListItem = ({ label, icon, isActive = false, hasCheck = false, onClick }: ListItemProps) => {
   return (
-    <StyledMenuItem isActive={isActive} onClick={onClick}>
+    <StyledMenuItem type='button' isActive={isActive} onClick={onClick}>
       {icon && (
         <StyledIconWrapper>
           <Icon
@@ -66,6 +65,7 @@ const ListItem = ({ label, icon, isActive = false, hasCheck = false, onClick }: 
             variant='SM'
             color={isActive ? tokens.colors.primary[500] : tokens.colors.neutral[500]}
             filled={isActive}
+            decorative
           />
         </StyledIconWrapper>
       )}

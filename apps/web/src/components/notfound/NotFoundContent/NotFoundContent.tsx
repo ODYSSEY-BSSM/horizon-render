@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 
-type Props = {
+export type Props = {
   showMainMessage?: boolean;
 };
 
@@ -21,7 +21,7 @@ const NotFoundContent = ({ showMainMessage = true }: Props) => {
 
 export default NotFoundContent;
 
-const StyledMainMessage = styled.p`
+const StyledMainMessage = styled.h2`
   font-family: 'SUIT Variable', sans-serif;
   font-size: 32px;
   font-weight: normal;
@@ -41,6 +41,5 @@ const StyledSubMessage = styled.div`
 
   p {
     margin: 0;
-    text-align: center;
   }
 `;

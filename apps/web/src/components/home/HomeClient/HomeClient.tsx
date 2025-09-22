@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { AppLayout } from '../../../layouts';
+import type { BreadcrumbItem } from '../../../layouts/types';
 
 const menuItems = [
   { id: 'dashboard', label: 'Dashboard' },
@@ -12,7 +13,9 @@ const menuItems = [
 
 const HomeClient = () => {
   const [activeItemId, setActiveItemId] = useState<string>('dashboard');
-  const [breadcrumbItems, setBreadcrumbItems] = useState([{ label: 'Dashboard' }]);
+  const [breadcrumbItems, setBreadcrumbItems] = useState<BreadcrumbItem[]>([
+    { label: 'Dashboard' },
+  ]);
 
   const handleMenuItemClick = (itemId: string) => {
     setActiveItemId(itemId);
@@ -24,11 +27,12 @@ const HomeClient = () => {
 
   return (
     <AppLayout
+      menuItems={menuItems}
       activeItemId={activeItemId}
       onMenuItemClick={handleMenuItemClick}
       breadcrumbItems={breadcrumbItems}
     >
-      <div>Home Page Content</div>
+      <div>홈 페이지 콘텐츠</div>
     </AppLayout>
   );
 };
