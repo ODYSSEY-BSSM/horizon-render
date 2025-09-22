@@ -2,15 +2,9 @@
 
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
+import type { MenuItem } from '../types';
 import ListMenu from './ListMenu/ListMenu';
 import LogoArea from './LogoArea/LogoArea';
-
-interface MenuItem {
-  id: string;
-  label: string;
-  icon?: string;
-  hasCheck?: boolean;
-}
 
 interface SidebarProps {
   menuItems?: MenuItem[];
@@ -20,7 +14,8 @@ interface SidebarProps {
 
 const StyledSidebar = styled.aside`
   width: 240px;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   background-color: ${tokens.colors.white};
   border-right: 1px solid ${tokens.colors.neutral[200]};
   display: flex;

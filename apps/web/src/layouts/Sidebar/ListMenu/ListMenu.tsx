@@ -1,14 +1,8 @@
 'use client';
 
 import styled from '@emotion/styled';
+import type { MenuItem } from '../../types';
 import ListItem from './ListItem/ListItem';
-
-interface MenuItem {
-  id: string;
-  label: string;
-  icon?: string;
-  hasCheck?: boolean;
-}
 
 interface ListMenuProps {
   items: MenuItem[];
@@ -16,24 +10,28 @@ interface ListMenuProps {
   onItemClick?: (itemId: string) => void;
 }
 
-const StyledMenuList = styled.div`
+const StyledMenuList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 `;
 
 const ListMenu = ({ items, activeItemId, onItemClick }: ListMenuProps) => {
   return (
-    <StyledMenuList>
+    <StyledMenuList aria-label='사이드바 메뉴'>
       {items.map((item) => (
-        <ListItem
-          key={item.id}
-          label={item.label}
-          icon={item.icon}
-          hasCheck={item.hasCheck}
-          isActive={item.id === activeItemId}
-          onClick={() => onItemClick?.(item.id)}
-        />
+        <li key={item.id}>
+          <ListItem
+            label={item.label}
+            icon={item.icon}
+            hasCheck={item.hasCheck}
+            isActive={item.id === activeItemId}
+            onClick={() => onItemClick?.(item.id)}
+          />
+        </li>
       ))}
     </StyledMenuList>
   );

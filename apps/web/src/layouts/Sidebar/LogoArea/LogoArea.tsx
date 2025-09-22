@@ -3,15 +3,18 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text } from '@horizon/ui';
+import Link from 'next/link';
 
 const LogoArea = () => {
   return (
-    <StyledLogoArea>
-      <StyledLogo src='/svg/logo.svg' alt='HORIZON' />
-      <Text variant='H2' color={tokens.colors.black} as='span'>
-        HORIZON
-      </Text>
-    </StyledLogoArea>
+    <Link href='/' aria-label='홈으로 이동'>
+      <StyledLogoArea>
+        <StyledLogo src='/svg/logo.svg' alt='' aria-hidden='true' />
+        <Text variant='H2' color={tokens.colors.black} as='span'>
+          HORIZON
+        </Text>
+      </StyledLogoArea>
+    </Link>
   );
 };
 

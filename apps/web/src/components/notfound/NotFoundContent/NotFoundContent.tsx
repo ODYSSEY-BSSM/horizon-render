@@ -1,10 +1,16 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 
-const NotFoundContent = () => {
+type Props = {
+  showMainMessage?: boolean;
+};
+
+const NotFoundContent = ({ showMainMessage = true }: Props) => {
   return (
     <>
-      <StyledMainMessage>흠... 요청하신 페이지를 찾을 수 없습니다.</StyledMainMessage>
+      {showMainMessage && (
+        <StyledMainMessage>흠... 요청하신 페이지를 찾을 수 없습니다.</StyledMainMessage>
+      )}
       <StyledSubMessage>
         <p>존재하지 않는 주소를 입력하셨거나,</p>
         <p>요청하신 페이지의 주소가 수정/삭제되어 페이지를 찾을 수 없습니다.</p>

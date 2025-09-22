@@ -3,15 +3,8 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type { ReactNode } from 'react';
-import type { BreadcrumbItem } from '../../types';
 import { Header, Sidebar } from '../index';
-
-interface MenuItem {
-  id: string;
-  label: string;
-  icon?: string;
-  hasCheck?: boolean;
-}
+import type { BreadcrumbItem, MenuItem } from '../types';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -73,16 +66,17 @@ export default AppLayout;
 
 const StyledAppLayout = styled.div`
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
   background-color: ${tokens.colors.background};
 `;
 
-const StyledMainContent = styled.div`
+const StyledMainContent = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: ${tokens.colors.background};
+  background-color: ${tokens.colors.white};
 `;
 
 const StyledContent = styled.div`

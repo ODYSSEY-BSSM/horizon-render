@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const useSlotMachine = () => {
   const [digits, setDigits] = useState(['4', '0', '4']);
   const [spinningStates, setSpinningStates] = useState([false, false, false]);
-  const [isJackpot, setIsJackpot] = useState(false);
 
   const handleDigitClick = (index: number) => {
-    // 스핀 중이면 해당 숫자만 멈춤
     if (spinningStates[index]) {
       setSpinningStates((prev) => {
         const newStates = [...prev];
@@ -14,32 +12,33 @@ export const useSlotMachine = () => {
         return newStates;
       });
     } else {
-      // 스핀 중이 아니면 전체 슬롯머신 시작
-      setSpinningStates([true, true, true]);
+      setSpinningStates((prev) => prev.map(() => true));
     }
   };
 
   useEffect(() => {
-    const intervals: (NodeJS.Timeout | null)[] = spinningStates.map((isSpinning, index) => {
-      if (isSpinning) {
-        return setInterval(() => {
-          setDigits((prev) => {
-            const newDigits = [...prev];
-            const currentDigit = Number.parseInt(newDigits[index], 10);
-            let nextDigit: number;
+    const intervals: Array<ReturnType<typeof setInterval> | null> = spinningStates.map(
+      (isSpinning, index) => {
+        if (isSpinning) {
+          return setInterval(() => {
+            setDigits((prev) => {
+              const newDigits = [...prev];
+              const currentDigit = Number.parseInt(newDigits[index], 10);
+              let nextDigit: number;
 
-            if (index === 0 || index === 2) {
-              nextDigit = currentDigit >= 9 ? 1 : currentDigit + 1;
-            } else {
-              nextDigit = currentDigit <= 1 ? 9 : currentDigit - 1;
-            }
-            newDigits[index] = nextDigit.toString();
-            return newDigits;
-          });
-        }, 100);
-      }
-      return null;
-    });
+              if (index === 0 || index === 2) {
+                nextDigit = currentDigit >= 9 ? 1 : currentDigit + 1;
+              } else {
+                nextDigit = currentDigit <= 1 ? 9 : currentDigit - 1;
+              }
+              newDigits[index] = nextDigit.toString();
+              return newDigits;
+            });
+          }, 100);
+        }
+        return null;
+      },
+    );
 
     return () => {
       for (const interval of intervals) {
@@ -50,13 +49,10 @@ export const useSlotMachine = () => {
     };
   }, [spinningStates]);
 
-  useEffect(() => {
-    if (!spinningStates.some((state) => state) && digits.every((digit) => digit === '7')) {
-      setIsJackpot(true);
-    } else {
-      setIsJackpot(false);
-    }
-  }, [digits, spinningStates]);
+  const isJackpot = useMemo(
+    () => !spinningStates.some(Boolean) && digits.every((d) => d === '7'),
+    [digits, spinningStates],
+  );
 
   return {
     digits,

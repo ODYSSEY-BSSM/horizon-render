@@ -8,7 +8,7 @@ const WinMessage = () => {
   return (
     <>
       <StyledMainMessage>축하합니다, 가서 공부나 하세요!</StyledMainMessage>
-      <NotFoundContent />
+      <NotFoundContent showMainMessage={false} />
     </>
   );
 };
@@ -26,7 +26,7 @@ const slideInFromTop = keyframes`
   }
 `;
 
-const StyledMainMessage = styled.p`
+const StyledMainMessage = styled.h1`
   font-family: 'SUIT Variable', sans-serif;
   font-size: 32px;
   font-weight: normal;
