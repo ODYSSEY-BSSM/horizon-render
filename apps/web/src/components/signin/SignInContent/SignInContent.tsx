@@ -17,7 +17,9 @@ const SignInContent = () => {
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
   const handleLogin = async () => {
-    if (!isFormValid) return;
+    if (!isFormValid) {
+      return;
+    }
 
     try {
       await loginMutation.mutateAsync({

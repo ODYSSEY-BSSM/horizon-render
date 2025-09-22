@@ -83,9 +83,15 @@ const baseInputStyles = `
 `;
 
 const getInputPadding = (hasLeft: boolean, hasRight: boolean) => {
-  if (hasLeft && hasRight) return 'padding-left: 36px; padding-right: 36px;';
-  if (hasLeft) return 'padding-left: 36px;';
-  if (hasRight) return 'padding-right: 36px;';
+  if (hasLeft && hasRight) {
+    return 'padding-left: 36px; padding-right: 36px;';
+  }
+  if (hasLeft) {
+    return 'padding-left: 36px;';
+  }
+  if (hasRight) {
+    return 'padding-right: 36px;';
+  }
   return '';
 };
 
