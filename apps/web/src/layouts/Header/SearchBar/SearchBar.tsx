@@ -31,31 +31,46 @@ const SearchBar = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if ((e.nativeEvent as KeyboardEvent).isComposing) return;
     if (e.key === 'Enter') {
       handleSearch();
     }
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearch();
+  };
+
   return (
-    <StyledSearchBar isFocused={isFocused} hasValue={!!value}>
-      <StyledInput
-        type='text'
-        placeholder={placeholder}
-        value={value}
-        hasValue={!!value}
-        onChange={handleInputChange}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onKeyDown={handleKeyDown}
-      />
-      <StyledSearchButton isFocused={isFocused} onClick={handleSearch} type='button'>
-        <Icon
-          name='search'
-          variant='SM'
-          color={isFocused ? tokens.colors.white : tokens.colors.neutral[400]}
+    // biome-ignore lint/a11y/useSemanticElements: <explanation>
+    <form role='search' onSubmit={handleSubmit}>
+      <StyledSearchBar isFocused={isFocused} hasValue={!!value}>
+        <StyledInput
+          type='search'
+          placeholder={placeholder}
+          value={value}
+          hasValue={!!value}
+          onChange={handleInputChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onKeyDown={handleKeyDown}
+          aria-label='검색어 입력'
         />
-      </StyledSearchButton>
-    </StyledSearchBar>
+        <StyledSearchButton
+          isFocused={isFocused}
+          onClick={handleSearch}
+          type='submit'
+          aria-label='검색'
+        >
+          <Icon
+            name='search'
+            variant='SM'
+            color={isFocused ? tokens.colors.white : tokens.colors.neutral[400]}
+          />
+        </StyledSearchButton>
+      </StyledSearchBar>
+    </form>
   );
 };
 

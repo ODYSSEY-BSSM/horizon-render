@@ -10,7 +10,12 @@ interface ProfileProps {
 
 const Profile = ({ onClick }: ProfileProps) => {
   return (
-    <StyledProfile onClick={onClick} type='button'>
+    <StyledProfile
+      onClick={onClick}
+      type='button'
+      aria-label='프로필 메뉴 열기'
+      title='프로필 메뉴 열기'
+    >
       <Icon name='person' variant='LG' color={tokens.colors.white} filled />
     </StyledProfile>
   );

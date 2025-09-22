@@ -76,7 +76,11 @@ const ListItem = ({ label, icon, isActive = false, hasCheck = false, onClick }: 
         >
           {label}
         </Text>
-        {hasCheck && <StyledCheckIcon>check</StyledCheckIcon>}
+        {hasCheck && (
+          <StyledCheckIcon aria-hidden='true'>
+            <Icon name='check' variant='SM' color={tokens.colors.success[200]} decorative />
+          </StyledCheckIcon>
+        )}
       </StyledContentWrapper>
     </StyledMenuItem>
   );
