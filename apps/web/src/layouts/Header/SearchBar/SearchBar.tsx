@@ -31,7 +31,9 @@ const SearchBar = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if ((e.nativeEvent as KeyboardEvent).isComposing) return;
+    if ((e.nativeEvent as KeyboardEvent).isComposing) {
+      return;
+    }
     if (e.key === 'Enter') {
       handleSearch();
     }
