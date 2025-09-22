@@ -1,6 +1,6 @@
 'use client';
 
-import AppLayout from '@/layouts/AppLayout';
+import AppLayout from '@/layouts/AppLayout/AppLayout';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type React from 'react';

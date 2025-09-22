@@ -1,9 +1,12 @@
-'use client';
+import HomeClient from '../components/home/HomeClient/HomeClient';
 
-import { Text } from '@horizon/ui';
+export const metadata = {
+  title: 'HORIZON — Dashboard',
+  description: '나의 학습 현황과 로드맵을 한 눈에.',
+};
 
 const HomePage = () => {
-  return <Text variant='B1'>하이!</Text>;
+  return <HomeClient />;
 };
 
 export default HomePage;
