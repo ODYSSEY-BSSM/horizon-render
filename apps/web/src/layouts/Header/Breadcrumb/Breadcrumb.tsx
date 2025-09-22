@@ -3,11 +3,7 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text } from '@horizon/ui';
-
-interface BreadcrumbItem {
-  label: string;
-  path?: string;
-}
+import type { BreadcrumbItem } from '../../../types';
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];

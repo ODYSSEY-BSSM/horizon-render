@@ -3,12 +3,8 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type { ReactNode } from 'react';
+import type { BreadcrumbItem } from '../../types';
 import { Header, Sidebar } from '../index';
-
-interface BreadcrumbItem {
-  label: string;
-  path?: string;
-}
 
 interface MenuItem {
   id: string;
@@ -86,7 +82,7 @@ const StyledMainContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #fcfdff;
+  background-color: ${tokens.colors.background};
 `;
 
 const StyledContent = styled.div`

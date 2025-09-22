@@ -29,7 +29,8 @@ const StyledMenuItem = styled.button<{ isActive: boolean }>`
   box-sizing: border-box;
 
   &:hover {
-    background-color: ${({ isActive }) => (isActive ? tokens.colors.primary[100] : '#f2f5fa')};
+    background-color: ${({ isActive }) =>
+      isActive ? tokens.colors.primary[100] : tokens.colors.neutral[100]};
   }
 `;
 

@@ -30,7 +30,7 @@ const SearchBar = ({
     onSearch?.(value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
@@ -46,7 +46,7 @@ const SearchBar = ({
         onChange={handleInputChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
       />
       <StyledSearchButton isFocused={isFocused} onClick={handleSearch} type='button'>
         <Icon

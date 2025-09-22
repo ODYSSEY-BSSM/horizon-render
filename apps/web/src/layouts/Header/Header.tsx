@@ -2,14 +2,10 @@
 
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
+import type { BreadcrumbItem } from '../../types';
 import Breadcrumb from './Breadcrumb/Breadcrumb';
 import Profile from './Profile/Profile';
 import SearchBar from './SearchBar/SearchBar';
-
-interface BreadcrumbItem {
-  label: string;
-  path?: string;
-}
 
 interface HeaderProps {
   breadcrumbItems?: BreadcrumbItem[];
