@@ -8,8 +8,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "lint": "biome check .",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'no tests for web yet'",
+    "clean": "rm -rf .next"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

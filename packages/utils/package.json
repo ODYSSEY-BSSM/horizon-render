@@ -15,7 +15,10 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'no tests for utils yet'",
+    "lint": "echo 'use root biome'",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@horizon/tokens": "workspace:*"

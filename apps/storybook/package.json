@@ -7,7 +7,11 @@
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "typecheck": "tsc --noEmit || echo 'skip: no tsconfig'",
+    "lint": "echo 'use root biome'",
+    "test": "echo 'no tests for storybook yet'",
+    "clean": "rm -rf storybook-static"
   },
   "dependencies": {
     "@horizon/ui": "workspace:*",

@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "dev": "echo 'editor has no dev server'",
+    "build": "echo 'editor has no build'",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'use root biome'",
+    "test": "echo 'no tests for editor yet'",
+    "clean": "echo 'nothing to clean in editor'"
   },
   "dependencies": {
     "@horizon/ui": "workspace:*"
