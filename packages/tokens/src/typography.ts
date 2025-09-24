@@ -41,9 +41,9 @@ export const lineHeight = {
 } as const;
 
 export const letterSpacing = {
-  '5': '0.05em',
-  '1': '0.01em',
-  '0': '0em',
+  5: '0.05em',
+  1: '0.01em',
+  0: '0em',
   '-1': '-0.01em',
   '-1.5': '-0.015em',
   '-2': '-0.02em',

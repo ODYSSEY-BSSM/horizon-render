@@ -4,8 +4,8 @@ export type ButtonSize = 'small' | 'medium' | 'large';
 export type ButtonVariant = 'contained' | 'outlined';
 export type IconPosition = 'none' | 'left' | 'right' | 'only';
 
-export interface ButtonProps<T extends React.ElementType = 'button'> {
-  as?: T;
+export interface ButtonProps {
+  as?: React.ElementType;
   size?: ButtonSize;
   iconPosition?: IconPosition;
   variant?: ButtonVariant;

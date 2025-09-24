@@ -65,6 +65,7 @@ export const buttonStyles = {
     disabled: css`
       cursor: not-allowed;
       background-color: ${tokens.colors.neutral[300]};
+      color: ${tokens.colors.neutral[500]};
     `,
   },
   outlined: {
@@ -92,11 +93,4 @@ export const buttonStyles = {
   },
 } as const;
 
-export const BLOCKED_PROPS = new Set([
-  'size',
-  'variant',
-  'iconPosition',
-  'rounded',
-  'disabled',
-  'as',
-]);
+export const BLOCKED_PROPS = new Set(['size', 'variant', 'iconPosition', 'rounded']);

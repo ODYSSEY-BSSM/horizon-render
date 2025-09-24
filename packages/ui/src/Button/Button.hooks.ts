@@ -2,7 +2,7 @@ import type React from 'react';
 import type { ButtonProps } from './Button.types';
 
 export const useButton = <T extends React.ElementType = 'button'>(
-  props: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>,
+  props: ButtonProps & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps>,
 ) => {
   const {
     as,
@@ -36,10 +36,20 @@ export const useButton = <T extends React.ElementType = 'button'>(
     'aria-label': iconPosition === 'only' ? ariaLabel || iconName : undefined,
   };
 
+  const semantics = isNativeButton
+    ? { type }
+    : isLink
+      ? {} // 링크는 본연의 시맨틱 유지
+      : { role: 'button', tabIndex: disabled ? -1 : 0 };
+
   const finalRestProps = {
-    ...(isNativeButton ? { type } : { role: 'button', tabIndex: disabled ? -1 : 0 }),
+    ...semantics,
     ...restProps,
   };
+
+  if (disabled && isLink) {
+    (finalRestProps as Partial<React.AnchorHTMLAttributes<HTMLAnchorElement>>).href = undefined;
+  }
 
   return {
     element: disabled && isLink ? 'span' : element,

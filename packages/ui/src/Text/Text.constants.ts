@@ -21,31 +21,31 @@ export const TEXT_VARIANTS = {
     fontSize: 18 as const,
     fontWeight: 'semibold' as const,
     lineHeight: 26 as const,
-    letterSpacing: '0' as const,
+    letterSpacing: 0 as const,
   },
   B1: {
     fontSize: 16 as const,
     fontWeight: 'regular' as const,
     lineHeight: 24 as const,
-    letterSpacing: '0' as const,
+    letterSpacing: 0 as const,
   },
   B2: {
     fontSize: 14 as const,
     fontWeight: 'regular' as const,
     lineHeight: 22 as const,
-    letterSpacing: '0' as const,
+    letterSpacing: 0 as const,
   },
   C: {
     fontSize: 12 as const,
     fontWeight: 'light' as const,
     lineHeight: 18 as const,
-    letterSpacing: '1' as const,
+    letterSpacing: 1 as const,
   },
   O: {
     fontSize: 11 as const,
     fontWeight: 'medium' as const,
     lineHeight: 16 as const,
-    letterSpacing: '5' as const,
+    letterSpacing: 5 as const,
   },
 } as const;
 

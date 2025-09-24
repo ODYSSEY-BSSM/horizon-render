@@ -20,6 +20,7 @@ export const useTextField = (props: TextFieldProps) => {
     containerClassName,
     labelClassName,
     helperClassName,
+    defaultValue,
     ...restProps
   } = props;
 
@@ -31,12 +32,17 @@ export const useTextField = (props: TextFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const isControlled = propValue !== undefined;
-  const [uncontrolledValue, setUncontrolledValue] = useState('');
+  const [uncontrolledValue, setUncontrolledValue] = useState<string>(() => {
+    if (typeof defaultValue === 'string') {
+      return defaultValue;
+    }
+    return defaultValue != null ? String(defaultValue) : '';
+  });
   const value = isControlled ? propValue : uncontrolledValue;
   const isFilled = !!value;
 
   const hasToggle = type === 'password';
-  const hasLeft = !!leftIcon;
+  const hasLeft = !!leftIcon || error;
   const hasRight = !!rightIcon;
   const resolvedType = hasToggle ? (showPassword ? 'text' : 'password') : type;
   const leftIconResolved = error ? 'warning' : leftIcon;
