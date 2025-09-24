@@ -45,17 +45,21 @@ export const useButton = <T extends React.ElementType = 'button'>(
   const finalRestProps = {
     ...semantics,
     ...restProps,
-  };
+  } as Record<string, unknown>;
 
   if (disabled && isLink) {
-    (finalRestProps as Partial<React.AnchorHTMLAttributes<HTMLAnchorElement>>).href = undefined;
+    const a = finalRestProps as Partial<React.AnchorHTMLAttributes<HTMLAnchorElement>>;
+    a.href = undefined;
+    a.target = undefined;
+    a.rel = undefined;
+    a.download = undefined;
   }
 
   return {
     element: disabled && isLink ? 'span' : element,
     styledProps,
     ariaProps,
-    restProps: finalRestProps,
+    restProps: finalRestProps as Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>,
     children,
     iconName,
     iconFilled,
