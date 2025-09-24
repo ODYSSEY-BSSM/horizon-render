@@ -4,11 +4,13 @@ import { StyledButton, StyledButtonIcon, StyledButtonText } from './Button.style
 import type { ButtonProps } from './Button.types';
 
 const Button = <T extends React.ElementType = 'button'>(
-  props: ButtonProps & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps>,
+  props: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>,
 ) => {
   const { element, styledProps, ariaProps, restProps, children, iconName, iconFilled } =
     useButton<T>(props);
   const { size, iconPosition } = styledProps;
+
+  const asElement = element as unknown as React.ElementType;
 
   const content = (
     <>
@@ -28,7 +30,7 @@ const Button = <T extends React.ElementType = 'button'>(
 
   if (iconPosition === 'only') {
     return (
-      <StyledButton as={element} {...styledProps} {...ariaProps} {...restProps}>
+      <StyledButton as={asElement} {...styledProps} {...ariaProps} {...restProps}>
         <StyledButtonIcon size={size} filled={iconFilled} aria-hidden={true}>
           {iconName}
         </StyledButtonIcon>
@@ -37,7 +39,7 @@ const Button = <T extends React.ElementType = 'button'>(
   }
 
   return (
-    <StyledButton as={element} {...styledProps} {...ariaProps} {...restProps}>
+    <StyledButton as={asElement} {...styledProps} {...ariaProps} {...restProps}>
       {content}
     </StyledButton>
   );

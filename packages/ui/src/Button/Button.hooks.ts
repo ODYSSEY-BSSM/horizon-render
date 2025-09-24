@@ -2,7 +2,7 @@ import type React from 'react';
 import type { ButtonProps } from './Button.types';
 
 export const useButton = <T extends React.ElementType = 'button'>(
-  props: ButtonProps & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps>,
+  props: ButtonProps<T> & Omit<React.ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>,
 ) => {
   const {
     as,
