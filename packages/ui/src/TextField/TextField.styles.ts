@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
+import { BLOCKED_PROPS, baseAffixStyles, baseButtonStyles } from './TextField.constants';
 
 export interface StyledInputWrapperProps {
   width?: string | number;
@@ -14,28 +15,9 @@ export interface StyledInputProps {
   hasToggle: boolean;
 }
 
-const BLOCKED_PROPS = new Set(['hasError', 'filled', 'hasLeft', 'hasRight', 'hasToggle']);
-
 export const shouldForwardProp = (prop: string): boolean => {
   return !BLOCKED_PROPS.has(prop);
 };
-
-const baseAffixStyles = `
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const baseButtonStyles = `
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-`;
 
 export const StyledAffixLeft = styled.div`
   ${baseAffixStyles}
@@ -69,8 +51,8 @@ const baseInputStyles = `
   height: 48px;
   width: 100%;
   align-items: center;
-  border-radius: ${tokens.rounding.object};
-  border: ${tokens.stroke.weight} solid transparent;
+  border-radius: 8px;
+  border: 1px solid transparent;
   background-color: ${tokens.colors.white};
   padding: 12px;
   font-size: ${tokens.fontSize[16]};
@@ -97,12 +79,12 @@ const getInputPadding = (hasLeft: boolean, hasRight: boolean) => {
 
 const getInputBoxShadow = (hasError: boolean, filled: boolean) => {
   if (hasError) {
-    return `box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.error[200]};`;
+    return `box-shadow: inset 0 0 0 1px ${tokens.colors.error[200]};`;
   }
   if (filled) {
-    return `box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.primary[500]};`;
+    return `box-shadow: inset 0 0 0 1px ${tokens.colors.primary[500]};`;
   }
-  return `box-shadow: inset 0 0 0 ${tokens.stroke.weight} ${tokens.colors.neutral[300]};`;
+  return `box-shadow: inset 0 0 0 1px ${tokens.colors.neutral[300]};`;
 };
 
 export const StyledHelper = styled.output`
@@ -132,7 +114,7 @@ export const StyledInput = styled('input', { shouldForwardProp })<StyledInputPro
 
   &:focus {
     outline: none;
-    box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
+    box-shadow: inset 0 0 0 calc(1px * 2) ${tokens.colors.primary[500]};
   }
 
   &:disabled {
@@ -147,7 +129,7 @@ export const StyledInput = styled('input', { shouldForwardProp })<StyledInputPro
     filled &&
     css`
       &:focus {
-        box-shadow: inset 0 0 0 calc(${tokens.stroke.weight} * 2) ${tokens.colors.primary[500]};
+        box-shadow: inset 0 0 0 calc(1px * 2) ${tokens.colors.primary[500]};
       }
     `}
 `;

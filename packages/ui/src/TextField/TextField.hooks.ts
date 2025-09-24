@@ -1,105 +1,84 @@
 import { tokens } from '@horizon/tokens';
-import { useCallback, useId, useState } from 'react';
+import { useId, useState } from 'react';
 import type React from 'react';
 import type { TextFieldProps } from './TextField.types';
 
-export interface UseTextFieldState {
-  id: string;
-  helperId: string;
-  value: string;
-  isFocused: boolean;
-  isFilled: boolean;
-  isPassword: boolean;
-  showPassword: boolean;
-  hasToggle: boolean;
-  hasLeft: boolean;
-  hasRight: boolean;
-  resolvedType?: React.HTMLInputTypeAttribute;
-  leftIconResolved?: string;
-  borderColor: string;
-  affixColor: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-  togglePassword: () => void;
-}
+export const useTextField = (props: TextFieldProps) => {
+  const {
+    id: propId,
+    value: propValue,
+    type,
+    error = false,
+    leftIcon,
+    rightIcon,
+    onChange,
+    onFocus,
+    onBlur,
+    label,
+    helperText,
+    width,
+    containerClassName,
+    labelClassName,
+    helperClassName,
+    ...restProps
+  } = props;
 
-export const useTextFieldState = ({
-  id,
-  value,
-  defaultValue,
-  onChange,
-  onFocus,
-  onBlur,
-  error = false,
-  leftIcon,
-  rightIcon,
-  ...restProps
-}: TextFieldProps): UseTextFieldState => {
-  const generatedId = useId();
-  const resolvedId = id ?? generatedId;
-  const helperId = `${resolvedId}-help`;
+  const id = useId();
+  const generatedId = propId || `textfield-${id}`;
+  const helperId = `helper-${generatedId}`;
 
-  const [internalValue, setInternalValue] = useState(String(defaultValue ?? ''));
-  const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const currentValue = value !== undefined ? String(value) : internalValue;
-  const isFilled = !!currentValue.trim();
-  const isPassword = (restProps.type ?? 'text') === 'password';
-  const hasToggle = isPassword;
-  const hasLeft = isPassword || !!leftIcon;
-  const hasRight = hasToggle || !!rightIcon;
-  const resolvedType = hasToggle ? (showPassword ? 'text' : 'password') : restProps.type;
-  const leftIconResolved = hasLeft ? (leftIcon ?? 'lock') : undefined;
+  const isControlled = propValue !== undefined;
+  const [uncontrolledValue, setUncontrolledValue] = useState('');
+  const value = isControlled ? propValue : uncontrolledValue;
+  const isFilled = !!value;
 
-  const borderColor = isFocused
-    ? tokens.colors.primary[500]
-    : error
-      ? tokens.colors.error[200]
-      : isFilled
-        ? tokens.colors.primary[500]
-        : tokens.colors.neutral[300];
+  const hasToggle = type === 'password';
+  const hasLeft = !!leftIcon;
+  const hasRight = !!rightIcon;
+  const resolvedType = hasToggle ? (showPassword ? 'text' : 'password') : type;
+  const leftIconResolved = error ? 'warning' : leftIcon;
 
-  const affixColor = isFilled ? tokens.colors.black : tokens.colors.neutral[400];
+  const borderColor = error
+    ? tokens.colors.error[200]
+    : isFocused
+      ? tokens.colors.primary[500]
+      : tokens.colors.neutral[300];
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (value === undefined) {
-        setInternalValue(e.target.value);
-      }
-      onChange?.(e);
-    },
-    [value, onChange],
-  );
+  const affixColor = error
+    ? tokens.colors.error[200]
+    : isFilled
+      ? tokens.colors.black
+      : tokens.colors.neutral[400];
 
-  const handleFocus = useCallback(
-    (e: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(true);
-      onFocus?.(e);
-    },
-    [onFocus],
-  );
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isControlled) {
+      setUncontrolledValue(e.target.value);
+    }
+    onChange?.(e);
+  };
 
-  const handleBlur = useCallback(
-    (e: React.FocusEvent<HTMLInputElement>) => {
-      setIsFocused(false);
-      onBlur?.(e);
-    },
-    [onBlur],
-  );
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(true);
+    onFocus?.(e);
+  };
 
-  const togglePassword = useCallback(() => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(false);
+    onBlur?.(e);
+  };
+
+  const togglePassword = () => {
     setShowPassword((prev) => !prev);
-  }, []);
+  };
 
   return {
-    id: resolvedId,
+    id: generatedId,
     helperId,
-    value: currentValue,
-    isFocused,
+    value,
     isFilled,
-    isPassword,
     showPassword,
     hasToggle,
     hasLeft,
@@ -112,5 +91,14 @@ export const useTextFieldState = ({
     onFocus: handleFocus,
     onBlur: handleBlur,
     togglePassword,
+    restProps,
+    label,
+    helperText,
+    error,
+    rightIcon,
+    width,
+    containerClassName,
+    labelClassName,
+    helperClassName,
   };
 };

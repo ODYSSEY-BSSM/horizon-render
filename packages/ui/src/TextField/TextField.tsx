@@ -1,8 +1,7 @@
-import { tokens } from '@horizon/tokens';
 import { forwardRef } from 'react';
 import Icon from '../Icon/Icon';
 import Text from '../Text/Text';
-import { useTextFieldState } from './TextField.hooks';
+import { useTextField } from './TextField.hooks';
 import {
   StyledAffixLeft,
   StyledAffixRight,
@@ -32,20 +31,16 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
     onFocus,
     onBlur,
     togglePassword,
-  } = useTextFieldState(props);
-
-  const {
+    restProps,
     label,
     helperText,
-    error = false,
-    leftIcon,
+    error,
     rightIcon,
     width,
     containerClassName,
     labelClassName,
     helperClassName,
-    ...restProps
-  } = props;
+  } = useTextField(props);
 
   return (
     <StyledTextField className={containerClassName}>
@@ -86,17 +81,13 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
             <Icon
               name={showPassword ? 'visibility' : 'visibility_off'}
               variant='SM'
-              color={isFilled ? tokens.colors.black : tokens.colors.neutral[400]}
+              color={affixColor}
             />
           </StyledAffixRightButton>
         ) : (
           rightIcon && (
             <StyledAffixRight aria-hidden>
-              <Icon
-                name={rightIcon}
-                variant='SM'
-                color={isFilled ? tokens.colors.black : tokens.colors.neutral[400]}
-              />
+              <Icon name={rightIcon} variant='SM' color={affixColor} />
             </StyledAffixRight>
           )
         )}
