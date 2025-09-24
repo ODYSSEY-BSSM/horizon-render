@@ -3,7 +3,8 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import type { ReactNode } from 'react';
-import { Header, Sidebar } from '../index';
+import Header from './Header/Header';
+import Sidebar from './Sidebar/Sidebar';
 import type { BreadcrumbItem, MenuItem } from './types';
 
 interface AppLayoutProps {
