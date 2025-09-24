@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { AppLayout } from '../../../layouts';
-import type { BreadcrumbItem } from '../../../layouts/types';
+import type { BreadcrumbItem } from '../../../layouts/AppLayout/types';
 
 const menuItems = [
   { id: 'dashboard', label: 'Dashboard' },
