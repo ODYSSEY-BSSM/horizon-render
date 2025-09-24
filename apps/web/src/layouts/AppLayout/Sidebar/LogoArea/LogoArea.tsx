@@ -7,18 +7,24 @@ import Link from 'next/link';
 
 const LogoArea = () => {
   return (
-    <Link href='/' aria-label='홈으로 이동'>
+    <StyledLogoLink href='/' aria-label='홈으로 이동'>
       <StyledLogoArea>
         <StyledLogo src='/svg/logo.svg' alt='' aria-hidden='true' />
         <Text variant='H2' color={tokens.colors.black} as='span'>
           HORIZON
         </Text>
       </StyledLogoArea>
-    </Link>
+    </StyledLogoLink>
   );
 };
 
 export default LogoArea;
+
+const StyledLogoLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+`;
 
 const StyledLogoArea = styled.div`
   display: flex;
