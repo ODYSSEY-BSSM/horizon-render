@@ -25,7 +25,7 @@ const StyledButton = styled.button`
   height: 48px;
   background-color: ${tokens.colors.white};
   border: 1px solid ${tokens.colors.black};
-  border-radius: ${tokens.rounding.object};
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;

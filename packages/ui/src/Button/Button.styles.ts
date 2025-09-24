@@ -1,14 +1,17 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
+import {
+  BLOCKED_PROPS,
+  BUTTON_ICON_CONFIGS,
+  BUTTON_TEXT_CONFIGS,
+  GAP_SIZES,
+  HORIZONTAL_PADDINGS,
+  ICON_PADDINGS,
+  VERTICAL_PADDING,
+  buttonStyles,
+} from './Button.constants';
 import type { ButtonSize, ButtonVariant, IconPosition, StyledButtonProps } from './Button.types';
-
-// Button text configurations
-const BUTTON_TEXT_CONFIGS = {
-  small: { fontSize: 13 as const, fontWeight: 'semibold' as const, lineHeight: 18 as const },
-  medium: { fontSize: 14 as const, fontWeight: 'semibold' as const, lineHeight: 20 as const },
-  large: { fontSize: 16 as const, fontWeight: 'semibold' as const, lineHeight: 24 as const },
-} as const;
 
 const makeTextStyle = (
   fontSize: keyof typeof tokens.fontSize,
@@ -26,35 +29,14 @@ export const getTextStyles = (size: ButtonSize) => {
   return makeTextStyle(config.fontSize, config.fontWeight, config.lineHeight);
 };
 
-const BUTTON_ICON_CONFIGS = {
-  small: {
-    fontSize: '16px',
-    fontWeight: 'regular' as const,
-    grade: 0 as const,
-    opticalSize: 20 as const,
-  },
-  medium: {
-    fontSize: '20px',
-    fontWeight: 'regular' as const,
-    grade: 0 as const,
-    opticalSize: 24 as const,
-  },
-  large: {
-    fontSize: '24px',
-    fontWeight: 'medium' as const,
-    grade: 25 as const,
-    opticalSize: 40 as const,
-  },
-} as const;
-
 const makeIconStyle = (
   filled: keyof typeof tokens.icons.fill,
-  fontSizePx: string,
+  fontSize: string,
   fontWeight: keyof typeof tokens.fontWeight,
   grade: keyof typeof tokens.icons.grade,
   opticalSize: keyof typeof tokens.icons.opticalSize,
 ) => css`
-  font-size: ${fontSizePx};
+  font-size: ${fontSize};
   font-variation-settings: 
     'FILL' ${tokens.icons.fill[filled]},
     'wght' ${tokens.fontWeight[fontWeight]}, 
@@ -73,27 +55,7 @@ export const getIconStyles = (size: ButtonSize, filled: keyof typeof tokens.icon
   );
 };
 
-const GAP_SIZES = {
-  small: '6px',
-  medium: '8px',
-  large: '10px',
-} as const;
-
 export const getGapSize = (size: ButtonSize) => GAP_SIZES[size];
-
-const HORIZONTAL_PADDINGS = {
-  small: '16px',
-  medium: '20px',
-  large: '24px',
-} as const;
-
-const VERTICAL_PADDING = '10px';
-
-const ICON_PADDINGS = {
-  small: '10px',
-  medium: '12px',
-  large: '14px',
-} as const;
 
 export const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
   const iconPadding = ICON_PADDINGS[size];
@@ -112,55 +74,9 @@ export const getPadding = (size: ButtonSize, iconPosition: IconPosition) => {
   return `${VERTICAL_PADDING} ${horizontal}`;
 };
 
-const buttonStyles = {
-  contained: {
-    default: css`
-      background-color: ${tokens.colors.primary[500]};
-      color: ${tokens.colors.white};
-        
-      &:hover {
-        background-color: ${tokens.colors.primary[700]};
-      }
-        
-      &:active {
-        background-color: ${tokens.colors.primary[900]};
-      }
-    `,
-    disabled: css`
-      cursor: not-allowed;
-      background-color: ${tokens.colors.neutral[300]};
-    `,
-  },
-  outlined: {
-    default: css`
-      background-color: transparent;
-      border: 1px solid ${tokens.colors.primary[500]};
-      color: ${tokens.colors.primary[500]};
-        
-      &:hover {
-        background-color: ${tokens.colors.primary[600]};
-        color: ${tokens.colors.white};
-      }
-        
-      &:active {
-        background-color: ${tokens.colors.primary[900]};
-        color: ${tokens.colors.white};
-      }
-    `,
-    disabled: css`
-      cursor: not-allowed;
-      background-color: transparent;
-      color: ${tokens.colors.neutral[300]};
-      border: 1px solid ${tokens.colors.neutral[300]};
-    `,
-  },
-} as const;
-
 export const getButtonStyle = (variant: ButtonVariant, disabled: boolean) => {
   return buttonStyles[variant][disabled ? 'disabled' : 'default'];
 };
-
-const BLOCKED_PROPS = new Set(['size', 'variant', 'iconPosition', 'rounded', 'disabled', 'as']);
 
 const shouldForwardProp = (prop: string): boolean => {
   return !BLOCKED_PROPS.has(prop);

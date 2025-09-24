@@ -1,24 +1,16 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
+import { BLOCKED_PROPS, ICON_VARIANTS } from './Icon.constants';
 import type { IconVariant } from './Icon.types';
 
-// Icon variant configurations
-const ICON_VARIANTS = {
-  XS: { fontSize: '16px', fontWeight: 'light' as const, opticalSize: 20 as const },
-  SM: { fontSize: '20px', fontWeight: 'regular' as const, opticalSize: 24 as const },
-  MD: { fontSize: '24px', fontWeight: 'regular' as const, opticalSize: 24 as const },
-  LG: { fontSize: '32px', fontWeight: 'medium' as const, opticalSize: 40 as const },
-  XL: { fontSize: '40px', fontWeight: 'semibold' as const, opticalSize: 48 as const },
-} as const;
-
 const makeIconStyle = (
-  fontSizePx: string,
+  fontSize: string,
   fontWeight: keyof typeof tokens.fontWeight,
   opticalSize: keyof typeof tokens.icons.opticalSize,
   filled = false,
 ) => css`
-  font-size: ${fontSizePx};
+  font-size: ${fontSize};
   font-variation-settings: 
     'FILL' ${filled ? 1 : tokens.icons.fill[0]},
     'wght' ${tokens.fontWeight[fontWeight]},
@@ -31,13 +23,10 @@ export const getIconStyle = (variant: IconVariant, filled = false) => {
   return makeIconStyle(config.fontSize, config.fontWeight, config.opticalSize, filled);
 };
 
-const BLOCKED_PROPS = new Set(['variant', 'filled', 'size', 'color']);
-
 export const shouldForwardProp = (prop: string): boolean => {
   return !BLOCKED_PROPS.has(prop);
 };
 
-// Base icon styles
 const baseIconStyles = css`
   font-family: ${tokens.fontFamily.icon.join(', ')};
   user-select: none;
@@ -68,7 +57,6 @@ export const StyledIcon = styled('span', { shouldForwardProp })<{
     `;
   }}
 
-  /* 명시적 size가 있을 경우 최종 override */
   ${({ size }) =>
     size != null ? { fontSize: typeof size === 'number' ? `${size}px` : size } : undefined}
 `;

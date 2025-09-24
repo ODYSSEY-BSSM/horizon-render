@@ -5,7 +5,8 @@
     "rootDir": "./src",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "noImplicitAny": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "**/*.test.*", "**/*.stories.*"]
