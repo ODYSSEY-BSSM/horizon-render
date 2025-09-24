@@ -143,6 +143,18 @@
       }
     }
   },
+  "overrides": [
+    {
+      "include": ["packages/ui/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
       "quoteStyle": "single",

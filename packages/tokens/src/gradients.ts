@@ -1,6 +1,5 @@
 import { colors } from './colors';
 
-// 그라데이션 팩토리 함수
 const makeGradient = (colorScale: { 100: string; 200: string }) => ({
   horizontal: `linear-gradient(to right, ${colorScale[200]} 0%, ${colorScale[100]} 100%)`,
   vertical: `linear-gradient(to top, ${colorScale[200]} 0%, ${colorScale[100]} 100%)`,

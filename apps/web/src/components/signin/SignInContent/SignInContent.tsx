@@ -118,7 +118,7 @@ const StyledLoginButton = styled.button<{ disabled: boolean }>`
   height: 48px;
   background-color: ${({ disabled }) => (disabled ? tokens.colors.neutral[300] : tokens.colors.primary[500])};
   border: none;
-  border-radius: ${tokens.rounding.object};
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
