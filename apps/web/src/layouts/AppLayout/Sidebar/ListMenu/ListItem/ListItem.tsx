@@ -44,7 +44,7 @@ const StyledIconWrapper = styled.div`
 const StyledContentWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
   flex: 1;
 `;
 
@@ -53,6 +53,7 @@ const StyledCheckIcon = styled.span`
   align-items: center;
   line-height: 1;
   color: ${tokens.colors.success[200]};
+  margin-left: auto;
 `;
 
 const ListItem = ({ label, icon, isActive = false, hasCheck = false, onClick }: ListItemProps) => {
