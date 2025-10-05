@@ -1,7 +1,7 @@
 'use client';
 
-import { userApi } from '@horizon/api';
-import type { LoginRequest, LoginResponse, RegisterRequest, UserInfoResponse } from '@horizon/api';
+import { userApi } from '@/apis/index';
+import type { LoginRequest, LoginResponse, RegisterRequest, UserInfoResponse } from '@/apis/index';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useLogin = () => {

@@ -1,5 +1,5 @@
 {
-  "extends": "../../configs/tsconfig/library.json",
+  "extends": "../../../configs/tsconfig/library.json",
   "compilerOptions": {
     "rootDir": "./src",
     "lib": ["dom", "dom.iterable", "es2021"]
