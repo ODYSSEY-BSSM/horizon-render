@@ -1,5 +1,12 @@
 {
-  "extends": "../web/tsconfig.json",
+  "extends": "../../configs/tsconfig/app.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "dist", "storybook-static"]
 }

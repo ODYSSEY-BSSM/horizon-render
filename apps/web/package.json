@@ -17,7 +17,6 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hookform/resolvers": "^5.2.2",
-    "@horizon/api": "workspace:*",
     "@horizon/tokens": "workspace:*",
     "@horizon/ui": "workspace:*",
     "@horizon/utils": "workspace:*",
@@ -30,7 +29,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.62.0",
     "react-otp-input": "^3.1.1",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "ky": "^1.10.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

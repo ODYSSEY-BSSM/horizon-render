@@ -1,4 +1,4 @@
-import HomeClient from '../components/home/HomeClient/HomeClient';
+import HomeClient from '@/clients/home/home';
 
 export const metadata = {
   title: 'HORIZON — Dashboard',
