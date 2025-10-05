@@ -1,7 +1,7 @@
 'use client';
 
 import { userApi } from '@/apis/index';
-import type { LoginRequest, LoginResponse, RegisterRequest, UserInfoResponse } from '@/apis/index';
+import type { LoginRequest, UserInfoResponse } from '@/apis/index';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useLogin = () => {
@@ -12,12 +12,6 @@ export const useLogin = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user', 'profile'] });
     },
-  });
-};
-
-export const useRegister = () => {
-  return useMutation({
-    mutationFn: (data: RegisterRequest) => userApi.register(data),
   });
 };
 

@@ -1,8 +1,8 @@
-import { useRegister } from '@/apis/auth/useAuth';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useState } from 'react';
-import type { SignUpData, SignUpStep } from '../types/types';
+import type { SignUpData, SignUpStep } from '../../../types/types';
+import { useRegister } from './useSignUp';
 import { useSignUpValidation } from './useSignUpValidation';
 
 export const useSignUpHandlers = () => {
