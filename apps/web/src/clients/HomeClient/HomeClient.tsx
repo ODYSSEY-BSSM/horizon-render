@@ -1,8 +1,8 @@
 'use client';
 
+import { AppLayout } from '@/layouts';
+import type { BreadcrumbItem } from '@/layouts/AppLayout/types';
 import { useState } from 'react';
-import { AppLayout } from '../../src/layouts';
-import type { BreadcrumbItem } from '../../src/layouts/AppLayout/types';
 
 const menuItems = [
   { id: 'dashboard', label: '대시보드', icon: 'home' },
