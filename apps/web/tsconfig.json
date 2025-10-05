@@ -9,9 +9,19 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/clients/*": ["./clients/*"],
+      "@/api/*": ["./api/src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "clients/**/*.ts",
+    "clients/**/*.tsx",
+    "api/**/*.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }
