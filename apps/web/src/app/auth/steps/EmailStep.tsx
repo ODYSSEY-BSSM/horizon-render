@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
-import SecondaryAction from '../../SecondaryAction/SecondaryAction';
-import type { EmailStepProps } from '../types';
+import SecondaryAction from '../../../components/signup/SecondaryAction/SecondaryAction';
+import type { EmailStepProps } from '../../../types/types';
 
 const EmailStep = ({
   email,

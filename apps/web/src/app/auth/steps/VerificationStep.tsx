@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
-import SecondaryAction from '../../SecondaryAction/SecondaryAction';
-import VerificationInput from '../../VerificationInput/VerificationInput';
-import type { VerificationStepProps } from '../types';
+import SecondaryAction from '../../../components/signup/SecondaryAction/SecondaryAction';
+import VerificationInput from '../../../components/signup/VerificationInput/VerificationInput';
+import type { VerificationStepProps } from '../../../types/types';
 
 const VerificationStep = ({
   verificationCode,

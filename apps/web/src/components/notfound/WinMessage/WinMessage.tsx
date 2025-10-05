@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 
-import NotFoundContent from '../NotFoundContent/NotFoundContent';
+import NotFoundContent from '@/clients/NotFoundContent/NotFoundContent';
 
 const WinMessage = () => {
   return (

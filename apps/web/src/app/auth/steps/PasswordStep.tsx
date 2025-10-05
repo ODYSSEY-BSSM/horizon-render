@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text, TextField } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
-import type { PasswordStepProps } from '../types';
+import type { PasswordStepProps } from '../../../types/types';
 
 const PasswordStep = ({
   password,

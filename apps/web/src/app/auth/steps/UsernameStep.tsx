@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text, TextField } from '@horizon/ui';
-import type { UsernameStepProps } from '../types';
+import type { UsernameStepProps } from '../../../types/types';
 
 const UsernameStep = ({
   username,
