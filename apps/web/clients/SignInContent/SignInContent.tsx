@@ -1,4 +1,4 @@
-import { useLogin } from '@/hooks/api/useAuth';
+import { useLogin } from '@/apis/auth/useAuth';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text, TextField } from '@horizon/ui';

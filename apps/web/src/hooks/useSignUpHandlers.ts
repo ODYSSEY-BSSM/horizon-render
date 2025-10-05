@@ -1,4 +1,4 @@
-import { useRegister } from '@/hooks/api/useAuth';
+import { useRegister } from '@/apis/auth/useAuth';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useState } from 'react';

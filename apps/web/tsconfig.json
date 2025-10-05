@@ -10,8 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/clients/*": ["./clients/*"],
-      "@/api/*": ["./api/src/*"]
+      "@/clients/*": ["./clients/*"]
     }
   },
   "include": [
@@ -20,8 +19,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "clients/**/*.ts",
-    "clients/**/*.tsx",
-    "api/**/*.ts"
+    "clients/**/*.tsx"
   ],
   "exclude": ["node_modules", "dist"]
 }
