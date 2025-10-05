@@ -1,1 +1,1 @@
-export { default as HomeClient } from '@/clients/HomeClient/HomeClient';
+export { default as HomeClient } from '@/clients/home/home';
