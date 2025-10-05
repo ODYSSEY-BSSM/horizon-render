@@ -1,12 +1,12 @@
+import EmailStep from '@/app/auth/steps/EmailStep';
+import PasswordStep from '@/app/auth/steps/PasswordStep';
+import UsernameStep from '@/app/auth/steps/UsernameStep';
+import VerificationStep from '@/app/auth/steps/VerificationStep';
+import { useSignUpHandlers } from '@/hooks/auth/signup/useSignUpHandlers';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Icon, Text, TextField } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
-import { useSignUpHandlers } from './hooks/useSignUpHandlers';
-import EmailStep from './steps/EmailStep';
-import PasswordStep from './steps/PasswordStep';
-import UsernameStep from './steps/UsernameStep';
-import VerificationStep from './steps/VerificationStep';
 
 const SignUpContent = () => {
   const {
@@ -84,7 +84,7 @@ const SignUpContent = () => {
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (errors.email) {
-                    setErrors((prev) => ({ ...prev, email: '' }));
+                    setErrors((prev: Record<string, string>) => ({ ...prev, email: '' }));
                   }
                 }}
                 error={!!errors.email}
@@ -106,10 +106,10 @@ const SignUpContent = () => {
         return (
           <VerificationStep
             verificationCode={verificationCode}
-            setVerificationCode={(value) => {
+            setVerificationCode={(value: string) => {
               setVerificationCode(value);
               if (errors.code) {
-                setErrors((prev) => ({ ...prev, code: '' }));
+                setErrors((prev: Record<string, string>) => ({ ...prev, code: '' }));
               }
             }}
             onSubmit={handleVerificationSubmit}
@@ -123,17 +123,17 @@ const SignUpContent = () => {
         return (
           <PasswordStep
             password={password}
-            setPassword={(value) => {
+            setPassword={(value: string) => {
               setPassword(value);
               if (errors.password) {
-                setErrors((prev) => ({ ...prev, password: '' }));
+                setErrors((prev: Record<string, string>) => ({ ...prev, password: '' }));
               }
             }}
             confirmPassword={confirmPassword}
-            setConfirmPassword={(value) => {
+            setConfirmPassword={(value: string) => {
               setConfirmPassword(value);
               if (errors.confirmPassword) {
-                setErrors((prev) => ({ ...prev, confirmPassword: '' }));
+                setErrors((prev: Record<string, string>) => ({ ...prev, confirmPassword: '' }));
               }
             }}
             onSubmit={handlePasswordSubmit}
@@ -146,10 +146,10 @@ const SignUpContent = () => {
         return (
           <UsernameStep
             username={username}
-            setUsername={(value) => {
+            setUsername={(value: string) => {
               setUsername(value);
               if (errors.username) {
-                setErrors((prev) => ({ ...prev, username: '' }));
+                setErrors((prev: Record<string, string>) => ({ ...prev, username: '' }));
               }
             }}
             onSubmit={handleUsernameSubmit}

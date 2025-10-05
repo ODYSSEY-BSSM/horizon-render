@@ -1,12 +1,12 @@
-import { useLogin } from '@/hooks/api/useAuth';
+import ContinueWithGoogle from '@/components/signin/ContinueWithGoogle/ContinueWithGoogle';
+import SecondaryAction from '@/components/signin/SecondaryAction/SecondaryAction';
+import { useLogin } from '@/hooks/auth/signin/useSignIn';
 import styled from '@emotion/styled';
 import { tokens } from '@horizon/tokens';
 import { Text, TextField } from '@horizon/ui';
 import { Flexbox } from '@horizon/utils';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import ContinueWithGoogle from '../ContinueWithGoogle/ContinueWithGoogle';
-import SecondaryAction from '../SecondaryAction/SecondaryAction';
 
 const SignInContent = () => {
   const [email, setEmail] = useState('');
