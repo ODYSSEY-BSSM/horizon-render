@@ -1,10 +1,12 @@
-'use client';
+import Dashboard from '@/clients/dashboard/dashboard';
 
-import { DashboardContent } from '@/components/dashboard';
-import type React from 'react';
-
-const Dashboard = () => {
-  return <DashboardContent />;
+export const metadata = {
+  title: 'HORIZON — Dashboard',
+  description: '대시보드에서 학습 현황을 확인하고 로드맵을 관리하세요.',
 };
 
-export default Dashboard;
+const DashboardPage = () => {
+  return <Dashboard />;
+};
+
+export default DashboardPage;
